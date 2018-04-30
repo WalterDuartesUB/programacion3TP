@@ -1,0 +1,43 @@
+package ar.edu.ub.p3.aeropuerto.servidor;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import ar.edu.ub.p3.aeropuerto.modelo.Avion;
+
+public class EstadoAeropuerto {
+
+	private boolean sigueCorriendo;
+	private List<Avion> aviones;
+	
+	public EstadoAeropuerto(boolean sigueCorriendo) {
+		this.setSigueCorriendo(sigueCorriendo);
+		this.setAviones( new LinkedList<Avion>());
+		
+		//Agrego aviones de prueba 
+		this.getAviones().add( new Avion("123456", "boing"));
+		this.getAviones().add( new Avion("753159", "airbus"));
+	}
+	
+	public EstadoAeropuerto() {
+		this( true );
+		
+	}
+
+	public boolean isSigueCorriendo() {
+		return this.sigueCorriendo;
+	}
+	
+	public void setSigueCorriendo(boolean sigueCorriendo) {
+		this.sigueCorriendo = sigueCorriendo;
+	}
+
+	public List<Avion> getAviones() {
+		return aviones;
+	}
+
+	private void setAviones(List<Avion> aviones) {
+		this.aviones = aviones;
+	}
+
+}
