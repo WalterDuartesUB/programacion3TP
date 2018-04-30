@@ -19,7 +19,7 @@ public class Aplicacion {
 			in.nextLine();
 			
 			//Envio el pedido al server de apagarse
-			try(Socket s = new Socket( configuracion.getIPPedidosAeropuerto(), configuracion.getPuertoPedidosAeropuerto() ) ) {
+			try(Socket s = new Socket( configuracion.getIpPedidosAeropuerto(), configuracion.getPuertoPedidosAeropuerto() ) ) {
 				
 				try( ObjectOutputStream oos = new ObjectOutputStream( s.getOutputStream() ) )
 				{

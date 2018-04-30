@@ -26,7 +26,7 @@ public class Aplicacion {
 		// Me quedo esperando a que me llegue un pedido de la aplicacion de
 		// gestion de los recursos del aeropuerto
 		
-		try (ServerSocket ss = new ServerSocket( configuracion.getPuertoPedidosAeropuertoGestion() ) ){						
+		try (ServerSocket ss = new ServerSocket( configuracion.getPuertoGestionAeropuerto() ) ){						
 
 			//Lo que llegue por este puerto siempre mata el server
 			ss.accept();
