@@ -3,7 +3,9 @@ package ar.edu.ub.p3.aeropuerto.servidor;
 import java.util.LinkedList;
 import java.util.List;
 
-import ar.edu.ub.p3.aeropuerto.modelo.Avion;
+import ar.edu.ub.p3.common.aeropuerto.modelo.Avion;
+
+
 
 public class EstadoAeropuerto {
 
@@ -15,8 +17,8 @@ public class EstadoAeropuerto {
 		this.setAviones( new LinkedList<Avion>());
 		
 		//Agrego aviones de prueba 
-		this.getAviones().add( new Avion("123456", "boing"));
-		this.getAviones().add( new Avion("753159", "airbus"));
+		this.getAviones().add( new Avion(null, "123456", "boing"));
+		this.getAviones().add( new Avion(null,"753159", "airbus"));
 	}
 	
 	public EstadoAeropuerto() {

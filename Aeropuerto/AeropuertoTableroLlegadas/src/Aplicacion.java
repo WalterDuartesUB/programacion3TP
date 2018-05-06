@@ -1,9 +1,12 @@
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-import ar.edu.ub.p3.aeropuerto.pedido._PedidoAeropuertoImprimirAviones;
+import ar.edu.ub.p3.common.aeropuerto.conexion.CodigoComando;
+import ar.edu.ub.p3.common.aeropuerto.conexion.Comando;
+import ar.edu.ub.p3.common.aeropuerto.modelo.Avion;
 import ar.edu.ub.p3.tablero.ConfiguracionTableroLlegadas;
 
 public class Aplicacion {
@@ -21,10 +24,28 @@ public class Aplicacion {
 			//Envio el pedido al server de apagarse
 			try(Socket s = new Socket( configuracion.getIpPedidosAeropuerto(), configuracion.getPuertoPedidosAeropuerto() ) ) {
 				
-				try( ObjectOutputStream oos = new ObjectOutputStream( s.getOutputStream() ) )
+				try( ObjectOutputStream oos = new ObjectOutputStream( s.getOutputStream() ); )
 				{
-					oos.writeObject( new _PedidoAeropuertoImprimirAviones() );	
-				}
+					
+					Comando comando = new Comando( CodigoComando.OBTENER_LISTA_AVIONES );
+					
+//					comando.getParametros().put("avion", new Avion(null, "patente", "modelo" ) );
+					
+					//Hago el pedido de la lista de aviones
+					oos.writeObject( comando );	
+					/*
+					ObjectInputStream ois = new ObjectInputStream( s.getInputStream() );
+					
+					//Espero la lista de aviones
+					Avion[] aviones = (Avion[]) ois.readObject();
+					
+					for( Avion avion : aviones )
+						System.out.println( avion.getModelo());
+					*/
+					
+				} /* catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}*/
 				
 			} catch (IOException e) {
 				e.printStackTrace();

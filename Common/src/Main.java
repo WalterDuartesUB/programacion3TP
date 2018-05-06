@@ -1,3 +1,6 @@
+import java.util.Map;
+import java.util.HashMap;
+
 import ar.edu.ub.p3.common.aeropuerto.modelo.Aeropuerto;
 import ar.edu.ub.p3.common.aeropuerto.modelo.Avion;
 import ar.edu.ub.p3.common.aeropuerto.modelo.Posicion;
@@ -22,6 +25,19 @@ public class Main {
 		InterfazVuelo interfazVuelo = vuelo;
 		interfazVuelo.getAvion().getPosicion().setX(9);
 
+		
+		Map<String,Object> mapa = new HashMap<String,Object>();
+		
+		mapa.put("avion", avion);
+		mapa.put("1Aero", aeropuerto);
+		mapa.put("2Aero", aeropuerto);
+		mapa.put("Vuelito", vuelo);
+		
+		//
+		
+		Avion otroAvion = (Avion) mapa.get("avion");
+		
+		System.out.println( otroAvion.getPatente());
 	}
 
 }

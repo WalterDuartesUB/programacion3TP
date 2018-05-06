@@ -1,9 +1,15 @@
 package ar.edu.ub.p3.common.aeropuerto.modelo;
 
+import java.io.Serializable;
+
 import ar.edu.ub.p3.common.aeropuerto.modelo.Interface.InterfazAeropuerto;
 
-public class Aeropuerto implements InterfazAeropuerto {
+public class Aeropuerto implements InterfazAeropuerto, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7525449166419513749L;
 	private String   iata;
 	private String   nombre;
 	private Posicion posicion;

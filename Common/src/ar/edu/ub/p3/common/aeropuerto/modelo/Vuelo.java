@@ -1,9 +1,15 @@
 package ar.edu.ub.p3.common.aeropuerto.modelo;
 
+import java.io.Serializable;
+
 import ar.edu.ub.p3.common.aeropuerto.modelo.Interface.InterfazVuelo;
 
-public class Vuelo implements InterfazVuelo {
+public class Vuelo implements InterfazVuelo, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4624792219122186105L;
 	private Aeropuerto aeropuertoOrigen;
 	private Aeropuerto aeropuertoDestino;
 	private Avion      avion;
