@@ -3,7 +3,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-import ar.edu.ub.p3.aeropuerto.pedido.PedidoAeropuertoImprimirAviones;
+import ar.edu.ub.p3.aeropuerto.pedido._PedidoAeropuertoImprimirAviones;
 import ar.edu.ub.p3.tablero.ConfiguracionTableroLlegadas;
 
 public class Aplicacion {
@@ -23,7 +23,7 @@ public class Aplicacion {
 				
 				try( ObjectOutputStream oos = new ObjectOutputStream( s.getOutputStream() ) )
 				{
-					oos.writeObject( new PedidoAeropuertoImprimirAviones() );	
+					oos.writeObject( new _PedidoAeropuertoImprimirAviones() );	
 				}
 				
 			} catch (IOException e) {

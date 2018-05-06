@@ -7,17 +7,17 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 
-import ar.edu.ub.p3.aeropuerto.pedido.PedidoAeropuerto;
+import ar.edu.ub.p3.aeropuerto.pedido._PedidoAeropuerto;
 
 public class AtendedorPedido implements Runnable {
 	
-	private List<PedidoAeropuerto>  pedidos;
+	private List<_PedidoAeropuerto>  pedidos;
 	private ConfiguracionAeropuerto configuracionAeropuerto;
 	private EstadoAeropuerto        estadoAeropuerto;
 	
 	public AtendedorPedido(ConfiguracionAeropuerto configuracionAeropuerto, EstadoAeropuerto estadoAeropuerto, Socket s) {
 				
-		this.setPedidos( new LinkedList<PedidoAeropuerto>() );
+		this.setPedidos( new LinkedList<_PedidoAeropuerto>() );
 		this.setConfiguracionAeropuerto(configuracionAeropuerto);
 		this.setEstadoAeropuerto(estadoAeropuerto);
 		
@@ -26,12 +26,12 @@ public class AtendedorPedido implements Runnable {
 		try {
 			
 			ObjectInputStream ois = new ObjectInputStream( s.getInputStream() );
-			PedidoAeropuerto pedido = null;
+			_PedidoAeropuerto pedido = null;
 			
 			try
 			{
 				// Leo todos los objetos en Socket
-				while( ( pedido = (PedidoAeropuerto) ois.readObject() ) != null )
+				while( ( pedido = (_PedidoAeropuerto) ois.readObject() ) != null )
 				{
 					this.getPedidos().add( pedido );
 				}
@@ -50,17 +50,17 @@ public class AtendedorPedido implements Runnable {
 	@Override
 	public void run() {
 		
-		for( PedidoAeropuerto pedido : this.getPedidos() )
+		for( _PedidoAeropuerto pedido : this.getPedidos() )
 			pedido.atender( this.getConfiguracionAeropuerto(), this.getEstadoAeropuerto() );
 
 		System.out.println("Se resolvio un pedido");
 	}
 
-	private List<PedidoAeropuerto> getPedidos() {
+	private List<_PedidoAeropuerto> getPedidos() {
 		return pedidos;
 	}
 
-	private void setPedidos(List<PedidoAeropuerto> pedidos) {
+	private void setPedidos(List<_PedidoAeropuerto> pedidos) {
 		this.pedidos = pedidos;
 	}
 

@@ -5,7 +5,7 @@ import ar.edu.ub.p3.aeropuerto.modelo.Avion;
 import ar.edu.ub.p3.aeropuerto.servidor.ConfiguracionAeropuerto;
 import ar.edu.ub.p3.aeropuerto.servidor.EstadoAeropuerto;
 
-public class PedidoAeropuertoImprimirAviones extends PedidoAeropuerto implements Serializable {
+public class _PedidoAeropuertoImprimirAviones extends _PedidoAeropuerto implements Serializable {
 
 	/**
 	 * 
