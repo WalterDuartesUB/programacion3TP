@@ -27,7 +27,7 @@ public class EstadoAeropuerto {
 		
 		this.setEstoyConectado(false);
 		this.setEstoyEsperandoRespuestaConexion(false);
-		this.setDeboContinuar(false);
+		this.setDeboContinuar(true);
 		
 		
 	}

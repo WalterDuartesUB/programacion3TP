@@ -1,8 +1,10 @@
 package ar.edu.ub.p3.conexion;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,14 +35,30 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 	@Override
 	public void run() {
 		
-		try {
-			ObjectInputStream ois = new ObjectInputStream(this.getSocket().getInputStream());
-			Mensaje mensaje = (Mensaje) ois.readObject();
-			this.getHandlers().get(mensaje.getTipoMensaje()).accept(mensaje, this.getEstadoAeropuerto());
-		} catch (IOException | ClassNotFoundException e) {
-			 
-			e.printStackTrace();
-		}
+		try (ObjectInputStream in = new ObjectInputStream(this.getSocket().getInputStream())) {
+        	Mensaje mensaje = null;        	
+        	
+            while ( this.getEstadoAeropuerto().isDeboContinuar() ) {
+                try {
+                    mensaje = (Mensaje) in.readObject();
+                    
+                    this.getHandlers().get( mensaje.getTipoMensaje() ).accept( mensaje, this.getEstadoAeropuerto() );
+                 
+                }
+                catch (EOFException e) {
+                    break;
+                }
+            }
+        }
+        catch (SocketException e) {
+            System.out.println("Disconnected");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("Class not found " + e);
+        }
+        catch (IOException e) {
+            System.out.println("IOException: " + e);
+        }
 		
 		
 		
