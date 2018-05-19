@@ -1,6 +1,9 @@
 package ar.edu.ub.p3.interfaz;
 
-public interface IVuelo {
+import java.io.Serializable;
+
+public interface IVuelo extends Serializable{
+	
 	public String getIdVuelo();
 	public IAvion getAvion();
 	public IAeropuerto getAeropuertoOrigen();

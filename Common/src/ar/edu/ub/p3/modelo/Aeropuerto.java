@@ -1,10 +1,16 @@
 package ar.edu.ub.p3.modelo;
 
+import java.io.Serializable;
+
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IPosicion;
 
-public class Aeropuerto implements IAeropuerto{
+public class Aeropuerto implements IAeropuerto,Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3310136677628152272L;
 	private String idAeropuerto;
 	private Posicion posicion;
 	
@@ -26,10 +32,15 @@ public class Aeropuerto implements IAeropuerto{
 	
 		return this.posicion;
 	}
-	public void setIdAeropuerto(String idAeropuerto) {
+	private void setIdAeropuerto(String idAeropuerto) {
 		this.idAeropuerto = idAeropuerto;
 	}
-	public void setPosicion(Posicion posicion) {
+	private void setPosicion(Posicion posicion) {
 		this.posicion = posicion;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getIdAeropuerto() + " " + this.getPosicion().toString();
 	}
 }

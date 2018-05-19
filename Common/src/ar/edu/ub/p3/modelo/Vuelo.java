@@ -1,11 +1,17 @@
 package ar.edu.ub.p3.modelo;
 
+import java.io.Serializable;
+
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
 import ar.edu.ub.p3.interfaz.IVuelo;
 
-public class Vuelo implements IVuelo {
+public class Vuelo implements IVuelo,Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8411875701642756646L;
 	private String idVuelo;
 	private Avion avion;
 	private Aeropuerto aeropuertoOrigen;
@@ -35,17 +41,24 @@ public class Vuelo implements IVuelo {
 	public IAeropuerto getAeropuertoDestino() {
 		return this.aeropuertoDestino;
 	}
-	public void setIdVuelo(String idVuelo) {
+	private void setIdVuelo(String idVuelo) {
 		this.idVuelo = idVuelo;
 	}
-	public void setAvion(Avion avion) {
+	private void setAvion(Avion avion) {
 		this.avion = avion;
 	}
-	public void setAeropuertoOrigen(Aeropuerto aeropuertoOrigen) {
+	private void setAeropuertoOrigen(Aeropuerto aeropuertoOrigen) {
 		this.aeropuertoOrigen = aeropuertoOrigen;
 	}
 	public void setAeropuertoDestino(Aeropuerto aeropuertoDestino) {
 		this.aeropuertoDestino = aeropuertoDestino;
+	}
+	public void setPosicion(Posicion posicion) {
+		this.avion.setPosicion(posicion);
+	}
+	@Override
+	public String toString() {
+		return this.getIdVuelo() + " " + this.getAvion().toString() + " " + this.getAeropuertoOrigen().toString() + " " + this.getAeropuertoDestino().toString();
 	}
 	
 }

@@ -1,6 +1,8 @@
 package ar.edu.ub.p3.interfaz;
 
-public interface IPosicion {
+import java.io.Serializable;
+
+public interface IPosicion extends Serializable{
 	
 	public double getX();
 	public double getY();
