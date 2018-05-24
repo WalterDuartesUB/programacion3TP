@@ -6,4 +6,5 @@ public interface IAvion extends Serializable{
 	
 	public String getIdAvion();
 	public IPosicion getPosicion();
+	public IAerolinea getAerolinea();
 }
