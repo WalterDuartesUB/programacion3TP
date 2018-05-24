@@ -66,9 +66,6 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
         catch (IOException e) {
             System.out.println("IOException: " + e);
         }
-		
-		
-		
 
 	}
 
