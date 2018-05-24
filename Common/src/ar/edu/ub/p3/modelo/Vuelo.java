@@ -1,6 +1,7 @@
 package ar.edu.ub.p3.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
@@ -15,14 +16,20 @@ public class Vuelo implements IVuelo,Serializable {
 	private String idVuelo;
 	private Avion avion;
 	private Aeropuerto aeropuertoOrigen;
-	private Aeropuerto aeropuertoDestino;
+	private Aeropuerto aeropuertoDestino;	
+	private Date horarioProgramado;
 	
-	public Vuelo(String idVuelo, IAvion avion, IAeropuerto aeropuertoOrigen, IAeropuerto aeropuertoDestino) {
+	public Vuelo(String idVuelo, IAvion avion, IAeropuerto aeropuertoOrigen, IAeropuerto aeropuertoDestino, Date horarioProgramado) {
 		this.setIdVuelo(idVuelo);
 		this.setAvion(new Avion(avion));
 		this.setAeropuertoOrigen(new Aeropuerto(aeropuertoOrigen));
 		this.setAeropuertoDestino(new Aeropuerto(aeropuertoDestino));
+		this.setHorarioProgramado(horarioProgramado);
 	}
+	
+	public Vuelo( IVuelo vuelo ) {
+		this( vuelo.getIdVuelo(), vuelo.getAvion(), vuelo.getAeropuertoOrigen(), vuelo.getAeropuertoDestino(), vuelo.getHorarioProgramado() );
+	}	
 
 	@Override
 	public String getIdVuelo() {
@@ -58,7 +65,16 @@ public class Vuelo implements IVuelo,Serializable {
 	}
 	@Override
 	public String toString() {
-		return this.getIdVuelo() + " " + this.getAvion().toString() + " " + this.getAeropuertoOrigen().toString() + " " + this.getAeropuertoDestino().toString();
+		return this.getIdVuelo() + " " + this.getAvion().toString() + " " + this.getAeropuertoOrigen().toString() + " " + this.getAeropuertoDestino().toString() + " " + this.getHorarioProgramado().toString();
+	}
+
+	@Override
+	public Date getHorarioProgramado() {
+		return horarioProgramado;
+	}
+
+	private void setHorarioProgramado(Date horarioProgramado) {
+		this.horarioProgramado = horarioProgramado;
 	}
 	
 }

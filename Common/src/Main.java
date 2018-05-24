@@ -1,3 +1,5 @@
+import java.util.Date;
+
 import ar.edu.ub.p3.interfaz.IAerolinea;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
@@ -18,7 +20,7 @@ public class Main {
 		IAeropuerto aeropuerto2 = new Aeropuerto("2", "aeropuerto 2", posi);
 		IAerolinea aerolinea =new Aerolinea("AA", "Aerolineas ARgentinas");
 		IAvion avion = new Avion("avion1", aerolinea, aeropuerto1.getPosicion());
-		IVuelo vuelo = new Vuelo("vuelo1", avion, aeropuerto1, aeropuerto2);
+		IVuelo vuelo = new Vuelo("vuelo1", avion, aeropuerto1, aeropuerto2, new Date() );
 		System.out.println("pito");
 		System.out.println(vuelo);
 		System.out.println(avion);
