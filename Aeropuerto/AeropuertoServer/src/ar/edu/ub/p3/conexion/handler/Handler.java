@@ -1,4 +1,4 @@
-package ar.edu.ub.p3.conexion;
+package ar.edu.ub.p3.conexion.handler;
 
 public interface Handler <T>{
 
