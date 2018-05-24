@@ -129,13 +129,16 @@ public class ConexionTraficoAereo {
 
 	public void desconectar() {
 		
-		
+		this.getEstadoAeropuerto().setDeboContinuar( false );
+		this.getEstadoAeropuerto().setEstoyConectado( false );
+		this.getEstadoAeropuerto().setEstoyEsperandoRespuestaConexion( false );
+				
+		this.enviarMensaje( Mensaje.crearMensajeBajaAeropuerto( this.getEstadoAeropuerto().getAerpuerto().getIdAeropuerto() ) );
 		
 	}
 
 	public void obtenerAeropuertosDisponibles() {
-		 
-	}
-	
+		this.enviarMensaje( Mensaje.crearMensajeObtenerListadoAeropuerto() );
+	}	
 	
 }
