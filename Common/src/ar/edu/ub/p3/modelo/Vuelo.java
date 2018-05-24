@@ -9,10 +9,11 @@ import ar.edu.ub.p3.interfaz.IVuelo;
 
 public class Vuelo implements IVuelo,Serializable {
 	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8411875701642756646L;
+	private static final long serialVersionUID = -1023138772196002204L;
 	private String idVuelo;
 	private Avion avion;
 	private Aeropuerto aeropuertoOrigen;
