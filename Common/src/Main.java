@@ -12,8 +12,8 @@ public class Main {
 	public static void main(String[] args) {
 		Posicion posicion = new Posicion(5,5);
 		IPosicion posi = posicion;
-		IAeropuerto aeropuerto1 = new Aeropuerto("1", posi);
-		IAeropuerto aeropuerto2 = new Aeropuerto("2", posi);
+		IAeropuerto aeropuerto1 = new Aeropuerto("1", "aeropuerto 1", posi);
+		IAeropuerto aeropuerto2 = new Aeropuerto("2", "aeropuerto 2", posi);
 		IAvion avion = new Avion("avion1", aeropuerto1.getPosicion());
 		IVuelo vuelo = new Vuelo("vuelo1", avion, aeropuerto1, aeropuerto2);
 		System.out.println("pito");

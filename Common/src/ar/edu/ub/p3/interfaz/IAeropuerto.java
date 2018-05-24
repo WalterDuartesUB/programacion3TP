@@ -6,5 +6,6 @@ public interface IAeropuerto extends Serializable {
 	
 	public String getIdAeropuerto();
 	public IPosicion getPosicion();
+	public String getNombre();
 	
 }
