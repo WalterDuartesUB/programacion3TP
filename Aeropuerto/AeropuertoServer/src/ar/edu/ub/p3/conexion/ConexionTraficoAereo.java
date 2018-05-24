@@ -127,14 +127,18 @@ public class ConexionTraficoAereo {
 		this.outputStram = outputStram;
 	}
 
-	public void desconectar() {
-		
-		this.getEstadoAeropuerto().setDeboContinuar( false );
-		this.getEstadoAeropuerto().setEstoyConectado( false );
-		this.getEstadoAeropuerto().setEstoyEsperandoRespuestaConexion( false );
-				
+	public void desconectar() {		
+		this.getEstadoAeropuerto().setEstoyEsperandoRespuestaConexion( true );
 		this.enviarMensaje( Mensaje.crearMensajeBajaAeropuerto( this.getEstadoAeropuerto().getAerpuerto().getIdAeropuerto() ) );
 		
+		while( this.getEstadoAeropuerto().isEstoyEsperandoRespuestaConexion() )
+		{
+			try {
+				Thread.sleep( 1000 );
+			} catch (InterruptedException e) {			
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void obtenerAeropuertosDisponibles() {

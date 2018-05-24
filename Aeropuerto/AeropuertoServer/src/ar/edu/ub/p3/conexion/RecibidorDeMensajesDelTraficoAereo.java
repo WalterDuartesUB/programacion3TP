@@ -10,6 +10,7 @@ import java.util.Map;
 
 import ar.edu.ub.p3.conexion.handler.Handler;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeAltaAeropuertoACK;
+import ar.edu.ub.p3.conexion.handler.HandlerMensajeBajaAeropuertoACK;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeListadoAeropuertosDisponibles;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeTraficoAereoError;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
@@ -34,6 +35,7 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 		this.getHandlers().put(TipoMensaje.ALTA_AEROPUERTO_ACK, new HandlerMensajeAltaAeropuertoACK());
 		this.getHandlers().put(TipoMensaje.TRAFICO_AEREO_ERROR, new HandlerMensajeTraficoAereoError());
 		this.getHandlers().put(TipoMensaje.LISTADO_AEROPUERTOS_DISPONIBLES, new HandlerMensajeListadoAeropuertosDisponibles());
+		this.getHandlers().put(TipoMensaje.BAJA_AEROPUERTO_ACK, new HandlerMensajeBajaAeropuertoACK());
 		
 	}
 
