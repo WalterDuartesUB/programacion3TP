@@ -1,10 +1,11 @@
-import ar.edu.ub.p3.aeropuerto.conexion.*;
-import ar.edu.ub.p3.aeropuerto.configuracion.Configuracion;
-import ar.edu.ub.p3.aeropuerto.menu.consola.Menu;
+import ar.edu.ub.p3.aeropuerto.gestor.conexion.*;
+import ar.edu.ub.p3.aeropuerto.gestor.configuracion.Configuracion;
+import ar.edu.ub.p3.aeropuerto.gestor.interfazgrafica.InterfazGrafica;
+import ar.edu.ub.p3.aeropuerto.gestor.menu.consola.Menu;
 import ar.edu.ub.p3.interfaz.IAvion;
 
 public class Aplicacion {
-
+ 
 	//JUST - STRING IT - 
 	public static void main(String[] args) {
 		
@@ -12,6 +13,8 @@ public class Aplicacion {
 		
 		
 		Menu menu = new Menu();
+		
+		InterfazGrafica iGrafica = new InterfazGrafica(conexion);
 		
 		for(IAvion avion : conexion.getAviones())
 			System.out.println(avion.toString());
