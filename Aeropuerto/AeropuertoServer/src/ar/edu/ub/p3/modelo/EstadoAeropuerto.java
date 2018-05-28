@@ -30,10 +30,39 @@ public class EstadoAeropuerto {
 		this.setEstoyEsperandoRespuestaConexion(false);
 		this.setDeboContinuar(true);
 		
+		//Cargo la informacion que maneja el aeropuerto
+		this.cargarAeropuertos( configuracion.getConfiguracion("pathAeropuertos") );
+		this.cargarAerolineas( configuracion.getConfiguracion("pathAerolineas") );
+		this.cargarAviones( configuracion.getConfiguracion("pathAviones") );
+		this.cargarVuelos( configuracion.getConfiguracion("pathVuelos") );
 		
 	}
 	
 	
+	private void cargarVuelos(String pathData) {
+		// TODO leer todos los vuelos del archivo vuelos.data
+		
+	}
+
+
+	private void cargarAviones(String pathData) {
+		// TODO leer todos los aviones del archivo aviones.data
+		
+	}
+
+
+	private void cargarAerolineas(String pathData) {
+		// TODO leer todas las aerolineas del archivo aerolineas.data
+		
+	}
+
+
+	private void cargarAeropuertos(String pathData) {
+		// TODO Decidir como conseguir los id y nombre de los otros aeropuertos
+		
+	}
+
+
 	public Aeropuerto getAerpuerto() {
 		return aerpuerto;
 	}

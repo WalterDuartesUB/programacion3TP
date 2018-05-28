@@ -102,9 +102,8 @@ public class ConexionTraficoAereo {
 		
 	}
 
-	private int getPuerto(  ) {
-		
-		return Integer.parseInt(this.getConfiguracion().getConfiguracion("puertoTraficoAereo")) ;
+	private int getPuerto(  ) {		
+		return this.getConfiguracion().getConfiguracionAsInt("puertoTraficoAereo");
 	}
 
 	private String getIpServer() {

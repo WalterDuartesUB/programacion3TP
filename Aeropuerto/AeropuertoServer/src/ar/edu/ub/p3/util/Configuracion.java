@@ -36,6 +36,10 @@ public class Configuracion {
 		
 	}
 
+	public int getConfiguracionAsInt(String propiedad) {		
+		return Integer.parseInt( this.getProperties().getProperty(propiedad) );		
+	}
+	
 	public void close() {
 		
 		try {
