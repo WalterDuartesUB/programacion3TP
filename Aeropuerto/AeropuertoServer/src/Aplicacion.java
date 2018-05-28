@@ -29,9 +29,9 @@ public class Aplicacion {
 			inputUsuario = in.nextLine().toUpperCase();
 			System.out.println( inputUsuario );
 			
-			if( inputUsuario == "L")
+			if( inputUsuario.compareTo("L") == 0 )
 				conexionTA.obtenerAeropuertosDisponibles();
-			else if( inputUsuario == "Q")
+			else if( inputUsuario.compareTo("Q") == 0 )
 				conexionTA.desconectar();
 		}
 		
