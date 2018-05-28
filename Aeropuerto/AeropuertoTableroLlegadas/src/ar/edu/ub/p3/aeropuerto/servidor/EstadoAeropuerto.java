@@ -3,7 +3,7 @@ package ar.edu.ub.p3.aeropuerto.servidor;
 import java.util.LinkedList;
 import java.util.List;
 
-import ar.edu.ub.p3.common.aeropuerto.modelo.Avion;
+import ar.edu.ub.p3.modelo.Avion;
 
 
 

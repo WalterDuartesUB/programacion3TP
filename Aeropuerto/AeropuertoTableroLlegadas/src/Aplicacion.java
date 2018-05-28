@@ -4,9 +4,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-import ar.edu.ub.p3.common.aeropuerto.conexion.CodigoComando;
-import ar.edu.ub.p3.common.aeropuerto.conexion.Comando;
-import ar.edu.ub.p3.common.aeropuerto.modelo.Avion;
+import ar.edu.ub.p3.conexion.*;
+import ar.edu.ub.p3.modelo.Avion;
 import ar.edu.ub.p3.tablero.ConfiguracionTableroLlegadas;
 
 public class Aplicacion {

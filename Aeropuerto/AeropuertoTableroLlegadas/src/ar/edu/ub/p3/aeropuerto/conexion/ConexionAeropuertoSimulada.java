@@ -89,4 +89,12 @@ public class ConexionAeropuertoSimulada extends ConexionAeropuerto {
 		
 	}
 
+	public AeropuertoServidorSimulado getServidorAeropuerto() {
+		return servidorAeropuerto;
+	}
+
+	public void setServidorAeropuerto(AeropuertoServidorSimulado servidorAeropuerto) {
+		this.servidorAeropuerto = servidorAeropuerto;
+	}
+
 }
