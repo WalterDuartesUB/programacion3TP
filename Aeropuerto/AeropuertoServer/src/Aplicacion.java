@@ -16,13 +16,27 @@ public class Aplicacion {
 		in.nextLine();		
 		conexionTA.conectar();
 				
-		System.out.println("Enter para pedir la lista de aeropuertos");
-		in.nextLine();
-		conexionTA.obtenerAeropuertosDisponibles();
+		///////////////////////////////////////////////////////////////////////
+		//Preparo un menu para poder repetir los mensajes sin reiniciar la app
 		
-		System.out.println("Enter para desconectar del server de trafico aereo");
-		in.nextLine();
-		conexionTA.desconectar();
+		String inputUsuario = "";
+		
+		while( inputUsuario.compareTo("Q") != 0 )
+		{	
+			System.out.println("Menu de opciones\n----------------------------");
+			System.out.println("L para pedir la lista de aeropuertos");			
+			System.out.println("Q para desconectar del server de trafico aereo y salir de la app");
+			inputUsuario = in.nextLine().toUpperCase();
+			System.out.println( inputUsuario );
+			
+			if( inputUsuario == "L")
+				conexionTA.obtenerAeropuertosDisponibles();
+			else if( inputUsuario == "Q")
+				conexionTA.desconectar();
+		}
+		
+		///////////////////////////////////////////////////////////////////////
+		//Libero los recursos
 		
 		configuracion.close();
 		in.close();
