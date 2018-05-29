@@ -1,11 +1,11 @@
-package ar.edu.ub.p3.aeropuerto.conexion;
+package ar.edu.ub.p3.aeropuerto.tablero.conexion;
 
 import java.util.List;
 
+import ar.edu.ub.p3.aeropuerto.tablero.configuracion.Configuracion;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
 import ar.edu.ub.p3.interfaz.IVuelo;
-import ar.edu.ub.p3.aeropuerto.configuracion.Configuracion;
 
 public abstract class ConexionAeropuerto {
 	public ConexionAeropuerto( Configuracion configuracion ) {

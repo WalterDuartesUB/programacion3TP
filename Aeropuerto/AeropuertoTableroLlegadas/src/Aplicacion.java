@@ -1,55 +1,39 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.Scanner;
 
-import ar.edu.ub.p3.conexion.*;
-import ar.edu.ub.p3.modelo.Avion;
-import ar.edu.ub.p3.tablero.ConfiguracionTableroLlegadas;
+
+import ar.edu.ub.p3.aeropuerto.tablero.conexion.ConexionAeropuerto;
+import ar.edu.ub.p3.aeropuerto.tablero.conexion.ConexionAeropuertoSimulada;
+import ar.edu.ub.p3.aeropuerto.tablero.configuracion.Configuracion;
+import ar.edu.ub.p3.aeropuerto.tablero.interfazgrafica.InterfazGrafica;
+import ar.edu.ub.p3.interfaz.IVuelo;
+
 
 public class Aplicacion {
 
 	public static void main(String[] args) {		
-		ConfiguracionTableroLlegadas configuracion = new ConfiguracionTableroLlegadas ( args.length > 0 ? args[0] : "tablero.properties" );
-
-		System.out.println("Presione enter para listar en el servidor de aeropuertos los aviones disponibles.");
+		ConexionAeropuerto conexion = new ConexionAeropuertoSimulada(new Configuracion("tablero.properties"));
 		
-		try( Scanner in = new Scanner( System.in ) )
-		{
-			//Espero el enter para matar
-			in.nextLine();
-			
-			//Envio el pedido al server de apagarse
-			try(Socket s = new Socket( configuracion.getIpPedidosAeropuerto(), configuracion.getPuertoPedidosAeropuerto() ) ) {
-				
-				try( ObjectOutputStream oos = new ObjectOutputStream( s.getOutputStream() ); )
-				{
-					
-					Comando comando = new Comando( CodigoComando.OBTENER_LISTA_AVIONES );
-					
-//					comando.getParametros().put("avion", new Avion(null, "patente", "modelo" ) );
-					
-					//Hago el pedido de la lista de aviones
-					oos.writeObject( comando );	
-					/*
-					ObjectInputStream ois = new ObjectInputStream( s.getInputStream() );
-					
-					//Espero la lista de aviones
-					Avion[] aviones = (Avion[]) ois.readObject();
-					
-					for( Avion avion : aviones )
-						System.out.println( avion.getModelo());
-					*/
-					
-				} /* catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}*/
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}			
-		}		
-	}
+		
+	//	Menu menu = new Menu();
+		
+		InterfazGrafica iGrafica = new InterfazGrafica(conexion);
+		
 
+		
+		//for(IVuelo vuelo : conexion.getVuelos())
+		//	System.out.println(vuelo.toString());
+		
+	
+		for(IVuelo vuelo : conexion.getVuelos()) {
+			System.out.println("---------------------------");
+			System.out.println("Numero Vuelo: " + vuelo.getIdVuelo().toString());
+			System.out.println("Aerolinea: " + vuelo.getAvion().getAerolinea().toString());
+			System.out.println("Destino : " + vuelo.getAeropuertoDestino().toString());
+			System.out.println("Origen: " + vuelo.getAeropuertoOrigen().toString());
+			System.out.println("Hora salida : " + vuelo.getHorarioProgramado());
+		}
+			
+
+		
+
+	}
 }

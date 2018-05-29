@@ -1,4 +1,4 @@
-package ar.edu.ub.p3.aeropuerto.configuracion;
+package ar.edu.ub.p3.aeropuerto.tablero.configuracion;
 
 import java.io.File;
 import java.io.FileInputStream;
