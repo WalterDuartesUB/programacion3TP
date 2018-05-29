@@ -48,7 +48,6 @@ public class EstadoAeropuerto {
 	
 	
 	private void cargarVuelos(String pathData) {
-		// TODO leer todos los vuelos del archivo vuelos.data		
 		this.setVuelos( CargadorData.cargarMapaDesdeArchivo(pathData, new VueloFactory(this.getAviones(), this.getAeropuertos())));
 		
 		System.out.println("Vuelos: ");
@@ -57,7 +56,6 @@ public class EstadoAeropuerto {
 
 
 	private void cargarAviones(String pathData) {
-		// TODO leer todos los aviones del archivo aviones.data
 		this.setAviones( CargadorData.cargarMapaDesdeArchivo(pathData, new AvionFactory( this.getAerolineas(), this.getAerpuerto().getPosicion() ) ) );
 		
 		System.out.println("Aviones: ");
