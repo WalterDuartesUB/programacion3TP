@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
+import ar.edu.ub.p3.modelo.Vuelo;
 import ar.edu.ub.p3.util.Configuracion;
 
 public class ConexionTraficoAereo {
@@ -64,21 +65,24 @@ public class ConexionTraficoAereo {
 
 			///////////////////////////////////////////////////////////////////
 			// Espero la respuesta del servidor
-
+			
+			this.esperarRespuestaTraficoAereo();
+/*
 			while( this.isEstoyEsperandoRespuestaConexion() )
 			{            	
 				// Espero para buscar mi respuesta            	
 				Thread.sleep( 1000 );
 			}
-
+*/
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {			
+		}
+		/*catch (InterruptedException e) {			
 			e.printStackTrace();
 		}
-
+*/
 		return this.isEstoyConectado();
 	
 		
@@ -130,7 +134,31 @@ public class ConexionTraficoAereo {
 		this.getEstadoAeropuerto().setEstoyEsperandoRespuestaConexion( true );
 		this.enviarMensaje( Mensaje.crearMensajeBajaAeropuerto( this.getEstadoAeropuerto().getAerpuerto().getIdAeropuerto() ) );
 		
-		while( this.getEstadoAeropuerto().isEstoyEsperandoRespuestaConexion() )
+		this.esperarRespuestaTraficoAereo();
+	}
+
+	public void obtenerAeropuertosDisponibles() {
+		this.enviarMensaje( Mensaje.crearMensajeObtenerListadoAeropuerto() );
+	}
+
+	public void despegar(Vuelo vuelo) {
+		this.enviarMensaje( Mensaje.crearMensajeProgramarVuelo(vuelo));		
+	}
+
+	public Vuelo obtenerInformacionVuelo(String idVuelo) {
+		
+		this.getEstadoAeropuerto().setEstoyEsperandoRespuestaConexion( true );
+		this.getEstadoAeropuerto().setVueloRecibido(null);
+		
+		this.enviarMensaje( Mensaje.crearMensajeObtenerInformacionVuelo( idVuelo ) );
+		
+		this.esperarRespuestaTraficoAereo();
+		
+		return this.getEstadoAeropuerto().getVueloRecibido();
+	}
+
+	private void esperarRespuestaTraficoAereo() {
+		while( this.isEstoyEsperandoRespuestaConexion() )
 		{
 			try {
 				Thread.sleep( 1000 );
@@ -139,9 +167,5 @@ public class ConexionTraficoAereo {
 			}
 		}
 	}
-
-	public void obtenerAeropuertosDisponibles() {
-		this.enviarMensaje( Mensaje.crearMensajeObtenerListadoAeropuerto() );
-	}	
 	
 }

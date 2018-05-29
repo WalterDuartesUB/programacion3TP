@@ -22,6 +22,8 @@ public class EstadoAeropuerto {
 	private boolean estoyEsperandoRespuestaConexion;
 	private boolean deboContinuar;
 	
+	private Vuelo vueloRecibido;
+	
 	public EstadoAeropuerto( Configuracion configuracion  ) {
 		 
 		String idAeropuerto = configuracion.getConfiguracion("idAeropuerto");
@@ -43,6 +45,9 @@ public class EstadoAeropuerto {
 		this.cargarAerolineas( configuracion.getConfiguracion("pathAerolineas") );
 		this.cargarAviones( configuracion.getConfiguracion("pathAviones") );
 		this.cargarVuelos( configuracion.getConfiguracion("pathVuelos") );
+		
+		//Otros
+		this.setVueloRecibido( null );
 		
 	}
 	
@@ -153,6 +158,16 @@ public class EstadoAeropuerto {
 
 	private void setAeropuertos(Map<String, Aeropuerto> aeropuertos) {
 		this.aeropuertos = aeropuertos;
+	}
+
+
+	public Vuelo getVueloRecibido() {
+		return vueloRecibido;
+	}
+
+
+	public void setVueloRecibido(Vuelo vueloRecibido) {
+		this.vueloRecibido = vueloRecibido;
 	}
 	
 	
