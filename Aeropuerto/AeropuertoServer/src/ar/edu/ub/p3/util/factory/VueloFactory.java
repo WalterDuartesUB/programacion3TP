@@ -1,5 +1,6 @@
 package ar.edu.ub.p3.util.factory;
 
+import java.util.Date;
 import java.util.Map;
 
 import ar.edu.ub.p3.modelo.Aeropuerto;
@@ -38,7 +39,7 @@ public class VueloFactory extends Fabrica<Vuelo>{
 	
 	@Override
 	public Vuelo crear(String[] campos) {
-		return new Vuelo( campos[0], this.getAviones().get( campos[1] ), this.getAeropuertos().get( campos[2] ), this.getAeropuertos().get( campos[3] ) );
+		return new Vuelo( campos[0], this.getAviones().get( campos[1] ), this.getAeropuertos().get( campos[2] ), this.getAeropuertos().get( campos[3] ), new Date() );
 	}
 
 }
