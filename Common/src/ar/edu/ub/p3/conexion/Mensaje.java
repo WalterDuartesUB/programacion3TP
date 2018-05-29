@@ -79,8 +79,10 @@ public class Mensaje implements Serializable{
 		return mensaje;
 	}
 	
-	public static Mensaje crearMensajeObtenerInformacionVuelo() {
-		return new Mensaje(TipoMensaje.OBTENER_INFORMACION_VUELO);
+	public static Mensaje crearMensajeObtenerInformacionVuelo( String idVuelo) {
+		Mensaje mensaje = new Mensaje(TipoMensaje.OBTENER_INFORMACION_VUELO);
+		mensaje.setIdVuelo(idVuelo);		
+		return mensaje;
 	}
 	
 	public static Mensaje crearMensajeInformacionVuelo(IVuelo vuelo) {
