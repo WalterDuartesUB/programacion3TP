@@ -8,7 +8,7 @@ import ar.edu.ub.p3.vista.VentanaPrincipal;
 public class Aplicacion {
 
 	public static void main(String[] args) {
-		
+		 
 		new VentanaPrincipal();
 		
 		Scanner in = new Scanner( System.in );
