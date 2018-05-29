@@ -1,6 +1,4 @@
-package ar.edu.ub.p3.tablero;
-
-import ar.edu.ub.p3.aeropuerto.configuracion.Configuracion;
+package ar.edu.ub.p3.aeropuerto.tablero.configuracion;
 
 public class ConfiguracionTableroLlegadas {
 	

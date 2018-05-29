@@ -1,9 +1,9 @@
-package ar.edu.ub.p3.aeropuerto.conexion;
+package ar.edu.ub.p3.aeropuerto.tablero.conexion;
 
 import java.util.List;
 
-import ar.edu.ub.p3.aeropuerto.conexion.simulada.AeropuertoServidorSimulado;
-import ar.edu.ub.p3.aeropuerto.configuracion.Configuracion;
+import ar.edu.ub.p3.aeropuerto.tablero.conexion.simulada.AeropuertoServidorSimulado;
+import ar.edu.ub.p3.aeropuerto.tablero.configuracion.Configuracion;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
 import ar.edu.ub.p3.interfaz.IVuelo;
@@ -17,6 +17,13 @@ public class ConexionAeropuertoSimulada extends ConexionAeropuerto {
 		setServidorAeropuerto(new AeropuertoServidorSimulado());
 	}
 
+	@Override
+	public List<IVuelo> getVuelos() {
+		return getServidorAeropuerto().getVuelosPrueba();
+		// TODO Auto-generated method stub
+
+	}
+	
 	@Override
 	public void conectarAlAeropuerto() {
 		// TODO Auto-generated method stub
@@ -35,11 +42,6 @@ public class ConexionAeropuertoSimulada extends ConexionAeropuerto {
 		return null;
 	}
 
-	@Override
-	public List<IVuelo> getVuelos() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<IVuelo> getVuelosCercanosAlAeropuerto() {

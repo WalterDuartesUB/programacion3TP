@@ -1,4 +1,4 @@
-package ar.edu.ub.p3.aeropuerto.conexion.simulada;
+package ar.edu.ub.p3.aeropuerto.tablero.conexion.simulada;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -55,11 +55,11 @@ public class AeropuertoServidorSimulado {
 	}
 
 
-
-
 	public void setVuelosPrueba(LinkedList<IVuelo> vuelosPrueba) {
 		this.vuelosPrueba = vuelosPrueba;
 	}
+	
+
 	
 
 }
