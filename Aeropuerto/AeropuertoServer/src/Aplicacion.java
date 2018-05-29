@@ -8,14 +8,14 @@ import ar.edu.ub.p3.vista.VentanaPrincipal;
 public class Aplicacion {
 
 	public static void main(String[] args) {
-		 
-		new VentanaPrincipal();
 		
-		Scanner in = new Scanner( System.in );
+//		Scanner in = new Scanner( System.in );
 		Configuracion configuracion = new Configuracion(args[0]);
 		EstadoAeropuerto estadoAeropuerto = new EstadoAeropuerto(configuracion);
 		ConexionTraficoAereo conexionTA = new ConexionTraficoAereo(configuracion,estadoAeropuerto);
-		
+
+		new VentanaPrincipal( configuracion, estadoAeropuerto, conexionTA );
+/*		
 		System.out.println("Enter para conectar al trafico aereo");
 		in.nextLine();		
 		conexionTA.conectar();
@@ -55,7 +55,7 @@ public class Aplicacion {
 		
 		configuracion.close();
 		in.close();
-		
+*/		
 	}
 
 }

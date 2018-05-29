@@ -54,7 +54,8 @@ public class ConexionTraficoAereo {
 			//Creo el socket al servidor
 			this.setSocket( new Socket(this.getIpServer(), this.getPuerto() ) );
 
-			//Creo un thread para poder escuchar los mensajes que llegan desde el servidor        	
+			//Creo un thread para poder escuchar los mensajes que llegan desde el servidor
+			//TODO guardar este thread para poder terminarlo al desconectar con un join
 			new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket() ) ).start();
 
 			// Creo el outputstream

@@ -8,21 +8,32 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import ar.edu.ub.p3.controlador.VentanaPrincipalControlador;
+import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
+import ar.edu.ub.p3.modelo.EstadoAeropuerto;
+import ar.edu.ub.p3.util.Configuracion;
 
-public class VentanaPrincipal extends JFrame {
+public class VentanaPrincipal extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2955325317528293957L;
 
-	public VentanaPrincipal() {
+	private Configuracion configuracion;
+	private EstadoAeropuerto estadoAeropuerto;
+	private ConexionTraficoAereo conexionTraficoAereo;
+	
+	public VentanaPrincipal(Configuracion configuracion, EstadoAeropuerto estadoAeropuerto, ConexionTraficoAereo conexionTA) {
 		super("Servidor de Aeropuerto");
 		
 		this.inicializarVentana();
 		this.crearMenus();
 		this.setVisible( true );
+		
+		//TODO revisar como hacer esto, deberia formar parte del controlador
+		this.setConexionTraficoAereo(conexionTA);
+		this.setConfiguracion(configuracion);
+		this.setEstadoAeropuerto(estadoAeropuerto);
 	}
 
 	private void crearMenus() {
@@ -41,7 +52,7 @@ public class VentanaPrincipal extends JFrame {
 		JMenu menu = new JMenu("Administracion");
 		
 		JMenuItem menuItem = new JMenuItem("Conectar al Trafico Aereo");
-		menuItem.addActionListener( this::onClickMenuItemConectarAlTraficoAereo );		
+		menuItem.addActionListener( this::onClickMenuItemConectarAlTraficoAereo );
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Desconectar del Trafico Aereo");
@@ -109,7 +120,7 @@ public class VentanaPrincipal extends JFrame {
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Vuelos");
-		menuItem.addActionListener( this::onClickMenuItemGestionarVuelos );
+		menuItem.addActionListener( this::onClickMenuItemGestionarVuelos );		
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem("Aerolineas");
@@ -127,27 +138,27 @@ public class VentanaPrincipal extends JFrame {
 		this.setLocation(300, 300);
 		this.setSize(400, 400);
 		this.setResizable( false );
-//		this.setDefaultCloseOperation( EXIT_ON_CLOSE );
+		this.setDefaultCloseOperation( EXIT_ON_CLOSE );
 	}
 	
 	public void onClickMenuItemConectarAlTraficoAereo( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getConexionTraficoAereo().conectar();		
 	}
 	
 	public void onClickMenuItemDesconectarAlTraficoAereo( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getConexionTraficoAereo().desconectar();
 	}
 	
 	public void onClickMenuItemPedirListaAeropuertosDisponibles( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getConexionTraficoAereo().obtenerAeropuertosDisponibles();
 	}
 	
 	public void onClickMenuItemProgramarVueloDePrueba( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getConexionTraficoAereo().despegar( this.getEstadoAeropuerto().getVuelos().get( this.getConfiguracion().getConfiguracion("idVueloPrueba") ) );
 	}
 	
 	public void onClickMenuItemPedirInformacionActualDelVueloDePrueba( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		System.out.println( this.getConexionTraficoAereo().obtenerInformacionVuelo( this.getConfiguracion().getConfiguracion("idVueloPrueba") ) );
 	}
 	
 	public void onClickMenuItemSalir( ActionEvent ae ) {
@@ -184,5 +195,29 @@ public class VentanaPrincipal extends JFrame {
 	
 	private void onEventoAImplementar() {
 		JOptionPane.showMessageDialog( this, "Evento a implementar " );
+	}
+
+	private Configuracion getConfiguracion() {
+		return configuracion;
+	}
+
+	private void setConfiguracion(Configuracion configuracion) {
+		this.configuracion = configuracion;
+	}
+
+	private EstadoAeropuerto getEstadoAeropuerto() {
+		return estadoAeropuerto;
+	}
+
+	private void setEstadoAeropuerto(EstadoAeropuerto estadoAeropuerto) {
+		this.estadoAeropuerto = estadoAeropuerto;
+	}
+
+	private ConexionTraficoAereo getConexionTraficoAereo() {
+		return conexionTraficoAereo;
+	}
+
+	private void setConexionTraficoAereo(ConexionTraficoAereo conexionTraficoAereo) {
+		this.conexionTraficoAereo = conexionTraficoAereo;
 	}
 }
