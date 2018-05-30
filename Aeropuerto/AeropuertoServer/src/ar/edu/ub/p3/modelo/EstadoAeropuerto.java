@@ -3,7 +3,7 @@ package ar.edu.ub.p3.modelo;
 import java.util.HashMap;
 import java.util.Map;
 
-import ar.edu.ub.p3.util.CargadorData;
+import ar.edu.ub.p3.util.CargadorArchivosData;
 import ar.edu.ub.p3.util.Configuracion;
 import ar.edu.ub.p3.util.factory.AerolineaFactory;
 import ar.edu.ub.p3.util.factory.AeropuertoFactory;
@@ -53,7 +53,7 @@ public class EstadoAeropuerto {
 	
 	
 	private void cargarVuelos(String pathData) {
-		this.setVuelos( CargadorData.cargarMapaDesdeArchivo(pathData, new VueloFactory(this.getAviones(), this.getAeropuertos())));
+		this.setVuelos( CargadorArchivosData.cargarMapaDesdeArchivo(pathData, new VueloFactory(this.getAviones(), this.getAeropuertos())));
 		
 		System.out.println("Vuelos: ");
 		System.out.println( this.getVuelos() );
@@ -61,7 +61,7 @@ public class EstadoAeropuerto {
 
 
 	private void cargarAviones(String pathData) {
-		this.setAviones( CargadorData.cargarMapaDesdeArchivo(pathData, new AvionFactory( this.getAerolineas(), this.getAerpuerto().getPosicion() ) ) );
+		this.setAviones( CargadorArchivosData.cargarMapaDesdeArchivo(pathData, new AvionFactory( this.getAerolineas(), this.getAerpuerto().getPosicion() ) ) );
 		
 		System.out.println("Aviones: ");
 		System.out.println( this.getAviones() );		
@@ -69,7 +69,7 @@ public class EstadoAeropuerto {
 
 
 	private void cargarAerolineas(String pathData) {
-		this.setAerolineas( CargadorData.cargarMapaDesdeArchivo(pathData, new AerolineaFactory() ) );
+		this.setAerolineas( CargadorArchivosData.cargarMapaDesdeArchivo(pathData, new AerolineaFactory() ) );
 		
 		System.out.println("Aerolineas: ");
 		System.out.println( this.getAerolineas() );
@@ -77,7 +77,7 @@ public class EstadoAeropuerto {
 	
 	private void cargarAeropuertos(String pathData) {
 		// TODO Decidir como conseguir los id y nombre de los otros aeropuertos
-		this.setAeropuertos( CargadorData.cargarMapaDesdeArchivo(pathData, new AeropuertoFactory() ) );
+		this.setAeropuertos( CargadorArchivosData.cargarMapaDesdeArchivo(pathData, new AeropuertoFactory() ) );
 		
 		System.out.println("Aeropuertos: ");
 		System.out.println();		

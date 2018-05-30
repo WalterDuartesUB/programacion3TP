@@ -9,7 +9,7 @@ import java.util.Map;
 
 import ar.edu.ub.p3.util.factory.Fabrica;
 
-public class CargadorData {
+public class CargadorArchivosData {
 	public static <T,F extends Fabrica<T>> Map<String, T> cargarMapaDesdeArchivo( String pathData, F fabrica ){
 		Map<String, T> aeropuerto = new HashMap<String, T>();
 		
