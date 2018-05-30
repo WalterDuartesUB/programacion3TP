@@ -23,15 +23,14 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 
 	private EstadoAeropuerto estadoAeropuerto;
 	private Socket socket;
-	private Map<TipoMensaje,Handler<EstadoAeropuerto>> handlers;
+	private Map<TipoMensaje,Handler<EstadoAeropuerto>> handlers;	
 	
 	public RecibidorDeMensajesDelTraficoAereo(EstadoAeropuerto estadoAeropuerto, Socket socket) {
 		
-		setEstadoAeropuerto(estadoAeropuerto);
-		setSocket(socket);
-		setHandlers(new HashMap<TipoMensaje, Handler<EstadoAeropuerto>>());
-		loadHandlers();
-		
+		this.setEstadoAeropuerto(estadoAeropuerto);
+		this.setSocket(socket);
+		this.setHandlers(new HashMap<TipoMensaje, Handler<EstadoAeropuerto>>());
+		this.loadHandlers();
 	}
 
 	private void loadHandlers() {
@@ -50,33 +49,40 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public void run() {	
+		System.out.println("Empezo el thread de mensajes del TA");
 		
-		try (ObjectInputStream in = new ObjectInputStream(this.getSocket().getInputStream())) {
+		try( ObjectInputStream in = new ObjectInputStream(this.getSocket().getInputStream()) )  {			
         	Mensaje mensaje = null;        	
         	
             while ( this.getEstadoAeropuerto().isDeboContinuar() ) {
                 try {
                     mensaje = (Mensaje) in.readObject();
-                    
+                    System.out.println("Recibi un mensaje: " + mensaje.getTipoMensaje() );
                     this.getHandlers().get( mensaje.getTipoMensaje() ).accept( mensaje, this.getEstadoAeropuerto() );
                  
                 }
                 catch (EOFException e) {
+                	e.printStackTrace();
                     break;
                 }
             }
+
         }
         catch (SocketException e) {
+        	e.printStackTrace();
             System.out.println("Disconnected");
         }
         catch (ClassNotFoundException e) {
+        	e.printStackTrace();
             System.out.println("Class not found " + e);
         }
         catch (IOException e) {
+        	e.printStackTrace();
             System.out.println("IOException: " + e);
         }
 
+		System.out.println("Termino el thread de mensajes del TA");
 	}
 
 	private EstadoAeropuerto getEstadoAeropuerto() {

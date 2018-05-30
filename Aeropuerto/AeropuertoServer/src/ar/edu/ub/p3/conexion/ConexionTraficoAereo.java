@@ -1,9 +1,10 @@
 package ar.edu.ub.p3.conexion;
 
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.modelo.Vuelo;
 import ar.edu.ub.p3.util.Configuracion;
@@ -13,7 +14,8 @@ public class ConexionTraficoAereo {
 	private EstadoAeropuerto estadoAeropuerto;
 	private Configuracion configuracion;
 	private Socket socket;
-	private ObjectOutputStream outputStram;
+	private ObjectOutputStream outputStream;		
+	private Thread threadRecibidorDeMensajesDelTraficoAereo;
 	
 	public ConexionTraficoAereo(Configuracion configuracion, EstadoAeropuerto estadoAeropuerto) {
 		
@@ -44,6 +46,7 @@ public class ConexionTraficoAereo {
 		///////////////////////////////////////////////////////////////////
 		//Marco que estoy esperando la conexion
 
+		this.getEstadoAeropuerto().setDeboContinuar(true);
 		this.getEstadoAeropuerto().setEstoyEsperandoRespuestaConexion( true );
 
 		///////////////////////////////////////////////////////////////////
@@ -54,9 +57,10 @@ public class ConexionTraficoAereo {
 			//Creo el socket al servidor
 			this.setSocket( new Socket(this.getIpServer(), this.getPuerto() ) );
 
+			System.out.println( this.getSocket() );
+			
 			//Creo un thread para poder escuchar los mensajes que llegan desde el servidor
-			//TODO guardar este thread para poder terminarlo al desconectar con un join
-			new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket() ) ).start();
+			this.crearThreadRecibidorDeMensajesDelTraficoAereo();
 
 			// Creo el outputstream
 			this.setOutputStram( new ObjectOutputStream( this.getSocket().getOutputStream() ) );
@@ -68,26 +72,21 @@ public class ConexionTraficoAereo {
 			// Espero la respuesta del servidor
 			
 			this.esperarRespuestaTraficoAereo();
-/*
-			while( this.isEstoyEsperandoRespuestaConexion() )
-			{            	
-				// Espero para buscar mi respuesta            	
-				Thread.sleep( 1000 );
-			}
-*/
+			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		/*catch (InterruptedException e) {			
-			e.printStackTrace();
-		}
-*/
+		
 		return this.isEstoyConectado();
 	
-		
-		}
+	}
+
+	private void crearThreadRecibidorDeMensajesDelTraficoAereo() {
+		this.setThreadRecibidorDeMensajesDelTraficoAereo( new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket() ) ) );
+		this.getThreadRecibidorDeMensajesDelTraficoAereo().start();
+	}
 
 	private boolean isEstoyConectado() {
 		return this.getEstadoAeropuerto().isEstoyConectado();
@@ -100,7 +99,7 @@ public class ConexionTraficoAereo {
 	private void enviarMensaje(Mensaje mensaje) {
 		
 		try {
-			this.getOutputStram().writeObject( mensaje );
+			this.getOutputStream().writeObject( mensaje );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -115,20 +114,20 @@ public class ConexionTraficoAereo {
 		return this.getConfiguracion().getConfiguracion("ipTraficoAereo");
 	}
 
-	public Socket getSocket() {
+	private Socket getSocket() {
 		return socket;
 	}
 
-	public void setSocket(Socket socket) {
+	private void setSocket(Socket socket) {
 		this.socket = socket;
 	}
 
-	private ObjectOutputStream getOutputStram() {
-		return outputStram;
+	private ObjectOutputStream getOutputStream() {
+		return outputStream;
 	}
 
 	private void setOutputStram(ObjectOutputStream outputStram) {
-		this.outputStram = outputStram;
+		this.outputStream = outputStram;
 	}
 
 	public void desconectar() {		
@@ -136,6 +135,24 @@ public class ConexionTraficoAereo {
 		this.enviarMensaje( Mensaje.crearMensajeBajaAeropuerto( this.getEstadoAeropuerto().getAerpuerto().getIdAeropuerto() ) );
 		
 		this.esperarRespuestaTraficoAereo();
+		System.out.println("Espero para terminar el thread de mensajes");
+		try {
+			this.getThreadRecibidorDeMensajesDelTraficoAereo().join();
+		} catch (InterruptedException e) {		
+			e.printStackTrace();
+		}
+		System.out.println("Termino el thread de mensajes");		
+		this.cerrarConexionSocket();		
+	}
+
+	private void cerrarConexionSocket() {
+		//Cierro la conexion
+		try {
+			this.getOutputStream().close();			
+			this.getSocket().close();
+		} catch (IOException e) {	
+			e.printStackTrace();
+		}
 	}
 
 	public void obtenerAeropuertosDisponibles() {
@@ -162,11 +179,20 @@ public class ConexionTraficoAereo {
 		while( this.isEstoyEsperandoRespuestaConexion() )
 		{
 			try {
-				Thread.sleep( 1000 );
+				System.out.println("Esperando respuesta del Trafico Aereo...");
+				Thread.sleep( 1000 );			
 			} catch (InterruptedException e) {			
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
+	private Thread getThreadRecibidorDeMensajesDelTraficoAereo() {
+		return threadRecibidorDeMensajesDelTraficoAereo;
+	}
+
+	private void setThreadRecibidorDeMensajesDelTraficoAereo(Thread threadRecibidorDeMensajesDelTraficoAereo) {
+		this.threadRecibidorDeMensajesDelTraficoAereo = threadRecibidorDeMensajesDelTraficoAereo;
+	}
+
 }

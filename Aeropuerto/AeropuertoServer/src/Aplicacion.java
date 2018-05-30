@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
