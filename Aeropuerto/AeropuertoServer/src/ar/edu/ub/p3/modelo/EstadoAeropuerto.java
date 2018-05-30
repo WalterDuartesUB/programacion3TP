@@ -80,7 +80,7 @@ public class EstadoAeropuerto {
 		this.setAeropuertos( CargadorArchivosData.cargarMapaDesdeArchivo(pathData, new AeropuertoFactory() ) );
 		
 		System.out.println("Aeropuertos: ");
-		System.out.println();		
+		System.out.println( this.getAeropuertos() );		
 	}
 
 

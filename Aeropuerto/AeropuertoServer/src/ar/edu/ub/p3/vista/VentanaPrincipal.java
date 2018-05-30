@@ -6,9 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
+import ar.edu.ub.p3.controlador.VentanaPrincipalControlador;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
 
@@ -18,10 +18,9 @@ public class VentanaPrincipal extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 2955325317528293957L;
-
-	private Configuracion configuracion;
-	private EstadoAeropuerto estadoAeropuerto;
-	private ConexionTraficoAereo conexionTraficoAereo;
+	
+	private VentanaPrincipalControlador controlador;
+	
 	
 	public VentanaPrincipal(Configuracion configuracion, EstadoAeropuerto estadoAeropuerto, ConexionTraficoAereo conexionTA) {
 		super("Servidor de Aeropuerto");
@@ -31,9 +30,7 @@ public class VentanaPrincipal extends JFrame{
 		this.setVisible( true );
 		
 		//TODO revisar como hacer esto, deberia formar parte del controlador
-		this.setConexionTraficoAereo(conexionTA);
-		this.setConfiguracion(configuracion);
-		this.setEstadoAeropuerto(estadoAeropuerto);
+		this.setControlador( new VentanaPrincipalControlador( configuracion, estadoAeropuerto, conexionTA ) );
 	}
 
 	private void crearMenus() {
@@ -142,82 +139,62 @@ public class VentanaPrincipal extends JFrame{
 	}
 	
 	public void onClickMenuItemConectarAlTraficoAereo( ActionEvent ae ) {
-		this.getConexionTraficoAereo().conectar();		
+		this.getControlador().conectarAlTraficoAereo();		
 	}
 	
 	public void onClickMenuItemDesconectarAlTraficoAereo( ActionEvent ae ) {
-		this.getConexionTraficoAereo().desconectar();
+		this.getControlador().desconectarDelTraficoAereo();		
 	}
 	
 	public void onClickMenuItemPedirListaAeropuertosDisponibles( ActionEvent ae ) {
-		this.getConexionTraficoAereo().obtenerAeropuertosDisponibles();
+		this.getControlador().debugPedirListaAeropuertosDisponibles();		
 	}
 	
 	public void onClickMenuItemProgramarVueloDePrueba( ActionEvent ae ) {
-		this.getConexionTraficoAereo().despegar( this.getEstadoAeropuerto().getVuelos().get( this.getConfiguracion().getConfiguracion("idVueloPrueba") ) );
+		this.getControlador().debugProgramarVueloDePrueba();
 	}
 	
 	public void onClickMenuItemPedirInformacionActualDelVueloDePrueba( ActionEvent ae ) {
-		System.out.println( this.getConexionTraficoAereo().obtenerInformacionVuelo( this.getConfiguracion().getConfiguracion("idVueloPrueba") ) );
+		this.getControlador().debugPedirInformacionActualDelVueloDePrueba();
 	}
 	
 	public void onClickMenuItemSalir( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getControlador().salirDeLaAplicacion();
 	}
 	
 	public void onClickMenuItemVerArribos( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getControlador().verArribos();
 	}
 	
 	public void onClickMenuItemVerDespegues( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getControlador().verDespegues();
 	}
 	
 	public void onClickMenuItemVerRadar( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getControlador().verRadar();
 	}
 	
 	public void onClickMenuItemGestionarAviones( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getControlador().gestionarAviones();
 	}
 	
 	public void onClickMenuItemGestionarAerolineas( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getControlador().gestionarAerolineas();
 	}
 	
 	public void onClickMenuItemGestionarAeropuertos( ActionEvent ae ) {
-		this.onEventoAImplementar();
+		this.getControlador().gestionarAeropuertos();
 	}
 	
 	public void onClickMenuItemGestionarVuelos( ActionEvent ae ) {
-		this.onEventoAImplementar();	
-	}
-	
-	private void onEventoAImplementar() {
-		JOptionPane.showMessageDialog( this, "Evento a implementar " );
+		this.getControlador().gestionarVuelos();	
 	}
 
-	private Configuracion getConfiguracion() {
-		return configuracion;
+	private VentanaPrincipalControlador getControlador() {
+		return controlador;
 	}
 
-	private void setConfiguracion(Configuracion configuracion) {
-		this.configuracion = configuracion;
-	}
-
-	private EstadoAeropuerto getEstadoAeropuerto() {
-		return estadoAeropuerto;
-	}
-
-	private void setEstadoAeropuerto(EstadoAeropuerto estadoAeropuerto) {
-		this.estadoAeropuerto = estadoAeropuerto;
-	}
-
-	private ConexionTraficoAereo getConexionTraficoAereo() {
-		return conexionTraficoAereo;
-	}
-
-	private void setConexionTraficoAereo(ConexionTraficoAereo conexionTraficoAereo) {
-		this.conexionTraficoAereo = conexionTraficoAereo;
+	private void setControlador(VentanaPrincipalControlador controlador) {
+		this.controlador = controlador;
 	}
 }
