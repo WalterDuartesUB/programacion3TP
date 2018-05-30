@@ -11,18 +11,22 @@ public class Aplicacion {
 		
 		ConexionAeropuerto conexion = new ConexionAeropuertoSimulada(new Configuracion("appgestion.properties"));
 		
-		
-		Menu menu = new Menu();
-		
 		InterfazGrafica iGrafica = new InterfazGrafica(conexion);
 		
-		for(IAvion avion : conexion.getAviones())
-			System.out.println(avion.toString());
 		
-		menu.menuPrincipal(conexion);
 		
-		for(IAvion avion : conexion.getAviones())
-			System.out.println(avion.toString());
+		
+		//Menu menu = new Menu();
+		
+		
+		
+		//for(IAvion avion : conexion.getAviones())
+			//System.out.println(avion.toString());
+		
+		//menu.menuPrincipal(conexion);
+		
+		//for(IAvion avion : conexion.getAviones())
+			//System.out.println(avion.toString());
 		
 		
 		
