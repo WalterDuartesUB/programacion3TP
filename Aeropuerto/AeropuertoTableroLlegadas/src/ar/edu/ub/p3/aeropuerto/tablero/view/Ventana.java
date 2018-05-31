@@ -38,7 +38,7 @@ public class Ventana extends JFrame {
         this.setSize(710, 450);                                 // colocamos tamanio a la ventana (ancho, alto)
         this.setLocationRelativeTo(null);                       // centramos la ventana en la pantalla
         this.setLayout(null);                                   // no usamos ningun layout, solo asi podremos dar posiciones a los componentes
-        this.setResizable(false);                               // hacemos que la ventana no sea redimiensionable
+        //this.setResizable(false);                               // hacemos que la ventana no sea redimiensionable
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // hacemos que cuando se cierre la ventana termina todo proceso
         this.getContentPane().setLayout(null);
 
@@ -48,9 +48,8 @@ public class Ventana extends JFrame {
     private void agregarTabla(ConexionAeropuerto conexion) {
 
     	String[] 	nombreColumna = {"NroVuelo", "Origen", "Destino", "Aerolinea", "Hora Programada"};
-    
-    	Object [][] aux = new Object [3][5];
     	
+    	// acomodar segun tablero llegada o salida
     	Object [][] aux3 = new Object [conexion.getVuelos().size()][nombreColumna.length];
     	
     	Object [][] aux2 = {
@@ -112,18 +111,20 @@ public class Ventana extends JFrame {
     	int i = 0;
     	
 		for(IVuelo vuelo : conexion.getVuelos()) {
+			
+
 			aux3[i][0] = (vuelo.getIdVuelo().toString());
 			aux3[i][3] = (vuelo.getAvion().getAerolinea().toString());
 			aux3[i][2] = ( vuelo.getAeropuertoDestino().getIdAeropuerto() + " - "+vuelo.getAeropuertoDestino().getNombre());
 			aux3[i][1] = ( vuelo.getAeropuertoOrigen().getIdAeropuerto() +" - "+ vuelo.getAeropuertoOrigen().getNombre());
 			aux3[i][4] = ( vuelo.getHorarioProgramado().getHours() +":"+vuelo.getHorarioProgramado().getMinutes());
-			
 			i++;
+			
 		}
     	
 
     	JTable tabla = new JTable(aux2,nombreColumna);
-    	JScrollPane scroll =  new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    	JScrollPane scroll =  new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     	scroll.setBackground(Color.DARK_GRAY);
     	
     	tabla.setAutoscrolls(true);
@@ -132,7 +133,7 @@ public class Ventana extends JFrame {
     	tabla.setSize(200,200);
     	
     	getContentPane().setLayout(new BorderLayout());
-    	getContentPane().add(tabla.getTableHeader(), BorderLayout.PAGE_START);
+    	//getContentPane().add(tabla.getTableHeader(), BorderLayout.PAGE_START);
     	getContentPane().add(scroll,BorderLayout.CENTER);
     	
     	JPanel botones = new JPanel();
@@ -149,9 +150,9 @@ public class Ventana extends JFrame {
         tabla.setGridColor(Color.RED);
         tabla.setSelectionBackground(Color.YELLOW);
     	
-    	this.setLayout(new BorderLayout());
-    	this.add(tabla.getTableHeader(), BorderLayout.PAGE_START);
-    	this.add(tabla, BorderLayout.CENTER);
+    	//this.setLayout(new BorderLayout());
+    	//this.add(tabla.getTableHeader(), BorderLayout.PAGE_START);
+    	//this.add(tabla, BorderLayout.CENTER);
     			
     	}
     }
