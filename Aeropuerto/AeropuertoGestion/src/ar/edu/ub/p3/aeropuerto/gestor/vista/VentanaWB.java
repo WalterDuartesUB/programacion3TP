@@ -1,16 +1,24 @@
-package ar.edu.ub.p3.aeropuerto.gestor.vista;
 
-import java.awt.EventQueue;
-import java.awt.List;
+
+
+
+//ESTA CLASE ESTA EN FASE DE PRUEBA
+//NO DEBE SER TOMADA EN SERIO
+//NO SE ESTA USANDO
+
+
+
+
+
+package ar.edu.ub.p3.aeropuerto.gestor.vista;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.Color;
-import java.awt.Component;
+
 import java.awt.event.ActionListener;
-import java.util.Vector;
+
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
 
 import ar.edu.ub.p3.aeropuerto.gestor.conexion.ConexionAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
@@ -18,7 +26,7 @@ import ar.edu.ub.p3.modelo.Aerolinea;
 import ar.edu.ub.p3.modelo.Avion;
 import ar.edu.ub.p3.modelo.Posicion;
 
-import javax.swing.JLabel;
+
 import javax.swing.JTextPane;
 import java.awt.Font;
 

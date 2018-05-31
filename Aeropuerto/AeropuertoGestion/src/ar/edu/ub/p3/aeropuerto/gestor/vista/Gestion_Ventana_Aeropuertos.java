@@ -1,13 +1,19 @@
 package ar.edu.ub.p3.aeropuerto.gestor.vista;
 
-import javax.swing.JButton;
+
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import ar.edu.ub.p3.aeropuerto.gestor.conexion.ConexionAeropuerto;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+
 import javax.swing.JPanel;
 
 public class Gestion_Ventana_Aeropuertos extends JFrame {
@@ -18,7 +24,7 @@ public class Gestion_Ventana_Aeropuertos extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
     
-    private JButton btnAgregarAeropuerto;
+
 
 
 	
@@ -28,7 +34,7 @@ public class Gestion_Ventana_Aeropuertos extends JFrame {
         getContentPane().setBackground(Color.DARK_GRAY);
         configurarVentana();        
         agregarTabla(conexion);
-        
+        crearMenu();
     }
 
     private void configurarVentana() {
@@ -50,7 +56,7 @@ public class Gestion_Ventana_Aeropuertos extends JFrame {
     	
     	int i = 0;
     	
-    	for(IAeropuerto aeropuerto : conexion.getAeropuertos()) {
+    	for( i = 0; i< conexion.getAeropuertos().size();i++) {
     		
     		aux[i][0] = new Object();
     		aux[i][1] = new Object();
@@ -107,24 +113,79 @@ public class Gestion_Ventana_Aeropuertos extends JFrame {
     	    }
     	});
     	
-    	setBtnAgregarAeropuerto(new JButton("Agregar Avion"));
-    	//getContentPane().add(getBtnAgregarAvion(), BorderLayout.EAST);
-    	//getContentPane().add(new JButton("Borrar Avion"), BorderLayout.EAST);
-    
-    	
     	
     			
     	}
 
-	public JButton getBtnAgregarAeropuerto() {
-		return btnAgregarAeropuerto;
+    private void crearMenu() {
+		JMenuBar menubar = new JMenuBar();
+		
+		menubar.add( this.crearMenuGestion() );
+
+		this.setJMenuBar(menubar);
 	}
 
-	public void setBtnAgregarAeropuerto(JButton btnAgregarAeropuerto) {
-		this.btnAgregarAeropuerto = btnAgregarAeropuerto;
+    
+    private JMenu crearMenuGestion() {
+		JMenu menu = new JMenu("Gestor de Aeropuertos");
+		
+		JMenuItem menuItem = new JMenuItem("Agregar");
+		menuItem.addActionListener( this::onClickMenuItemAgregarAerolinea );
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem("Modificar");
+		menuItem.addActionListener( this::onClickMenuItemModificarAerolinea );
+		menu.add(menuItem);			
+		
+		menuItem = new JMenuItem("Eliminar");
+		menuItem.addActionListener( this::onClickMenuItemEliminarAerolinea );
+		menu.add(menuItem);		
+
+		
+		menu.addSeparator();
+		
+		menuItem = new JMenuItem("Salir");
+		menuItem.addActionListener( this::onClickMenuItemSalir );
+		menu.add(menuItem);
+		
+		
+		return menu;
 	}
 
+    
+    
+    
+    public void onClickMenuItemAgregarAerolinea( ActionEvent ae ) {
+    	
+    	onEventoAImplementar();
+    	
+	}
 	
+	public void onClickMenuItemModificarAerolinea( ActionEvent ae ) {
+				
+		onEventoAImplementar();
+		
+	}
+	
+	public void onClickMenuItemEliminarAerolinea( ActionEvent ae ) {
+		
+		onEventoAImplementar();
+		
+	}
+	
+	
+	
+	public void onClickMenuItemSalir( ActionEvent ae ) {
+	
+		this.setVisible(false);
+		
+	}
+    
+
+	private void onEventoAImplementar() {
+		JOptionPane.showMessageDialog( null, "Evento a implementar " );
+	}
+
 
 	
     }
