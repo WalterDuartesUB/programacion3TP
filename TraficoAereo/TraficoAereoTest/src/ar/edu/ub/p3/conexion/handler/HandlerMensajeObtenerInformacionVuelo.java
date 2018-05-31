@@ -20,7 +20,12 @@ public class HandlerMensajeObtenerInformacionVuelo implements Handler {
 		try {
 			System.out.println( this.getEstadoTA().getVuelo( m.getIdVuelo() ) );
 			System.out.println( new Vuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) );
-			oos.writeObject( Mensaje.crearMensajeInformacionVuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) );
+			
+			Mensaje mensaje = Mensaje.crearMensajeInformacionVuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) );
+			
+			oos.writeObject( mensaje );
+			
+			System.out.println( mensaje.getVuelo() );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

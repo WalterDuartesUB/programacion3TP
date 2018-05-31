@@ -23,7 +23,7 @@ public class VentanaPrincipal extends JFrame{
 	
 	
 	public VentanaPrincipal(Configuracion configuracion, EstadoAeropuerto estadoAeropuerto, ConexionTraficoAereo conexionTA) {
-		super("Servidor de Aeropuerto");
+		super("Servidor de Aeropuerto: " + configuracion.getConfiguracion("nombreAeropuerto"));
 		
 		this.inicializarVentana();
 		this.crearMenus();
