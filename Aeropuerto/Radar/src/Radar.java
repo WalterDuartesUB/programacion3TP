@@ -40,28 +40,44 @@ public class Radar extends JPanel implements IRadar{
 	  }
 	
 	  public void paintComponent(Graphics g) {
-		  super.paintComponent(g);
+		    super.paintComponent(g);
 		    int width = getWidth();
-		    int height = getHeight();    
-		    this.dibujarRadiosDeCobertura(g, width, height);
+		    int height = getHeight();
+		    int anchoAlto = Integer.min(width, height);
+		    this.setBackground(Color.BLACK);
 		    
-		    this.dibujarEjesDeRadar(g, width, height);
+		    this.dibujarGrilla(g,anchoAlto);
+		    
+		    this.dibujarRadiosDeCobertura(g,anchoAlto);
+		    
+		    this.dibujarEjesDeRadar(g,anchoAlto);
 		    for (IVuelo vuelo : this.getVuelos()){
-		    	this.dibujarVuelo(g,vuelo,width,height);
+		    	this.dibujarVuelo(g,vuelo,anchoAlto);
 		    	
 		    }
 
 	    
 	  }
-	private void dibujarVuelo(Graphics g, IVuelo vuelo, int width, int height) {
+	private void dibujarGrilla(Graphics g, int anchoAlto) {
+		int x,y;
+		g.setColor(Color.RED);
+		for (y = 0; y < 10; y++){
+			for (x = 0; x< 10; x++){
+				g.drawRect((x*(anchoAlto/10)), y*(anchoAlto/10), anchoAlto/10, anchoAlto/10);
+			}
+		}
+		
+	}
+
+	private void dibujarVuelo(Graphics g, IVuelo vuelo, int anchoAlto) {
 		Posicion posicionAvion = this.obtenerDistanciasAlAeropuerto(vuelo.getAvion().getPosicion());
 		double x = posicionAvion.getX();
 		double y = posicionAvion.getY();
 		//TODO sacar el casteo y comvertir correctamente 
-		int xPixel = this.calcularUnidadesDePantalla(width, (int)x);
-		int yPixel = this.calcularUnidadesDePantalla(height, (int)y);
-		int yPixelCorregido = this.calcularCoordenadaYEnPantalla(yPixel,height);
-		int xPixelCorregido = this.calcularCoordenadaXEnPantalla(xPixel,width);
+		int xPixel = this.calcularUnidadesDePantalla(anchoAlto, (int)x);
+		int yPixel = this.calcularUnidadesDePantalla(anchoAlto, (int)y);
+		int yPixelCorregido = this.calcularCoordenadaYEnPantalla(yPixel,anchoAlto);
+		int xPixelCorregido = this.calcularCoordenadaXEnPantalla(xPixel,anchoAlto);
 		char[] idAvion = vuelo.getAvion().getIdAvion().toCharArray();
  		g.setColor(Color.RED);
 		g.fillOval(xPixelCorregido-5, yPixelCorregido-5, 10, 10);
@@ -71,26 +87,26 @@ public class Radar extends JPanel implements IRadar{
 		return new Posicion(posicion.getX()-this.getAeropuerto().getPosicion().getX(),posicion.getY()-this.getAeropuerto().getPosicion().getY());
 	}
 
-	private int calcularCoordenadaXEnPantalla(int xPixel, int width) {
-		return width/2 + xPixel;
+	private int calcularCoordenadaXEnPantalla(int xPixel, int anchoAlto) {
+		return anchoAlto/2 + xPixel;
 	}
 
-	private int calcularCoordenadaYEnPantalla(int yPixel, int height) {
-		return (height/2)-yPixel;
+	private int calcularCoordenadaYEnPantalla(int yPixel, int anchoAlto) {
+		return (anchoAlto/2)-yPixel;
 	}
 
-	private void dibujarEjesDeRadar(Graphics g, int width, int height) {
+	private void dibujarEjesDeRadar(Graphics g, int anchoAlto) {
 		
-		g.setColor(Color.black);
-	    g.drawLine(0, height/2, width, height/2);
-	    g.drawLine(width/2, 0, width/2, height);
+		g.setColor(Color.GREEN);
+	    g.drawLine(0, anchoAlto/2, anchoAlto, anchoAlto/2);
+	    g.drawLine(anchoAlto/2, 0, anchoAlto/2, anchoAlto);
 	}
-	private void dibujarRadiosDeCobertura(Graphics g, int width, int height) {
-		g.setColor(Color.black);
+	private void dibujarRadiosDeCobertura(Graphics g, int anchoAlto) {
+		g.setColor(Color.GREEN);
 		for (int radio : this.radiosDeCobertura){
-	    	int ancho = calcularUnidadesDePantalla(width, radio);
-	    	int alto =  calcularUnidadesDePantalla(height, radio);
-	    	g.drawOval((width/2)-ancho, (height/2)-alto, ancho*2, alto*2);
+	    	int ancho = calcularUnidadesDePantalla(anchoAlto, radio);
+	    	int alto =  calcularUnidadesDePantalla(anchoAlto, radio);
+	    	g.drawOval((anchoAlto/2)-ancho, (anchoAlto/2)-alto, ancho*2, alto*2);
 	    }
 	}
 	private int calcularUnidadesDePantalla(int unidadDePantalla, int unidadReal) {
