@@ -29,6 +29,8 @@ public class AeropuertoServidorSimulado {
 		Date hora2 = new Date(2018, 05, 27, 12, 30);
 		@SuppressWarnings("deprecation")
 		Date hora3 = new Date(2018, 05, 27, 13, 30);
+		@SuppressWarnings("deprecation")
+		Date hora4 = new Date(2018, 05, 27, 18, 30);
 		
 		Aeropuerto aeropuerto1 = new Aeropuerto("AEP", "Aeroparque", new Posicion (11,11));
 		Aeropuerto aeropuerto2 = new Aeropuerto("SLA", "Salta", new Posicion (66,66));
@@ -40,10 +42,12 @@ public class AeropuertoServidorSimulado {
 		Vuelo vuelo1 = new Vuelo("AR1406", avion1, aeropuerto1, aeropuerto2, hora1);
 		Vuelo vuelo2 = new Vuelo("LA1574", avion2, aeropuerto1, aeropuerto2, hora2);
 		Vuelo vuelo3 = new Vuelo("OY1421", avion3, aeropuerto1, aeropuerto2, hora3);
+		Vuelo vuelo4 = new Vuelo("AR1407", avion1, aeropuerto2, aeropuerto1, hora4);
 		
 		getVuelosPrueba().add(vuelo1);
 		getVuelosPrueba().add(vuelo2);
 		getVuelosPrueba().add(vuelo3);
+		getVuelosPrueba().add(vuelo4);
 
 	}
 
