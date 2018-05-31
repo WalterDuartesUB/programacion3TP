@@ -1,32 +1,16 @@
 package ar.edu.ub.p3.aeropuerto.gestor.vista;
 
-import java.awt.BorderLayout;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-
 import ar.edu.ub.p3.aeropuerto.gestor.conexion.ConexionAeropuerto;
-import ar.edu.ub.p3.interfaz.IAvion;
-import ar.edu.ub.p3.interfaz.IVuelo;
-import javax.swing.JScrollBar;
+import ar.edu.ub.p3.interfaz.IAeropuerto;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.border.EtchedBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 
-public class IGrafica_ABM_Aviones extends JFrame {
+public class Gestion_Ventana_Aeropuertos extends JFrame {
 
 
     /**
@@ -34,13 +18,12 @@ public class IGrafica_ABM_Aviones extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
     
-    private JButton btnAgregarAvion;
+    private JButton btnAgregarAeropuerto;
 
 
 	
-    public IGrafica_ABM_Aviones(ConexionAeropuerto conexion) {
-        super();                    
-        setResizable(false);
+    public Gestion_Ventana_Aeropuertos(ConexionAeropuerto conexion) {
+        super();
         setBackground(Color.DARK_GRAY);
         getContentPane().setBackground(Color.DARK_GRAY);
         configurarVentana();        
@@ -50,11 +33,11 @@ public class IGrafica_ABM_Aviones extends JFrame {
     }
 
     private void configurarVentana() {
-        this.setTitle("GESTOR");                
+        this.setTitle("Gestion Aeropuertos");                
         this.setSize(583, 320);                                  
         this.setLocationRelativeTo(null);                        
         this.getContentPane().setLayout(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
+
 
     }
 
@@ -62,18 +45,17 @@ public class IGrafica_ABM_Aviones extends JFrame {
 
     private void agregarTabla(ConexionAeropuerto conexion) {
 
-    	String[] 	nombreColumna = { "ID_Avion","ID_Aerolinea","Nombre_Aerolinea" ,"Posicion"};
-    	Object [][] aux = new Object [conexion.getAviones().size()][nombreColumna.length];
+    	String[] 	nombreColumna = { "ID_Aeropuerto","Nombre_Aeropuerto" ,"Posicion"};
+    	Object [][] aux = new Object [conexion.getAeropuertos().size()][nombreColumna.length];
     	
     	
     	int i = 0;
     	
-    	for(IAvion avion : conexion.getAviones()) {
+    	for(IAeropuerto aeropuerto : conexion.getAeropuertos()) {
     		
     		aux[i][0] = new Object();
     		aux[i][1] = new Object();
     		aux[i][2] = new Object();
-    		aux[i][3] = new Object();
     		i++;
     		
     	}
@@ -81,11 +63,10 @@ public class IGrafica_ABM_Aviones extends JFrame {
    
     		
     	i=0;
-		for(IAvion avion : conexion.getAviones()) {
-			aux[i][0] = ( avion.getIdAvion().toString());
-			aux[i][1] = ( avion.getAerolinea().getIdAerolinea());
-			aux[i][2] = ( avion.getAerolinea().getNombre());
-			aux[i][3] = ( avion.getPosicion() .toString());
+		for(IAeropuerto aeropuerto : conexion.getAeropuertos()) {
+			aux[i][0] = ( aeropuerto.getIdAeropuerto());
+			aux[i][1] = ( aeropuerto.getNombre());
+			aux[i][2] = ( aeropuerto.getPosicion().toString());
 			
 			i++;
 		}
@@ -114,7 +95,7 @@ public class IGrafica_ABM_Aviones extends JFrame {
     	
     	
     	
-    	setBtnAgregarAvion(new JButton("Agregar Avion"));
+    	setBtnAgregarAeropuerto(new JButton("Agregar Avion"));
     	//getContentPane().add(getBtnAgregarAvion(), BorderLayout.EAST);
     	//getContentPane().add(new JButton("Borrar Avion"), BorderLayout.EAST);
     
@@ -123,12 +104,12 @@ public class IGrafica_ABM_Aviones extends JFrame {
     			
     	}
 
-	public JButton getBtnAgregarAvion() {
-		return btnAgregarAvion;
+	public JButton getBtnAgregarAeropuerto() {
+		return btnAgregarAeropuerto;
 	}
 
-	public void setBtnAgregarAvion(JButton btnAgregarAvion) {
-		this.btnAgregarAvion = btnAgregarAvion;
+	public void setBtnAgregarAeropuerto(JButton btnAgregarAeropuerto) {
+		this.btnAgregarAeropuerto = btnAgregarAeropuerto;
 	}
 
 	

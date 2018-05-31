@@ -1,40 +1,88 @@
 package ar.edu.ub.p3.aeropuerto.gestor.conexion.simulacion;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import ar.edu.ub.p3.interfaz.IAerolinea;
+import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
+import ar.edu.ub.p3.interfaz.IVuelo;
 import ar.edu.ub.p3.modelo.Aerolinea;
+import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.modelo.Avion;
 import ar.edu.ub.p3.modelo.Posicion;
+import ar.edu.ub.p3.modelo.Vuelo;
 
 public class AeropuertoServidorSimulado {
 
-	private List<IAvion> avionesSimulados;
-	 
+	private List<IAvion> 		avionesSimulados;
+	private List<IAeropuerto>	aeropuertosSimulados;
+	private List<IVuelo>		vuelosSimulados;
+	private List<IAerolinea>	aerolineasSimuladas;
+	
+	
 	public AeropuertoServidorSimulado() {
 		setAvionesSimulados(new LinkedList<IAvion> ());
+		setAeropuertosSimulados(new LinkedList<IAeropuerto>());
+		setAerolineasSimuladas(new LinkedList<IAerolinea>());
+		setVuelosSimulados(new LinkedList<IVuelo>());
+		
+		generarAerolineas();
+		generarAeropuertos();
 		generarAviones();
+		generarVuelos();
 	}
 	
 	
 	public void generarAviones() {
+		int i =0;
+		for( i=0;i<100;i++)
+			getAvionesSimulados().add(new Avion("AVI-"+i,getAerolineasSimuladas().get(i%getAerolineasSimuladas().size()), new Posicion(10,10)));
+	}
+	
+	public void generarAeropuertos() {
 		
-		getAvionesSimulados().add(new Avion("AVI-01",new Aerolinea("AER-01","AUSTRAL"), new Posicion(10,10)));
-		getAvionesSimulados().add(new Avion("AVI-02",new Aerolinea("AER-01","AUSTRAL"), new Posicion(11,11)));
-		getAvionesSimulados().add(new Avion("AVI-03",new Aerolinea("AER-02","AUSTRAL")  , new Posicion(12,12)));
-		getAvionesSimulados().add(new Avion("AVI-04",new Aerolinea("AER-03","AUSTRAL")  , new Posicion(13,13)));
-		getAvionesSimulados().add(new Avion("AVI-05",new Aerolinea("AER-04","AUSTRAL")  , new Posicion(14,14)));
+		int i = 0;
+		for(i=1;i<18;i++)
+			getAeropuertosSimulados().add(new Aeropuerto("AEROP-"+i, "Aeropuerto "+i, new Posicion(i,i*3)));
+	}
+	
+	public void generarVuelos() {
 		
-		getAvionesSimulados().add(new Avion("AVI-06",new Aerolinea("AER-05","LATAM")  , new Posicion(15,15)));
-		getAvionesSimulados().add(new Avion("AVI-07",new Aerolinea("AER-06","LATAM")  , new Posicion(16,17)));
-		getAvionesSimulados().add(new Avion("AVI-08",new Aerolinea("AER-07","LATAM")  , new Posicion(18,18)));
-		getAvionesSimulados().add(new Avion("AVI-09",new Aerolinea("AER-08","LATAM")  , new Posicion(19,19)));
-		getAvionesSimulados().add(new Avion("AVI-10",new Aerolinea("AER-09","LATAM")  , new Posicion(20,20)));
+		int i = 0;
+		for(i=0;i<200;i++)
+			getVuelosSimulados().add(new Vuelo("VUELO-"+i, 
+									 getAvionesSimulados().get(i%100), 
+									 getAeropuertosSimulados().get(i%(getAeropuertosSimulados().size()/2)), 
+									 getAeropuertosSimulados().get((i%(getAeropuertosSimulados().size()/2))+(getAeropuertosSimulados().size()/2)),
+									 new Date()));
 		
 		
 	}
 	
+	public void generarAerolineas() {
+		
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-1", "Austral Airlnes"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-2", "Aerolineas Argentinas"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-3", "Airline LATAM"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-4", "American Airline"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-5", "Austrian Airline"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-6", "Air France"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-7", "Aeromexico"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-8", "AIRLINES LATAM"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-9", "China Eastern"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-10", "Pegasus Airlines"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-11", "Qatar Airways"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-12", "TAP Air Portugal"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-13", "Cathay Pacific"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-14", "Aegean Airlines"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-15", "Norwegian Air Int"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-16", "Royal Air Maroc"));
+			getAerolineasSimuladas().add(new Aerolinea("AIRL-17", "Binter Canarias"));
+			
+		
+	}
 	
 	public List<IAvion> getAviones(){
 		
@@ -69,6 +117,36 @@ public class AeropuertoServidorSimulado {
 
 	private void setAvionesSimulados(List<IAvion> avionesSimulados) {
 		this.avionesSimulados = avionesSimulados;
+	}
+
+
+	public List<IAeropuerto> getAeropuertosSimulados() {
+		return aeropuertosSimulados;
+	}
+
+
+	public void setAeropuertosSimulados(List<IAeropuerto> aeropuertosSimulados) {
+		this.aeropuertosSimulados = aeropuertosSimulados;
+	}
+
+
+	public List<IVuelo> getVuelosSimulados() {
+		return vuelosSimulados;
+	}
+
+
+	public void setVuelosSimulados(List<IVuelo> vuelosSimulados) {
+		this.vuelosSimulados = vuelosSimulados;
+	}
+
+
+	public List<IAerolinea> getAerolineasSimuladas() {
+		return aerolineasSimuladas;
+	}
+
+
+	public void setAerolineasSimuladas(List<IAerolinea> aerolineasSimuladas) {
+		this.aerolineasSimuladas = aerolineasSimuladas;
 	}
 
 

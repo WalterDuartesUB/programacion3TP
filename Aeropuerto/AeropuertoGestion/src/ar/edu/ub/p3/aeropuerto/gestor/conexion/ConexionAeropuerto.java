@@ -3,6 +3,7 @@ package ar.edu.ub.p3.aeropuerto.gestor.conexion;
 import java.util.List;
 
 import ar.edu.ub.p3.aeropuerto.gestor.configuracion.Configuracion;
+import ar.edu.ub.p3.interfaz.IAerolinea;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
 import ar.edu.ub.p3.interfaz.IVuelo;
@@ -21,7 +22,8 @@ public abstract class ConexionAeropuerto {
 	public abstract List<IAeropuerto> getAeropuertos();
 	public abstract List<IVuelo>      getVuelos();
 	public abstract List<IVuelo>      getVuelosCercanosAlAeropuerto();	
-	public abstract List<IAvion>      getAviones();	
+	public abstract List<IAvion>      getAviones();
+	public abstract List<IAerolinea>  getAerolineas();
 	
 	//Operaciones de aviones
 	public abstract void              addAvion( IAvion avion );

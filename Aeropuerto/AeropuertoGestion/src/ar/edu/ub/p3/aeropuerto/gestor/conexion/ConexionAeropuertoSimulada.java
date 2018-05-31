@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.edu.ub.p3.aeropuerto.gestor.conexion.simulacion.AeropuertoServidorSimulado;
 import ar.edu.ub.p3.aeropuerto.gestor.configuracion.Configuracion;
+import ar.edu.ub.p3.interfaz.IAerolinea;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
 import ar.edu.ub.p3.interfaz.IVuelo;
@@ -41,13 +42,19 @@ public class ConexionAeropuertoSimulada extends ConexionAeropuerto{
 	@Override //NO TENGO QUE TOCAR ESTE METODO........................
 	public List<IAeropuerto> getAeropuertos() {
 		// TODO Auto-generated method stub
-		return null;
+		return getServidorAeropuerto().getAeropuertosSimulados();
 	}
 
 	@Override//NO TENGO QUE TOCAR ESTE METODO TODAVIA........................
 	public List<IVuelo> getVuelos() {
 		// TODO Auto-generated method stub
-		return null;
+		return getServidorAeropuerto().getVuelosSimulados();
+	}
+	
+	@Override
+	public List<IAerolinea> getAerolineas() {
+		// TODO Auto-generated method stub
+		return getServidorAeropuerto().getAerolineasSimuladas();
 	}
 
 	@Override//NO TENGO QUE TOCAR ESTE METODO TODAVIA........................
