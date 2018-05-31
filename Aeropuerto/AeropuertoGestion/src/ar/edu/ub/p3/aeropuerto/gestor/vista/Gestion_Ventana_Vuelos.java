@@ -30,7 +30,6 @@ public class Gestion_Ventana_Vuelos extends JFrame {
         getContentPane().setBackground(Color.DARK_GRAY);
         configurarVentana();        
         agregarTabla(conexion);
-        setVisible(true);
         
     }
 

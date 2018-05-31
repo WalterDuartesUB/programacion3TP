@@ -30,7 +30,6 @@ public class Gestion_Ventana_Aviones extends JFrame {
         getContentPane().setBackground(Color.DARK_GRAY);
         configurarVentana();        
         agregarTabla(conexion);
-        setVisible(true);
         
     }
 
@@ -92,6 +91,8 @@ public class Gestion_Ventana_Aviones extends JFrame {
     	getContentPane().setLayout(new BorderLayout());
     	getContentPane().add(tabla.getTableHeader(), BorderLayout.PAGE_START);
     	getContentPane().add(scroll,BorderLayout.CENTER);
+    	
+    	
     	
     	JPanel botones = new JPanel();
     	scroll.setRowHeaderView(botones);

@@ -28,7 +28,6 @@ public class Gestion_Ventana_Aeropuertos extends JFrame {
         getContentPane().setBackground(Color.DARK_GRAY);
         configurarVentana();        
         agregarTabla(conexion);
-        setVisible(true);
         
     }
 

@@ -1,16 +1,23 @@
 package ar.edu.ub.p3.aeropuerto.gestor.interfazgrafica;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.swing.JFrame;
+
 import ar.edu.ub.p3.aeropuerto.gestor.conexion.ConexionAeropuerto;
 import ar.edu.ub.p3.aeropuerto.gestor.vista.Gestion_Ventana_Aerolineas;
 import ar.edu.ub.p3.aeropuerto.gestor.vista.Gestion_Ventana_Aeropuertos;
 import ar.edu.ub.p3.aeropuerto.gestor.vista.Gestion_Ventana_Aviones;
 import ar.edu.ub.p3.aeropuerto.gestor.vista.Gestion_Ventana_Vuelos;
+import ar.edu.ub.p3.aeropuerto.gestor.vista.Gestion_Ventanas;
 
 
 public class InterfazGrafica {
 
 	//ESTA INTERFAZ GRAFICA TENDRA VARIAS VENTANAS, AL REDEOR DE 6 EN UN FUTURO PARA DIVERSAS ACCIONES
 	//POR AHORA SE MANTIENE EN UNA PARA PROBAR LA INTERACCION
+	private Gestion_Ventanas			Gestion_Ventanas;
 	
 	private Gestion_Ventana_Aviones 	GV_Aviones;
 	private Gestion_Ventana_Aerolineas 	GV_Aerolineas;
@@ -34,6 +41,14 @@ public class InterfazGrafica {
 		setGV_Vuelos	( new Gestion_Ventana_Vuelos	( getConexion() ) );
 		setGV_Aeropuertos(new Gestion_Ventana_Aeropuertos(getConexion() ) );
 		
+		List<JFrame> ventanas = new LinkedList<JFrame>();
+		
+		ventanas.add(getGV_Aviones());
+		ventanas.add(getGV_Aerolineas());
+		ventanas.add(getGV_Aeropuertos());
+		ventanas.add(getGV_Vuelos());
+		
+		setGestion_Ventanas( new Gestion_Ventanas(ventanas) );
 		
 	}
 
@@ -77,6 +92,14 @@ public class InterfazGrafica {
 
 	public void setGV_Aviones(Gestion_Ventana_Aviones gV_Aviones) {
 		GV_Aviones = gV_Aviones;
+	}
+
+	public Gestion_Ventanas getGestion_Ventanas() {
+		return Gestion_Ventanas;
+	}
+
+	public void setGestion_Ventanas(Gestion_Ventanas gestion_Ventanas) {
+		Gestion_Ventanas = gestion_Ventanas;
 	}
 	
 	
