@@ -4,23 +4,23 @@ import java.io.ObjectOutputStream;
 
 import ar.edu.ub.p3.conexion.AtendedorDePedidosDeAeropuerto;
 import ar.edu.ub.p3.conexion.Mensaje;
-import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
+import ar.edu.ub.p3.modelo.Vuelo;
 
-public class HandlerMensajeAltaAeropuerto implements Handler {
-
+public class HandlerMensajeObtenerInformacionVuelo implements Handler {
 	private EstadoTraficoAereo estadoTA;
-	
-	public HandlerMensajeAltaAeropuerto(EstadoTraficoAereo estadoTA) {
+	public HandlerMensajeObtenerInformacionVuelo(EstadoTraficoAereo estadoTA) {
 		this.setEstadoTA(estadoTA);
 	}
 
 	@Override
 	public void accept(Mensaje m, ObjectOutputStream oos, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
-		this.getEstadoTA().addAeropuerto( new Aeropuerto( m.getAeropuerto() ) );
-			
+
+		//TODO ver porque no cambia la posicion al pedir dos veces el mensaje
 		try {
-			oos.writeObject( Mensaje.crearMensajeAltaAeropuertoAck( this.getEstadoTA().getIAeropuertos() ) );
+			System.out.println( this.getEstadoTA().getVuelo( m.getIdVuelo() ) );
+			System.out.println( new Vuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) );
+			oos.writeObject( Mensaje.crearMensajeInformacionVuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

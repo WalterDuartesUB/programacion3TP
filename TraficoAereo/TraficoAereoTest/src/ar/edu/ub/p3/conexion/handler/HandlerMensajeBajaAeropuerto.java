@@ -2,6 +2,7 @@ package ar.edu.ub.p3.conexion.handler;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import ar.edu.ub.p3.conexion.AtendedorDePedidosDeAeropuerto;
 import ar.edu.ub.p3.conexion.Mensaje;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 
@@ -14,7 +15,7 @@ public class HandlerMensajeBajaAeropuerto implements Handler {
 	}
 
 	@Override
-	public void accept(Mensaje m, ObjectOutputStream oos) {
+	public void accept(Mensaje m, ObjectOutputStream oos, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
 		this.getEstadoTA().quitarAeropuerto( m.getIdAeropuerto() );
 		
 		try {
@@ -24,7 +25,7 @@ public class HandlerMensajeBajaAeropuerto implements Handler {
 		}
 		
 		//Marco como terminada la sesion con el cliente actual
-		this.getEstadoTA().setDeboContinuar( false );
+		atendedorDePedidosDeAeropuerto.setDeboContinuar( false );
 	}
 
 	private EstadoTraficoAereo getEstadoTA() {
