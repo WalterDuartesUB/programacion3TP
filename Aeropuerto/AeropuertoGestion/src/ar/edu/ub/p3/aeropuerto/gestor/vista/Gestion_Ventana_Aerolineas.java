@@ -92,7 +92,19 @@ public class Gestion_Ventana_Aerolineas extends JFrame {
     	
     	//getContentPane().add(tabla, BorderLayout.CENTER);
     	
-    	
+    	tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+    	    @Override
+    	    public void mouseClicked(java.awt.event.MouseEvent evt) {
+    	        int row = tabla.rowAtPoint(evt.getPoint());
+    	        int col = tabla.columnAtPoint(evt.getPoint());
+    	        if (row >= 0 && col >= 0) {
+    	        	
+    	            System.out.println(tabla.getValueAt(row, 0) +" "+
+    	            		tabla.getValueAt(row, 1)  );
+
+    	        }
+    	    }
+    	});
     	
     	setBtnAgregarAerolinea(new JButton("Agregar Avion"));
     	//getContentPane().add(getBtnAgregarAvion(), BorderLayout.EAST);
