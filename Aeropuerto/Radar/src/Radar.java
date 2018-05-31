@@ -14,10 +14,10 @@ import ar.edu.ub.p3.modelo.Avion;
 import ar.edu.ub.p3.modelo.Posicion;
 import ar.edu.ub.p3.modelo.Vuelo;
 
-public class Radar extends JPanel{
+public class Radar extends JPanel implements IRadar{
 	private static final long serialVersionUID = 1L;
 	private List<Integer> radiosDeCobertura;
-	private List<IVuelo> vuelos;
+	private List<Vuelo> vuelos;
 	private int coberturaKm;
 	private IAeropuerto aeropuerto; 
 	
@@ -30,23 +30,27 @@ public class Radar extends JPanel{
 		this.getRadiosDeCobertura().add(50);
 		this.setAeropuerto(new Aeropuerto(null, null,new Posicion(15,15)));
 		Aerolinea aerolinea = new Aerolinea(null, null);
-		this.setVuelos(new LinkedList<IVuelo>());
-		Vuelo vuelo = new Vuelo(null, new Avion(null, aerolinea, new Posicion(0, 0)), this.getAeropuerto(), this.getAeropuerto(), null);
-		this.getVuelos().add(vuelo);
+		this.setVuelos(new LinkedList<Vuelo>());
+		this.getVuelos().add(new Vuelo(null, new Avion(null, aerolinea, new Posicion(0, 0)), this.getAeropuerto(), this.getAeropuerto(), null));
+		this.getVuelos().add(new Vuelo(null, new Avion(null, aerolinea, new Posicion(18, 47)), this.getAeropuerto(), this.getAeropuerto(), null));
+		this.getVuelos().add(new Vuelo(null, new Avion(null, aerolinea, new Posicion(15, 15)), this.getAeropuerto(), this.getAeropuerto(), null));
+		this.getVuelos().add(new Vuelo(null, new Avion(null, aerolinea, new Posicion(-10, -25)), this.getAeropuerto(), this.getAeropuerto(), null));
+		
+		new Thread(new MovedorDeVuelosDePrueba(this,this.getVuelos())).start();
 	  }
 	
 	  public void paintComponent(Graphics g) {
-		  
-	    int width = getWidth();
-	    int height = getHeight();
-	    
-	    this.dibujarRadiosDeCobertura(g, width, height);
-	    
-	    this.dibujarEjesDeRadar(g, width, height);
-	    for (IVuelo vuelo : this.getVuelos()){
-	    	this.dibujarVuelo(g,vuelo,width,height);
-	    	
-	    }
+		  super.paintComponent(g);
+		    int width = getWidth();
+		    int height = getHeight();    
+		    this.dibujarRadiosDeCobertura(g, width, height);
+		    
+		    this.dibujarEjesDeRadar(g, width, height);
+		    for (IVuelo vuelo : this.getVuelos()){
+		    	this.dibujarVuelo(g,vuelo,width,height);
+		    	
+		    }
+
 	    
 	  }
 	private void dibujarVuelo(Graphics g, IVuelo vuelo, int width, int height) {
@@ -104,11 +108,11 @@ public class Radar extends JPanel{
 		this.coberturaKm = coberturaKm;
 	}
 
-	public List<IVuelo> getVuelos() {
+	public List<Vuelo> getVuelos() {
 		return vuelos;
 	}
 
-	public void setVuelos(List<IVuelo> vuelos) {
+	public void setVuelos(List<Vuelo> vuelos) {
 		this.vuelos = vuelos;
 	}
 
@@ -118,5 +122,12 @@ public class Radar extends JPanel{
 
 	public void setAeropuerto(IAeropuerto aeropuerto) {
 		this.aeropuerto = aeropuerto;
+	}
+
+	@Override
+	public void dibujarRadar() {
+		this.validate();
+		this.repaint();
+		
 	}
 }
