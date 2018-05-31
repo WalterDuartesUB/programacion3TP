@@ -25,7 +25,7 @@ public class MovedorDeVuelosDePrueba implements Runnable {
 			for (Vuelo vuelo: this.getVuelosDePrueba()){
 				Posicion posicion = new Posicion(vuelo.getAvion().getPosicion());
 				posicion.setX(posicion.getX()+1);
-				posicion.setY(posicion.getY());
+				posicion.setY(posicion.getY()+1);
 				vuelo.setPosicion(posicion);
 			}
 			this.getRadar().dibujarRadar();

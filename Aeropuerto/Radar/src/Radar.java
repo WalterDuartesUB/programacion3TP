@@ -31,10 +31,10 @@ public class Radar extends JPanel implements IRadar{
 		this.setAeropuerto(new Aeropuerto(null, null,new Posicion(15,15)));
 		Aerolinea aerolinea = new Aerolinea(null, null);
 		this.setVuelos(new LinkedList<Vuelo>());
-		this.getVuelos().add(new Vuelo(null, new Avion(null, aerolinea, new Posicion(0, 0)), this.getAeropuerto(), this.getAeropuerto(), null));
-		this.getVuelos().add(new Vuelo(null, new Avion(null, aerolinea, new Posicion(18, 47)), this.getAeropuerto(), this.getAeropuerto(), null));
-		this.getVuelos().add(new Vuelo(null, new Avion(null, aerolinea, new Posicion(15, 15)), this.getAeropuerto(), this.getAeropuerto(), null));
-		this.getVuelos().add(new Vuelo(null, new Avion(null, aerolinea, new Posicion(-10, -25)), this.getAeropuerto(), this.getAeropuerto(), null));
+		this.getVuelos().add(new Vuelo("Vuelo1", new Avion("Avion1", aerolinea, new Posicion(0, 0)), this.getAeropuerto(), this.getAeropuerto(), null));
+		this.getVuelos().add(new Vuelo("Vuelo2", new Avion("Avion2", aerolinea, new Posicion(18, 47)), this.getAeropuerto(), this.getAeropuerto(), null));
+		this.getVuelos().add(new Vuelo("Vuelo3", new Avion("Avion3", aerolinea, new Posicion(15, 15)), this.getAeropuerto(), this.getAeropuerto(), null));
+		this.getVuelos().add(new Vuelo("Vuelo4", new Avion("Avion4", aerolinea, new Posicion(-10, -25)), this.getAeropuerto(), this.getAeropuerto(), null));
 		
 		new Thread(new MovedorDeVuelosDePrueba(this,this.getVuelos())).start();
 	  }
@@ -62,9 +62,10 @@ public class Radar extends JPanel implements IRadar{
 		int yPixel = this.calcularUnidadesDePantalla(height, (int)y);
 		int yPixelCorregido = this.calcularCoordenadaYEnPantalla(yPixel,height);
 		int xPixelCorregido = this.calcularCoordenadaXEnPantalla(xPixel,width);
-		
-		g.setColor(Color.RED);
+		char[] idAvion = vuelo.getAvion().getIdAvion().toCharArray();
+ 		g.setColor(Color.RED);
 		g.fillOval(xPixelCorregido-5, yPixelCorregido-5, 10, 10);
+		g.drawChars(idAvion, 0, idAvion.length, xPixelCorregido+10, yPixelCorregido);
 	}
 	private Posicion obtenerDistanciasAlAeropuerto(IPosicion posicion) {
 		return new Posicion(posicion.getX()-this.getAeropuerto().getPosicion().getX(),posicion.getY()-this.getAeropuerto().getPosicion().getY());
