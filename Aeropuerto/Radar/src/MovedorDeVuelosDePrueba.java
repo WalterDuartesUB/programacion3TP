@@ -21,7 +21,7 @@ public class MovedorDeVuelosDePrueba implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println("voy a mover los aviones");
+			
 			for (Vuelo vuelo: this.getVuelosDePrueba()){
 				Posicion posicion = new Posicion(vuelo.getAvion().getPosicion());
 				posicion.setX(posicion.getX()+1);

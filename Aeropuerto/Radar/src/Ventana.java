@@ -10,7 +10,7 @@ public class Ventana extends JFrame{
 	public Ventana(){
 		super();
 		this.setTitle("Radar");
-		this.setSize(400, 400);
+		this.setSize(397, 399);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.add(radar,BorderLayout.CENTER);
 		this.setVisible(true);

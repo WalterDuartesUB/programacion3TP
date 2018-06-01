@@ -1,9 +1,14 @@
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IPosicion;
@@ -20,9 +25,11 @@ public class Radar extends JPanel implements IRadar{
 	private List<Vuelo> vuelos;
 	private int coberturaKm;
 	private IAeropuerto aeropuerto; 
+	private int angulo;
 	
 	public Radar() {
 		this.setCoberturaKm(50);
+		this.setAngulo(0);
 		
 		this.setRadiosDeCobertura(new LinkedList<Integer>());
 		this.getRadiosDeCobertura().add(10);
@@ -36,28 +43,55 @@ public class Radar extends JPanel implements IRadar{
 		this.getVuelos().add(new Vuelo("Vuelo3", new Avion("Avion3", aerolinea, new Posicion(15, 15)), this.getAeropuerto(), this.getAeropuerto(), null));
 		this.getVuelos().add(new Vuelo("Vuelo4", new Avion("Avion4", aerolinea, new Posicion(-10, -25)), this.getAeropuerto(), this.getAeropuerto(), null));
 		
+		//Creo el thread para mover los aviones de pruebas
 		new Thread(new MovedorDeVuelosDePrueba(this,this.getVuelos())).start();
+		
+		//Creo el timer para dibujar el arco del radar
+		new Timer( 15, this::actionPerformed).start();
 	  }
+
+	public void actionPerformed(ActionEvent arg0) {
+		this.setAngulo(this.getAngulo() + 1);
+		this.dibujarRadar();
+		
+	}
 	
 	  public void paintComponent(Graphics g) {
 		    super.paintComponent(g);
+		    
+		    Graphics2D g2 = (Graphics2D) g;
 		    int width = getWidth();
 		    int height = getHeight();
 		    int anchoAlto = Integer.min(width, height);
 		    this.setBackground(Color.BLACK);
 		    
-		    this.dibujarGrilla(g,anchoAlto);
+		    this.dibujarGrilla(g2,anchoAlto);
 		    
-		    this.dibujarRadiosDeCobertura(g,anchoAlto);
+		    this.dibujarRadiosDeCobertura(g2,anchoAlto);
 		    
-		    this.dibujarEjesDeRadar(g,anchoAlto);
+		    this.dibujarEjesDeRadar(g2,anchoAlto);
+		    
 		    for (IVuelo vuelo : this.getVuelos()){
-		    	this.dibujarVuelo(g,vuelo,anchoAlto);
-		    	
+		    	this.dibujarVuelo(g2,vuelo,anchoAlto);		    
 		    }
 
-	    
+		    this.dibujarArcoRadar(g2, anchoAlto);
+		    
+		    	    
 	  }
+
+	private void dibujarArcoRadar(Graphics2D g2, int anchoAlto) {
+		g2.setColor(Color.green);
+		
+		AffineTransform old = g2.getTransform();
+		GradientPaint gp = new GradientPaint(0,0, new Color( 0,50,0,0), anchoAlto, anchoAlto, new Color(181,230,29).brighter() );
+		
+		g2.setPaint( gp );
+		g2.rotate( Math.toRadians( this.getAngulo() ), 0 + (anchoAlto/2), 0 + (anchoAlto/2));
+		g2.fillArc((int)0, (int)0, (int)anchoAlto, (int)anchoAlto, 0, (int)15);
+		
+		g2.setTransform(old);
+	}
 	private void dibujarGrilla(Graphics g, int anchoAlto) {
 		int x,y;
 		g.setColor(Color.RED);
@@ -143,8 +177,17 @@ public class Radar extends JPanel implements IRadar{
 
 	@Override
 	public void dibujarRadar() {
+		
 		this.validate();
 		this.repaint();
 		
+	}
+
+	private int getAngulo() {
+		return angulo;
+	}
+
+	private void setAngulo(int angulo) {
+		this.angulo = angulo;
 	}
 }
