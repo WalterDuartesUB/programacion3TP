@@ -4,16 +4,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import ar.edu.ub.p3.conexion.ConexionAeropuerto;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 
 public class EstadoTraficoAereo {
 	private boolean          deboContinuar;
-	private Map<String,Aeropuerto> aeropuertos;
+	private Map<String,ConexionAeropuerto> aeropuertos;
 	private Map<String,Vuelo>      vuelos;
 	
 	public EstadoTraficoAereo() {
 		this.setDeboContinuar(true);
-		this.setAeropuertos( new HashMap<String,Aeropuerto>());
+		this.setAeropuertos( new HashMap<String,ConexionAeropuerto>());
 		this.setVuelos( new HashMap<String,Vuelo>());
 	}
 
@@ -25,11 +26,11 @@ public class EstadoTraficoAereo {
 		this.vuelos = vuelos;
 	}
 
-	public Map<String,Aeropuerto> getAeropuertos() {
+	public Map<String,ConexionAeropuerto> getAeropuertos() {
 		return aeropuertos;
 	}
 
-	private void setAeropuertos(Map<String,Aeropuerto> aeropuertos) {
+	private void setAeropuertos(Map<String,ConexionAeropuerto> aeropuertos) {
 		this.aeropuertos = aeropuertos;
 	}
 
@@ -41,15 +42,15 @@ public class EstadoTraficoAereo {
 		this.deboContinuar = deboContinuar;
 	}
 
-	public void addAeropuerto(Aeropuerto aeropuerto) {
+	public void addAeropuerto(ConexionAeropuerto aeropuerto) {
 		this.getAeropuertos().put( aeropuerto.getIdAeropuerto(), aeropuerto);		
 	}
 
 	public List<IAeropuerto> getIAeropuertos() {
 		List<IAeropuerto> iaeropuertos = new LinkedList<IAeropuerto>();
 		
-		for( Aeropuerto aeropuerto : this.getAeropuertos().values() )
-			iaeropuertos.add( aeropuerto );
+		for( ConexionAeropuerto aeropuerto : this.getAeropuertos().values() )
+			iaeropuertos.add( aeropuerto.getAeropuerto() );
 		
 		return iaeropuertos;
 	}
@@ -73,5 +74,9 @@ public class EstadoTraficoAereo {
 		synchronized (vuelo) {
 			vuelo.setPosicion( new Posicion( vuelo.getPosicion().sumar( posicion ) ) );
 		}
+	}
+
+	public ConexionAeropuerto getConexionAeropuerto(String idAeropuerto) {
+		return this.getAeropuertos().get(idAeropuerto);		
 	}
 }

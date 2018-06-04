@@ -11,6 +11,7 @@ import java.util.Set;
 
 import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
+import ar.edu.ub.p3.modelo.Posicion;
 import ar.edu.ub.p3.modelo.Vuelo;
 import ar.edu.ub.p3.util.Configuracion;
 
@@ -165,6 +166,9 @@ public class ConexionTraficoAereo {
 	}
 
 	public void despegar(Vuelo vuelo) {
+		//TODO evaluar si esto tiene que estar aca
+		vuelo.setPosicion(new Posicion( this.getEstadoAeropuerto().getAerpuerto().getPosicion() ) );
+		
 		this.enviarMensaje( Mensaje.crearMensajeProgramarVuelo(vuelo));		
 	}
 

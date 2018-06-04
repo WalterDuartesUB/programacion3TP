@@ -19,6 +19,7 @@ public class HandlerMensajeVueloProgramado implements Handler {
 		this.getEstadoTA().addVuelo( vuelo );
 		
 		//TODO despachar el mensaje al aeropuerto de destino con el vuelo
+		this.getEstadoTA().getConexionAeropuerto( vuelo.getAeropuertoDestino().getIdAeropuerto() ).enviarMensaje( Mensaje.crearMensajeProgramarVuelo(vuelo) );
 		
 		// Empiezo a mover el avion del vuelo
 		new Thread( new MovedorDeAvionEnVuelo( this.getEstadoTA(), vuelo.getIdVuelo() ) ).start();
