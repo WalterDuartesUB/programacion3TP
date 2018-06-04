@@ -10,6 +10,6 @@ public interface IVuelo extends Serializable{
 	public IAeropuerto getAeropuertoOrigen();
 	public IAeropuerto getAeropuertoDestino();
 	public Date getHorarioProgramado();
-	
+	public IPosicion getPosicion();
 
 }

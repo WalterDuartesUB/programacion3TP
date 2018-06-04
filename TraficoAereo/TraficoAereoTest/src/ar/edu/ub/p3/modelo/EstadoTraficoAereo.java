@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import ar.edu.ub.p3.interfaz.IAeropuerto;
-import ar.edu.ub.p3.interfaz.IVuelo;
-import ar.edu.ub.p3.modelo.Aeropuerto;
-import ar.edu.ub.p3.modelo.Vuelo;
 
 public class EstadoTraficoAereo {
 	private boolean          deboContinuar;
@@ -66,7 +63,15 @@ public class EstadoTraficoAereo {
 		this.getVuelos().put(vuelo.getIdVuelo(), vuelo);		
 	}
 
-	public IVuelo getVuelo(String idVuelo) {
+	public Vuelo getVuelo(String idVuelo) {
 		return this.getVuelos().get( idVuelo);
+	}
+
+	public void moverAvion(String idVuelo, Posicion posicion) {
+		Vuelo vuelo = this.getVuelo(idVuelo);
+		
+		synchronized (vuelo) {
+			vuelo.setPosicion( new Posicion( vuelo.getPosicion().sumar( posicion ) ) );
+		}
 	}
 }

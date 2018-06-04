@@ -6,4 +6,6 @@ public interface IPosicion extends Serializable{
 	
 	public double getX();
 	public double getY();
+	
+	public IPosicion sumar( IPosicion otraPosicion );
 }

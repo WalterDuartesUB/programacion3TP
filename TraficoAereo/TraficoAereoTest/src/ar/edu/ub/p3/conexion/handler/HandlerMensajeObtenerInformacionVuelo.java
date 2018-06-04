@@ -21,7 +21,7 @@ public class HandlerMensajeObtenerInformacionVuelo implements Handler {
 			System.out.println( this.getEstadoTA().getVuelo( m.getIdVuelo() ) );
 			System.out.println( new Vuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) );
 			
-			Mensaje mensaje = Mensaje.crearMensajeInformacionVuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) );
+			Mensaje mensaje = Mensaje.crearMensajeInformacionVuelo( new Vuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) );
 			
 			oos.writeObject( mensaje );
 			

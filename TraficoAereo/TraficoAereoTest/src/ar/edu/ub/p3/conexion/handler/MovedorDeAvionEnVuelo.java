@@ -1,14 +1,17 @@
 package ar.edu.ub.p3.conexion.handler;
 
 import ar.edu.ub.p3.interfaz.IPosicion;
+import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 import ar.edu.ub.p3.modelo.Posicion;
 import ar.edu.ub.p3.modelo.Vuelo;
 
 public class MovedorDeAvionEnVuelo implements Runnable {
-
-	private Vuelo vuelo;
-	public MovedorDeAvionEnVuelo(Vuelo vuelo) {
-		this.setVuelo(vuelo);
+	private EstadoTraficoAereo estadoTraficoAereo;
+	private String idVuelo;
+	
+	public MovedorDeAvionEnVuelo(EstadoTraficoAereo estadoTA, String idVuelo) {
+		this.setEstadoTraficoAereo(estadoTA);
+		this.setIdVuelo(idVuelo);
 	}
 
 	@Override
@@ -24,25 +27,26 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 			}
 			
 			//Cambio la posicion
-			this.getVuelo().setPosicion( this.sumar( this.getVuelo().getAvion().getPosicion(), new Posicion(1,1) ) );
-/*			
-			System.out.println("Movi el vuelo " + this.getVuelo().getIdVuelo() );
-			System.out.println("Movi el vuelo " + this.getVuelo().getAvion().getPosicion() );
-*/			
+			this.getEstadoTraficoAereo().moverAvion( this.getIdVuelo(), new Posicion(1,1) );
+
 		}
 
 	}
 
-	private Posicion sumar(IPosicion posicion, Posicion posicion2) {
-		return new Posicion( posicion.getX() + posicion2.getX(), posicion.getY() + posicion2.getY() );
+	public EstadoTraficoAereo getEstadoTraficoAereo() {
+		return estadoTraficoAereo;
 	}
 
-	private Vuelo getVuelo() {
-		return vuelo;
+	public void setEstadoTraficoAereo(EstadoTraficoAereo estadoTraficoAereo) {
+		this.estadoTraficoAereo = estadoTraficoAereo;
 	}
 
-	private void setVuelo(Vuelo vuelo) {
-		this.vuelo = vuelo;
+	public String getIdVuelo() {
+		return idVuelo;
+	}
+
+	public void setIdVuelo(String idVuelo) {
+		this.idVuelo = idVuelo;
 	}
 
 }

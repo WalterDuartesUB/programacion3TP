@@ -5,17 +5,17 @@ import java.util.Date;
 
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IAvion;
+import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.interfaz.IVuelo;
 
 public class Vuelo implements IVuelo,Serializable {
-	
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1023138772196002204L;
+	private static final long serialVersionUID = -4508747413410986870L;
 	private String idVuelo;
-	private Avion avion;
+	private volatile Avion avion;
 	private Aeropuerto aeropuertoOrigen;
 	private Aeropuerto aeropuertoDestino;	
 	private Date horarioProgramado;
@@ -76,6 +76,11 @@ public class Vuelo implements IVuelo,Serializable {
 
 	private void setHorarioProgramado(Date horarioProgramado) {
 		this.horarioProgramado = horarioProgramado;
+	}
+
+	@Override
+	public IPosicion getPosicion() {
+		return this.getAvion().getPosicion();
 	}
 	
 }

@@ -7,14 +7,13 @@ import ar.edu.ub.p3.interfaz.IAvion;
 import ar.edu.ub.p3.interfaz.IPosicion;
 
 public class Avion implements IAvion,Serializable{
-	
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8557012986126896848L;
+	private static final long serialVersionUID = 9016985862736944589L;
 	private String   idAvion;
-	private Posicion posicion;
+	private volatile Posicion posicion;
 	private Aerolinea aerolinea;
 	
 	public Avion(String idAvion, IAerolinea aerolinea, IPosicion posicion) {
