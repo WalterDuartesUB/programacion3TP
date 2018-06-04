@@ -1,7 +1,7 @@
 package ar.edu.ub.p3.conexion.handler;
 
+import ar.edu.ub.p3.conexion.Mensaje;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
-import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.interfaz.IVuelo;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 import ar.edu.ub.p3.modelo.Posicion;
@@ -36,8 +36,19 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 		
 		IVuelo vuelo = this.getEstadoTraficoAereo().getVuelo(this.getIdVuelo());
 		
-		while( Math.abs( vuelo.getPosicion().getY() - aeropuertoDestino.getPosicion().getY() ) > 0.1) {
-			
+		//Avanzo hasta estar en la zona de aterrizaje
+		this.moverAvion(aeropuertoDestino, pendiente, orientacionX, vuelo, 5);
+		
+		//Envio un mensaje de proximidad al aeropuerto de destino
+		this.getEstadoTraficoAereo().getConexionAeropuerto( aeropuertoDestino.getIdAeropuerto() ).enviarMensaje( Mensaje.crearMensajeVueloProximoAterrizar(new Vuelo(this.getEstadoTraficoAereo().getVuelo(this.getIdVuelo()))));
+		
+		//Sigo avanzando el avion hasta llegar
+		this.moverAvion(aeropuertoDestino, pendiente, orientacionX, vuelo, 0.1);
+	}
+
+	private void moverAvion(IAeropuerto aeropuertoDestino, double pendiente, double orientacionX, IVuelo vuelo, double distanciaAlDestino) {
+		
+		while( Math.abs( vuelo.getPosicion().getY() - aeropuertoDestino.getPosicion().getY() ) > distanciaAlDestino) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -47,21 +58,6 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 			//cambio el avion
 			this.getEstadoTraficoAereo().moverAvion( this.getIdVuelo(), new Posicion( orientacionX, pendiente * orientacionX  ) );
 		}
-/*		
-		//Muevo el avion hasta llegar a mi "destino"
-		for( int i = 0; i < 30; i++)
-		{
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			//Cambio la posicion
-			this.getEstadoTraficoAereo().moverAvion( this.getIdVuelo(), new Posicion(1,1) );
-
-		}
-*/
 	}
 
 	public EstadoTraficoAereo getEstadoTraficoAereo() {

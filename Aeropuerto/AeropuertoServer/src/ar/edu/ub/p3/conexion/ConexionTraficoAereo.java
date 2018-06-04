@@ -64,12 +64,12 @@ public class ConexionTraficoAereo {
 			this.setSocket( new Socket(this.getIpServer(), this.getPuerto() ) );
 
 			System.out.println( this.getSocket() );
+
+			// Creo el outputstream
+			this.setOutputStream( new ObjectOutputStream( this.getSocket().getOutputStream() ) );
 			
 			//Creo un thread para poder escuchar los mensajes que llegan desde el servidor
 			this.crearThreadRecibidorDeMensajesDelTraficoAereo();
-
-			// Creo el outputstream
-			this.setOutputStram( new ObjectOutputStream( this.getSocket().getOutputStream() ) );
 
 			// Envio el aeropuerto al trafico aereo
 			this.enviarMensaje( Mensaje.crearMensajeAltaAeropuerto( this.getEstadoAeropuerto().getAerpuerto()));
@@ -90,7 +90,7 @@ public class ConexionTraficoAereo {
 	}
 
 	private void crearThreadRecibidorDeMensajesDelTraficoAereo() {
-		this.setThreadRecibidorDeMensajesDelTraficoAereo( new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket() ) ) );
+		this.setThreadRecibidorDeMensajesDelTraficoAereo( new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket(), this.getOutputStream() ) ) );
 		this.getThreadRecibidorDeMensajesDelTraficoAereo().start();
 	}
 
@@ -132,7 +132,7 @@ public class ConexionTraficoAereo {
 		return outputStream;
 	}
 
-	private void setOutputStram(ObjectOutputStream outputStram) {
+	private void setOutputStream(ObjectOutputStream outputStram) {
 		this.outputStream = outputStram;
 	}
 

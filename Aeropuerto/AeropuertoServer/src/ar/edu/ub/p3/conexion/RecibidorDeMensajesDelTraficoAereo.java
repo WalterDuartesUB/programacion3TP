@@ -3,6 +3,7 @@ package ar.edu.ub.p3.conexion;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.HashMap;
@@ -24,11 +25,13 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 	private EstadoAeropuerto estadoAeropuerto;
 	private Socket socket;
 	private Map<TipoMensaje,Handler<EstadoAeropuerto>> handlers;	
+	private ObjectOutputStream objectOutputStream;
 	
-	public RecibidorDeMensajesDelTraficoAereo(EstadoAeropuerto estadoAeropuerto, Socket socket) {
+	public RecibidorDeMensajesDelTraficoAereo(EstadoAeropuerto estadoAeropuerto, Socket socket, ObjectOutputStream objectOutputStream) {
 		
 		this.setEstadoAeropuerto(estadoAeropuerto);
 		this.setSocket(socket);
+		this.setObjectOutputStream(objectOutputStream);
 		this.setHandlers(new HashMap<TipoMensaje, Handler<EstadoAeropuerto>>());
 		this.loadHandlers();
 	}
@@ -52,14 +55,14 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 	public void run() {	
 		System.out.println("Empezo el thread de mensajes del TA");
 		
-		try( ObjectInputStream in = new ObjectInputStream(this.getSocket().getInputStream()) )  {			
+		try(ObjectInputStream in = new ObjectInputStream(this.getSocket().getInputStream()); )  {			
         	Mensaje mensaje = null;        	
         	
             while ( this.getEstadoAeropuerto().isDeboContinuar() ) {
                 try {
                     mensaje = (Mensaje) in.readObject();
                     System.out.println("Recibi un mensaje: " + mensaje.getTipoMensaje() );
-                    this.getHandlers().get( mensaje.getTipoMensaje() ).accept( mensaje, this.getEstadoAeropuerto() );
+                    this.getHandlers().get( mensaje.getTipoMensaje() ).accept( mensaje, this.getObjectOutputStream(), this.getEstadoAeropuerto() );
                  
                 }
                 catch (EOFException e) {
@@ -107,6 +110,14 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 
 	private void setHandlers(Map<TipoMensaje,Handler<EstadoAeropuerto>> handlers) {
 		this.handlers = handlers;
+	}
+
+	private ObjectOutputStream getObjectOutputStream() {
+		return objectOutputStream;
+	}
+
+	private void setObjectOutputStream(ObjectOutputStream objectOutputStream) {
+		this.objectOutputStream = objectOutputStream;
 	}
 
 }

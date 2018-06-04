@@ -4,32 +4,18 @@ import java.io.ObjectOutputStream;
 
 import ar.edu.ub.p3.conexion.AtendedorDePedidosDeAeropuerto;
 import ar.edu.ub.p3.conexion.Mensaje;
-import ar.edu.ub.p3.conexion.TipoError;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
-import ar.edu.ub.p3.modelo.Vuelo;
 
-public class HandlerMensajeObtenerInformacionVuelo implements Handler {
+public class HandlerMensajeVueloAterrizoEnDestino implements Handler {
+
 	private EstadoTraficoAereo estadoTA;
-	public HandlerMensajeObtenerInformacionVuelo(EstadoTraficoAereo estadoTA) {
+	public HandlerMensajeVueloAterrizoEnDestino(EstadoTraficoAereo estadoTA) {
 		this.setEstadoTA(estadoTA);
 	}
 
 	@Override
 	public void accept(Mensaje m, ObjectOutputStream oos, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
-
-		//TODO ver porque no cambia la posicion al pedir dos veces el mensaje
-		try {
-			
-			if( this.getEstadoTA().getVuelo( m.getIdVuelo() ) != null )
-			{				
-				Mensaje mensaje = Mensaje.crearMensajeInformacionVuelo( new Vuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) );
-				
-				oos.writeObject( mensaje );			
-			}
-				
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.getEstadoTA().getConexionAeropuerto( this.getEstadoTA().getVuelo( m.getIdVuelo() ).getAeropuertoOrigen().getIdAeropuerto() ).enviarMensaje( ( Mensaje.crearMensajeVueloAterrizoEnDestino( m.getIdVuelo() ) ) );
 	}
 
 	private EstadoTraficoAereo getEstadoTA() {
