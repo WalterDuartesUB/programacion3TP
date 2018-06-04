@@ -18,18 +18,19 @@ public class HandlerMensajeAltaAeropuerto implements Handler {
 
 	@Override
 	public void accept(Mensaje m, ObjectOutputStream oos, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
-		this.getEstadoTA().addAeropuerto( new ConexionAeropuerto( m.getAeropuerto(), oos ) );
+		
+		//Creo un aeropuerto nuevo
+		ConexionAeropuerto conexionAeropuerto = new ConexionAeropuerto( m.getAeropuerto(), oos );
+		
+		//Agrego el aeropuerto a la lista de aeropurtos
+		this.getEstadoTA().addAeropuerto( conexionAeropuerto );
 			
 		//Envio el ACK del alta del aeropuerto
-		try {
-			oos.writeObject( Mensaje.crearMensajeAltaAeropuertoAck( this.getEstadoTA().getIAeropuertos() ) );
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		conexionAeropuerto.enviarMensaje( Mensaje.crearMensajeAltaAeropuertoAck( this.getEstadoTA().getIAeropuertos() ) );
 		
 		//Le envio a todos los aeropuertos la lista de aeropuertos disponibles
 		for( ConexionAeropuerto aeropuerto : this.getEstadoTA().getAeropuertos().values() )
-			aeropuerto.enviarMensaje(Mensaje.crearMensajeListadoAeropuerto( this.getEstadoTA().getIAeropuertos() )  );
+			aeropuerto.enviarMensaje( Mensaje.crearMensajeListadoAeropuerto( this.getEstadoTA().getIAeropuertos() ) );
 			
 	}
 

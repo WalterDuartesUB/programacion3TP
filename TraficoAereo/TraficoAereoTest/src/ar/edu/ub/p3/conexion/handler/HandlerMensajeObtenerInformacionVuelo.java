@@ -19,6 +19,7 @@ public class HandlerMensajeObtenerInformacionVuelo implements Handler {
 
 		//TODO ver porque no cambia la posicion al pedir dos veces el mensaje
 		try {
+			
 			if( this.getEstadoTA().getVuelo( m.getIdVuelo() ) != null )
 			{
 				System.out.println( this.getEstadoTA().getVuelo( m.getIdVuelo() ) );
@@ -30,8 +31,6 @@ public class HandlerMensajeObtenerInformacionVuelo implements Handler {
 				
 				System.out.println( mensaje.getVuelo() );
 			}
-			else
-				oos.writeObject( Mensaje.crearMensajeError( TipoError.VUELO_NO_DISPONIBLE, "No existe el vuelo con idVuelo: " + m.getIdVuelo() ) );
 				
 		} catch (IOException e) {
 			e.printStackTrace();
