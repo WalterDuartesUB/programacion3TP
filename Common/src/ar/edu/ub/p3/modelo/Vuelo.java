@@ -13,12 +13,15 @@ public class Vuelo implements IVuelo,Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4508747413410986870L;
+	private static final long serialVersionUID = -6232754061495941649L;
 	private String idVuelo;
 	private volatile Avion avion;
 	private Aeropuerto aeropuertoOrigen;
 	private Aeropuerto aeropuertoDestino;	
 	private Date horarioProgramado;
+	private Date horarioDespegue;
+	private Date horarioAterrizajeEstimado;
+	private EstadoVuelo estadoVuelo;
 	
 	public Vuelo(String idVuelo, IAvion avion, IAeropuerto aeropuertoOrigen, IAeropuerto aeropuertoDestino, Date horarioProgramado) {
 		this.setIdVuelo(idVuelo);
@@ -26,10 +29,22 @@ public class Vuelo implements IVuelo,Serializable {
 		this.setAeropuertoOrigen(new Aeropuerto(aeropuertoOrigen));
 		this.setAeropuertoDestino(new Aeropuerto(aeropuertoDestino));
 		this.setHorarioProgramado(horarioProgramado);
+		
+		this.setHorarioAterrizajeEstimado(horarioProgramado);
+		this.setHorarioDespegue(horarioProgramado);
+		this.setEstadoVuelo(EstadoVuelo.BOARDING);
+	}
+	
+	public Vuelo(String idVuelo, IAvion avion, IAeropuerto aeropuertoOrigen, IAeropuerto aeropuertoDestino, Date horarioProgramado, Date horarioDespegue, Date horarioAterrizajeEstimado, EstadoVuelo estadoVuelo) {
+		this(idVuelo,avion,aeropuertoOrigen, aeropuertoDestino,horarioProgramado);
+		
+		this.setEstadoVuelo(estadoVuelo);		
+		this.setHorarioDespegue(horarioDespegue);
+		this.setHorarioAterrizajeEstimado(horarioAterrizajeEstimado);
 	}
 	
 	public Vuelo( IVuelo vuelo ) {
-		this( vuelo.getIdVuelo(), vuelo.getAvion(), vuelo.getAeropuertoOrigen(), vuelo.getAeropuertoDestino(), vuelo.getHorarioProgramado() );
+		this( vuelo.getIdVuelo(), vuelo.getAvion(), vuelo.getAeropuertoOrigen(), vuelo.getAeropuertoDestino(), vuelo.getHorarioProgramado(), vuelo.getHorarioDespegue(), vuelo.getHorarioAterrizajeEstimado(), vuelo.getEstadoVuelo() );
 	}	
 
 	@Override
@@ -81,6 +96,31 @@ public class Vuelo implements IVuelo,Serializable {
 	@Override
 	public IPosicion getPosicion() {
 		return this.getAvion().getPosicion();
+	}
+
+	@Override
+	public EstadoVuelo getEstadoVuelo() {
+		return this.estadoVuelo;
+	}
+
+	public void setEstadoVuelo(EstadoVuelo estadoVuelo) {
+		this.estadoVuelo = estadoVuelo;
+	}
+
+	public Date getHorarioAterrizajeEstimado() {
+		return horarioAterrizajeEstimado;
+	}
+
+	public void setHorarioAterrizajeEstimado(Date horarioAterrizajeEstimado) {
+		this.horarioAterrizajeEstimado = horarioAterrizajeEstimado;
+	}
+
+	public Date getHorarioDespegue() {
+		return horarioDespegue;
+	}
+
+	public void setHorarioDespegue(Date horarioDespegue) {
+		this.horarioDespegue = horarioDespegue;
 	}
 	
 }
