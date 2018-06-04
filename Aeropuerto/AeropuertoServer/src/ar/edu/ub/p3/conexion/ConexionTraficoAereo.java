@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
+import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.modelo.Vuelo;
 import ar.edu.ub.p3.util.Configuracion;
@@ -180,7 +185,7 @@ public class ConexionTraficoAereo {
 		{
 			try {
 				System.out.println("Esperando respuesta del Trafico Aereo...");
-				Thread.sleep( 1000 );			
+				Thread.sleep( 100 );			
 			} catch (InterruptedException e) {			
 				e.printStackTrace();
 			}
@@ -193,6 +198,21 @@ public class ConexionTraficoAereo {
 
 	private void setThreadRecibidorDeMensajesDelTraficoAereo(Thread threadRecibidorDeMensajesDelTraficoAereo) {
 		this.threadRecibidorDeMensajesDelTraficoAereo = threadRecibidorDeMensajesDelTraficoAereo;
+	}
+
+	public Collection<Vuelo> obtenerInformacionVuelos(Collection<String> idVuelos) {
+		//TODO el trafico aereo deberia resolver este mensaje en un solo llamado
+		List<Vuelo> vuelos = new LinkedList<Vuelo>();
+		
+		for( String idVuelo : idVuelos)
+			vuelos.add( this.obtenerInformacionVuelo(idVuelo) );
+		
+		return vuelos;
+	}
+
+	public Collection<Vuelo> obtenerInformacionVuelosCercanos(IPosicion posicion, int coberturaKm) {
+		//TODO implementar este mensaje en el trafico aereo: obtenerInformacionVuelosCercanos
+		return this.obtenerInformacionVuelos( this.getEstadoAeropuerto().getVuelos().keySet() );
 	}
 
 }

@@ -18,7 +18,7 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 	public void run() {
 
 		//Muevo el avion hasta llegar a mi "destino"
-		for( int i = 0; i < 15; i++)
+		for( int i = 0; i < 30; i++)
 		{
 			try {
 				Thread.sleep(1000);
