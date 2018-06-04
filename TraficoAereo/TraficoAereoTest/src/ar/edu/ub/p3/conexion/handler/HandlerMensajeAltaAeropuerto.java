@@ -1,11 +1,8 @@
 package ar.edu.ub.p3.conexion.handler;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import ar.edu.ub.p3.conexion.AtendedorDePedidosDeAeropuerto;
 import ar.edu.ub.p3.conexion.ConexionAeropuerto;
+import ar.edu.ub.p3.conexion.IConexionAeropuerto;
 import ar.edu.ub.p3.conexion.Mensaje;
-import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 
 public class HandlerMensajeAltaAeropuerto implements Handler {
@@ -17,16 +14,16 @@ public class HandlerMensajeAltaAeropuerto implements Handler {
 	}
 
 	@Override
-	public void accept(Mensaje m, ObjectOutputStream oos, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
+	public void accept(Mensaje m, IConexionAeropuerto conexionAeropuerto, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
 		
 		//Creo un aeropuerto nuevo
-		ConexionAeropuerto conexionAeropuerto = new ConexionAeropuerto( m.getAeropuerto(), oos );
+		ConexionAeropuerto cnxAeropuerto = new ConexionAeropuerto( m.getAeropuerto(), conexionAeropuerto );
 		
 		//Agrego el aeropuerto a la lista de aeropurtos
-		this.getEstadoTA().addAeropuerto( conexionAeropuerto );
+		this.getEstadoTA().addAeropuerto( cnxAeropuerto );
 			
 		//Envio el ACK del alta del aeropuerto
-		conexionAeropuerto.enviarMensaje( Mensaje.crearMensajeAltaAeropuertoAck( this.getEstadoTA().getIAeropuertos() ) );
+		cnxAeropuerto.enviarMensaje( Mensaje.crearMensajeAltaAeropuertoAck( this.getEstadoTA().getIAeropuertos() ) );
 		
 		//Le envio a todos los aeropuertos la lista de aeropuertos disponibles
 		for( ConexionAeropuerto aeropuerto : this.getEstadoTA().getAeropuertos().values() )

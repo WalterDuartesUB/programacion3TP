@@ -1,9 +1,7 @@
 package ar.edu.ub.p3.conexion.handler;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import ar.edu.ub.p3.conexion.AtendedorDePedidosDeAeropuerto;
 import ar.edu.ub.p3.conexion.ConexionAeropuerto;
+import ar.edu.ub.p3.conexion.IConexionAeropuerto;
 import ar.edu.ub.p3.conexion.Mensaje;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 
@@ -16,15 +14,11 @@ public class HandlerMensajeBajaAeropuerto implements Handler {
 	}
 
 	@Override
-	public void accept(Mensaje m, ObjectOutputStream oos, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
+	public void accept(Mensaje m, IConexionAeropuerto conexionAeropuerto, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
 		this.getEstadoTA().quitarAeropuerto( m.getIdAeropuerto() );
 		
 		//Envio el ACK de la baja del aeropuerto
-		try {
-			oos.writeObject( Mensaje.crearMensajeBajaAeropuertoAck() );
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		conexionAeropuerto.enviarMensaje( Mensaje.crearMensajeBajaAeropuertoAck() );
 		
 		//Le envio a todos los aeropuertos la lista de aeropuertos disponibles
 		for( ConexionAeropuerto aeropuerto : this.getEstadoTA().getAeropuertos().values() )
