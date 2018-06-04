@@ -10,6 +10,7 @@ import ar.edu.ub.p3.conexion.handler.HandlerMensajeAltaAeropuerto;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeBajaAeropuerto;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeObtenerInformacionVuelo;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeObtenerListadoAeropuertosDisponibles;
+import ar.edu.ub.p3.conexion.handler.HandlerMensajeVueloAterrizoEnDestino;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeVueloProgramado;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 import ar.edu.ub.p3.util.Configuracion;
@@ -34,6 +35,7 @@ public class Aplicacion {
 		handlers.put(TipoMensaje.OBTENER_LISTADO_AEROPUERTOS_DISPONIBLES, new HandlerMensajeObtenerListadoAeropuertosDisponibles( estadoTA ) );
 		handlers.put(TipoMensaje.VUELO_PROGRAMADO, new HandlerMensajeVueloProgramado( estadoTA ) );
 		handlers.put(TipoMensaje.OBTENER_INFORMACION_VUELO, new HandlerMensajeObtenerInformacionVuelo( estadoTA ) );
+		handlers.put(TipoMensaje.VUELO_ATERRIZO_EN_DESTINO, new HandlerMensajeVueloAterrizoEnDestino( estadoTA ) );
 		
 		///////////////////////////////////////////////////////////////////////
 		// Inicio el servidor

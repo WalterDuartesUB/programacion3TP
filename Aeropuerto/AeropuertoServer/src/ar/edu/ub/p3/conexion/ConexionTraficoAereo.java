@@ -7,15 +7,15 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
+import ar.edu.ub.p3.modelo.EstadoVuelo;
 import ar.edu.ub.p3.modelo.Posicion;
 import ar.edu.ub.p3.modelo.Vuelo;
 import ar.edu.ub.p3.util.Configuracion;
 
-public class ConexionTraficoAereo {
+public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	
 	private EstadoAeropuerto estadoAeropuerto;
 	private Configuracion configuracion;
@@ -64,12 +64,12 @@ public class ConexionTraficoAereo {
 			this.setSocket( new Socket(this.getIpServer(), this.getPuerto() ) );
 
 			System.out.println( this.getSocket() );
+
+			// Creo el outputstream
+			this.setOutputStream( new ObjectOutputStream( this.getSocket().getOutputStream() ) );
 			
 			//Creo un thread para poder escuchar los mensajes que llegan desde el servidor
 			this.crearThreadRecibidorDeMensajesDelTraficoAereo();
-
-			// Creo el outputstream
-			this.setOutputStram( new ObjectOutputStream( this.getSocket().getOutputStream() ) );
 
 			// Envio el aeropuerto al trafico aereo
 			this.enviarMensaje( Mensaje.crearMensajeAltaAeropuerto( this.getEstadoAeropuerto().getAerpuerto()));
@@ -90,7 +90,7 @@ public class ConexionTraficoAereo {
 	}
 
 	private void crearThreadRecibidorDeMensajesDelTraficoAereo() {
-		this.setThreadRecibidorDeMensajesDelTraficoAereo( new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket() ) ) );
+		this.setThreadRecibidorDeMensajesDelTraficoAereo( new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket(), this ) ) );
 		this.getThreadRecibidorDeMensajesDelTraficoAereo().start();
 	}
 
@@ -102,7 +102,8 @@ public class ConexionTraficoAereo {
 		return this.getEstadoAeropuerto().isEstoyEsperandoRespuestaConexion();
 	}
 
-	private void enviarMensaje(Mensaje mensaje) {
+	@Override
+	public void enviarMensaje(Mensaje mensaje) {
 		
 		try {
 			this.getOutputStream().writeObject( mensaje );
@@ -132,7 +133,7 @@ public class ConexionTraficoAereo {
 		return outputStream;
 	}
 
-	private void setOutputStram(ObjectOutputStream outputStram) {
+	private void setOutputStream(ObjectOutputStream outputStram) {
 		this.outputStream = outputStram;
 	}
 
@@ -168,6 +169,7 @@ public class ConexionTraficoAereo {
 	public void despegar(Vuelo vuelo) {
 		//TODO evaluar si esto tiene que estar aca
 		vuelo.setPosicion(new Posicion( this.getEstadoAeropuerto().getAerpuerto().getPosicion() ) );
+		vuelo.setEstadoVuelo( EstadoVuelo.ON_AIR );
 		
 		this.enviarMensaje( Mensaje.crearMensajeProgramarVuelo(vuelo));		
 	}

@@ -26,7 +26,7 @@ public class VentanaRadar extends JDialog {
 		
 		this.setTitle("Radar");
 		this.setSize(397, 399);
-		this.add( new PanelRadar( this.getConfiguracion(), this.getAerpuerto(), this.getConexionTA() ),BorderLayout.CENTER);
+		this.add( new PanelRadar( this.getConfiguracion(), this.getAerpuerto().getPosicion(), this.getConexionTA() ),BorderLayout.CENTER);
 		this.setVisible(true);		
 		
 		//TODO en el close de este dialogo tiene que matar el timer de PanelRadar

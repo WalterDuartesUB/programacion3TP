@@ -1,10 +1,7 @@
 package ar.edu.ub.p3.conexion.handler;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import ar.edu.ub.p3.conexion.AtendedorDePedidosDeAeropuerto;
+import ar.edu.ub.p3.conexion.IConexionAeropuerto;
 import ar.edu.ub.p3.conexion.Mensaje;
-import ar.edu.ub.p3.conexion.TipoError;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 import ar.edu.ub.p3.modelo.Vuelo;
 
@@ -15,27 +12,10 @@ public class HandlerMensajeObtenerInformacionVuelo implements Handler {
 	}
 
 	@Override
-	public void accept(Mensaje m, ObjectOutputStream oos, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
+	public void accept(Mensaje m, IConexionAeropuerto conexionAeropuerto, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
 
-		//TODO ver porque no cambia la posicion al pedir dos veces el mensaje
-		try {
-			if( this.getEstadoTA().getVuelo( m.getIdVuelo() ) != null )
-			{
-				System.out.println( this.getEstadoTA().getVuelo( m.getIdVuelo() ) );
-				System.out.println( new Vuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) );
-				
-				Mensaje mensaje = Mensaje.crearMensajeInformacionVuelo( new Vuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) );
-				
-				oos.writeObject( mensaje );
-				
-				System.out.println( mensaje.getVuelo() );
-			}
-			else
-				oos.writeObject( Mensaje.crearMensajeError( TipoError.VUELO_NO_DISPONIBLE, "No existe el vuelo con idVuelo: " + m.getIdVuelo() ) );
-				
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		if( this.getEstadoTA().getVuelo( m.getIdVuelo() ) != null )					
+			conexionAeropuerto.enviarMensaje( Mensaje.crearMensajeInformacionVuelo( new Vuelo( this.getEstadoTA().getVuelo( m.getIdVuelo() ) ) ) );	
 	}
 
 	private EstadoTraficoAereo getEstadoTA() {

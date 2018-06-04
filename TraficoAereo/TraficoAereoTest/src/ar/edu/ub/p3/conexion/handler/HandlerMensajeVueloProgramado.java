@@ -1,7 +1,6 @@
 package ar.edu.ub.p3.conexion.handler;
-import java.io.ObjectOutputStream;
-
 import ar.edu.ub.p3.conexion.AtendedorDePedidosDeAeropuerto;
+import ar.edu.ub.p3.conexion.IConexionAeropuerto;
 import ar.edu.ub.p3.conexion.Mensaje;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 import ar.edu.ub.p3.modelo.Vuelo;
@@ -13,7 +12,7 @@ public class HandlerMensajeVueloProgramado implements Handler {
 	}
 
 	@Override
-	public void accept(Mensaje m, ObjectOutputStream oos, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
+	public void accept(Mensaje m, IConexionAeropuerto conexionAeropuerto, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
 		
 		Vuelo vuelo = new Vuelo( m.getVuelo() );
 		this.getEstadoTA().addVuelo( vuelo );
