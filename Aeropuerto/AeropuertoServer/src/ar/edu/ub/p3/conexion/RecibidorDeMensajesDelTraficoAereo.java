@@ -3,7 +3,6 @@ package ar.edu.ub.p3.conexion;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.HashMap;
@@ -25,13 +24,13 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 	private EstadoAeropuerto estadoAeropuerto;
 	private Socket socket;
 	private Map<TipoMensaje,Handler<EstadoAeropuerto>> handlers;	
-	private ObjectOutputStream objectOutputStream;
+	private IConexionTraficoAereo conexionTraficoAereo;
 	
-	public RecibidorDeMensajesDelTraficoAereo(EstadoAeropuerto estadoAeropuerto, Socket socket, ObjectOutputStream objectOutputStream) {
+	public RecibidorDeMensajesDelTraficoAereo(EstadoAeropuerto estadoAeropuerto, Socket socket, IConexionTraficoAereo conexionTraficoAereo) {
 		
 		this.setEstadoAeropuerto(estadoAeropuerto);
 		this.setSocket(socket);
-		this.setObjectOutputStream(objectOutputStream);
+		this.setConexionTraficoAereo(conexionTraficoAereo);
 		this.setHandlers(new HashMap<TipoMensaje, Handler<EstadoAeropuerto>>());
 		this.loadHandlers();
 	}
@@ -62,7 +61,7 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
                 try {
                     mensaje = (Mensaje) in.readObject();
                     System.out.println("Recibi un mensaje: " + mensaje.getTipoMensaje() );
-                    this.getHandlers().get( mensaje.getTipoMensaje() ).accept( mensaje, this.getObjectOutputStream(), this.getEstadoAeropuerto() );
+                    this.getHandlers().get( mensaje.getTipoMensaje() ).accept( mensaje, this.getConexionTraficoAereo(), this.getEstadoAeropuerto() );
                  
                 }
                 catch (EOFException e) {
@@ -112,12 +111,12 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 		this.handlers = handlers;
 	}
 
-	private ObjectOutputStream getObjectOutputStream() {
-		return objectOutputStream;
+	private IConexionTraficoAereo getConexionTraficoAereo() {
+		return conexionTraficoAereo;
 	}
 
-	private void setObjectOutputStream(ObjectOutputStream objectOutputStream) {
-		this.objectOutputStream = objectOutputStream;
+	private void setConexionTraficoAereo(IConexionTraficoAereo conexionTraficoAereo) {
+		this.conexionTraficoAereo = conexionTraficoAereo;
 	}
 
 }

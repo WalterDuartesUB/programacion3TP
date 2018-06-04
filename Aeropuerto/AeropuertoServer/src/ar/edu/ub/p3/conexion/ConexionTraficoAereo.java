@@ -7,7 +7,6 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
@@ -16,7 +15,7 @@ import ar.edu.ub.p3.modelo.Posicion;
 import ar.edu.ub.p3.modelo.Vuelo;
 import ar.edu.ub.p3.util.Configuracion;
 
-public class ConexionTraficoAereo {
+public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	
 	private EstadoAeropuerto estadoAeropuerto;
 	private Configuracion configuracion;
@@ -91,7 +90,7 @@ public class ConexionTraficoAereo {
 	}
 
 	private void crearThreadRecibidorDeMensajesDelTraficoAereo() {
-		this.setThreadRecibidorDeMensajesDelTraficoAereo( new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket(), this.getOutputStream() ) ) );
+		this.setThreadRecibidorDeMensajesDelTraficoAereo( new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket(), this ) ) );
 		this.getThreadRecibidorDeMensajesDelTraficoAereo().start();
 	}
 
@@ -103,7 +102,7 @@ public class ConexionTraficoAereo {
 		return this.getEstadoAeropuerto().isEstoyEsperandoRespuestaConexion();
 	}
 
-	private void enviarMensaje(Mensaje mensaje) {
+	public void enviarMensaje(Mensaje mensaje) {
 		
 		try {
 			this.getOutputStream().writeObject( mensaje );
