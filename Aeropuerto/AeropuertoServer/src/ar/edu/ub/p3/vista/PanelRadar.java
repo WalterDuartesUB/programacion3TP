@@ -25,14 +25,14 @@ public class PanelRadar extends JPanel{
 	private List<Integer> radiosDeCobertura;
 	private Collection<Vuelo> vuelos;
 	private int coberturaKm;
-	private IAeropuerto aeropuerto; 
+	private IPosicion posicionRadar; 
 	private int angulo;
 	private ConexionTraficoAereo conexionTA;
 	private Configuracion configuracion;
 	
-	public PanelRadar( Configuracion configuracion, IAeropuerto aeropuerto, ConexionTraficoAereo conexionTA) {
+	public PanelRadar( Configuracion configuracion, IPosicion posicionRadar, ConexionTraficoAereo conexionTA) {
 		this.setConexionTA(conexionTA);
-		this.setAeropuerto(aeropuerto);
+		this.setPosicionRadar(posicionRadar);
 		this.setVuelos( new LinkedList<Vuelo>() );
 		this.setConfiguracion(configuracion);
 		
@@ -58,7 +58,7 @@ public class PanelRadar extends JPanel{
 
 	public void pedirVuelosAlTraficoAereo(ActionEvent arg0) {		
 		//Pido la info de los vuelos cercanos a mi posicion
-		this.setVuelos( this.getConexionTA().obtenerInformacionVuelosCercanos( this.getAeropuerto().getPosicion(), this.getCoberturaKm() ) );
+		this.setVuelos( this.getConexionTA().obtenerInformacionVuelosCercanos( this.getPosicionRadar(), this.getCoberturaKm() ) );
 		
 		this.dibujarRadar();
 	}
@@ -125,7 +125,7 @@ public class PanelRadar extends JPanel{
 		g.drawChars(idAvion, 0, idAvion.length, xPixelCorregido+10, yPixelCorregido);
 	}
 	private Posicion obtenerDistanciasAlAeropuerto(IPosicion posicion) {
-		return new Posicion(posicion.getX()-this.getAeropuerto().getPosicion().getX(),posicion.getY()-this.getAeropuerto().getPosicion().getY());
+		return new Posicion(posicion.getX()-this.getPosicionRadar().getX(),posicion.getY()-this.getPosicionRadar().getY());
 	}
 
 	private int calcularCoordenadaXEnPantalla(int xPixel, int anchoAlto) {
@@ -174,12 +174,12 @@ public class PanelRadar extends JPanel{
 		this.vuelos = vuelos;
 	}
 
-	private IAeropuerto getAeropuerto() {
-		return aeropuerto;
+	private IPosicion getPosicionRadar() {
+		return posicionRadar;
 	}
 
-	private void setAeropuerto(IAeropuerto aeropuerto) {
-		this.aeropuerto = aeropuerto;
+	private void setPosicionRadar(IPosicion posicionRadar) {
+		this.posicionRadar = posicionRadar;
 	}
 
 	private void dibujarRadar() {
