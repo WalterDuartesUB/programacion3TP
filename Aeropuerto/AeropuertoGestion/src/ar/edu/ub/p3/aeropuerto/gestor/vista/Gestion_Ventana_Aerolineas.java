@@ -2,8 +2,8 @@ package ar.edu.ub.p3.aeropuerto.gestor.vista;
 
 import java.awt.BorderLayout;
 
-
-
+import javax.sound.sampled.Line;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -11,12 +11,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
+
 import ar.edu.ub.p3.aeropuerto.gestor.conexion.ConexionAeropuerto;
 import ar.edu.ub.p3.interfaz.IAerolinea;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
+import java.awt.CardLayout;
+
 
 public class Gestion_Ventana_Aerolineas extends JFrame {
 
@@ -26,7 +31,7 @@ public class Gestion_Ventana_Aerolineas extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
     
-
+	
 
 	
     public Gestion_Ventana_Aerolineas(ConexionAeropuerto conexion) {
@@ -40,7 +45,7 @@ public class Gestion_Ventana_Aerolineas extends JFrame {
 
     private void configurarVentana() {
         this.setTitle("Gestion Aerolineas");                
-        this.setSize(583, 285);                                  
+        this.setSize(800, 285);                                  
         this.setLocationRelativeTo(null);                        
         this.getContentPane().setLayout(null); 
 
@@ -85,10 +90,57 @@ public class Gestion_Ventana_Aerolineas extends JFrame {
     	tabla.setBackground(Color.DARK_GRAY);
     	
     	tabla.setSize(100,100);
+    	
     
+    	
     	getContentPane().setLayout(new BorderLayout());
     	getContentPane().add(tabla.getTableHeader(), BorderLayout.PAGE_START);
-    	getContentPane().add(scroll,BorderLayout.CENTER);
+     	
+     	
+     	//PANEL PARA REALIZAR ABM DE AEROL
+     	JPanel opciones = new JPanel();
+     	opciones.setSize(200, 226);
+     	
+     	opciones.setForeground(Color.WHITE);
+     	opciones.setBackground(Color.DARK_GRAY);
+     	opciones.setLayout(new CardLayout(0, 0));
+     	opciones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+     	
+     	JButton btnAgregar 		= new JButton("Crear");
+     	btnAgregar.setForeground(Color.WHITE);
+     	btnAgregar.setBackground(Color.GRAY);
+     	opciones.add(btnAgregar);
+     	
+     	JButton btnModificar 	= new JButton("Modificar");
+     	btnModificar.setForeground(Color.WHITE);
+     	btnModificar.setBackground(Color.GRAY);
+     	opciones.add(btnModificar);
+     	
+     	JButton btnEliminar		= new JButton("Eliminar");
+     	btnEliminar.setForeground(Color.WHITE);
+     	btnEliminar.setBackground(Color.GRAY);
+     	opciones.add(btnEliminar,BorderLayout.PAGE_START);
+     	
+     	
+     	
+     	JButton btnSalir		= new JButton("Salir");
+     	btnSalir.setForeground(Color.WHITE);
+     	btnSalir.setBackground(Color.GRAY);
+     	btnSalir.addActionListener( this::onClickMenuItemSalir );
+     	opciones.add(btnSalir);
+     	
+     	
+     	JTextField txtIdAerolinea = new JTextField(12);
+     	opciones.add(txtIdAerolinea);
+     	
+     	
+     	JTextField txtNombreAerolinea = new JTextField(12);
+     	opciones.add(txtNombreAerolinea);
+     	
+     	
+     	
+     	getContentPane().add(opciones, BorderLayout.EAST);
+     	getContentPane().add(scroll,BorderLayout.CENTER);
     	
     	JPanel botones = new JPanel();
     	scroll.setRowHeaderView(botones);
