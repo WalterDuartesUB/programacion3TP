@@ -93,7 +93,7 @@ public class Gestion_Ventanas extends JFrame {
 	
 	public void onClickMenuItemAbrirTablaAerolineas( ActionEvent ae ) {
 				
-		getVentanas().get(1).setVisible(true);
+		getVentanas().get(4).setVisible(true);
 		
 	}
 	

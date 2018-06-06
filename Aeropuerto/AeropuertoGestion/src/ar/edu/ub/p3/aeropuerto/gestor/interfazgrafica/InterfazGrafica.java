@@ -11,6 +11,8 @@ import ar.edu.ub.p3.aeropuerto.gestor.vista.Gestion_Ventana_Aeropuertos;
 import ar.edu.ub.p3.aeropuerto.gestor.vista.Gestion_Ventana_Aviones;
 import ar.edu.ub.p3.aeropuerto.gestor.vista.Gestion_Ventana_Vuelos;
 import ar.edu.ub.p3.aeropuerto.gestor.vista.Gestion_Ventanas;
+import ar.edu.ub.p3.aeropuerto.gestor.vista.aerolinea.FichaCamposPanel2;
+import ar.edu.ub.p3.aeropuerto.gestor.vista.aerolinea.FichaConListaView;
 
 
 public class InterfazGrafica {
@@ -41,12 +43,17 @@ public class InterfazGrafica {
 		setGV_Vuelos	( new Gestion_Ventana_Vuelos	( getConexion() ) );
 		setGV_Aeropuertos(new Gestion_Ventana_Aeropuertos(getConexion() ) );
 		
+		
+		
 		List<JFrame> ventanas = new LinkedList<JFrame>();
 		
 		ventanas.add(getGV_Aviones());
 		ventanas.add(getGV_Aerolineas());
 		ventanas.add(getGV_Aeropuertos());
 		ventanas.add(getGV_Vuelos());
+		
+		
+		ventanas.add(new FichaConListaView( new FichaCamposPanel2( conexion ) ,conexion));
 		
 		setGestion_Ventanas( new Gestion_Ventanas(ventanas) );
 		
