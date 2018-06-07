@@ -8,6 +8,7 @@ import ar.edu.ub.p3.interfaz.IVuelo;
 import ar.edu.ub.p3.modelo.Aerolinea;
 import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.modelo.Avion;
+import ar.edu.ub.p3.modelo.EstadoVuelo;
 import ar.edu.ub.p3.modelo.Posicion;
 import ar.edu.ub.p3.modelo.Vuelo;
 
@@ -48,15 +49,19 @@ public class AeropuertoServidorSimulado {
 		Avion avion9 = new Avion("LV-GWL", new Aerolinea("OY","ANDES"), new Posicion(33,33));
 		
 		Vuelo vuelo1 = new Vuelo("AR1406", avion1, aep, sla, hora1);
+		Vuelo vuelo5 = new Vuelo("LA1575", avion1, sla, aep, hora2, hora3, hora4, EstadoVuelo.ON_AIR);
 		Vuelo vuelo2 = new Vuelo("LA1574", avion2, aep, sla, hora2);
 		Vuelo vuelo3 = new Vuelo("OY1421", avion3, aep, sla, hora3);
-		Vuelo vuelo4 = new Vuelo("AR1407", avion1, sla, aep, hora4);
+		Vuelo vuelo4 = new Vuelo("AR1407", avion1, aep, sla, hora4);
+		Vuelo vuelo6 = new Vuelo("AR1408", avion2, sla, aep, hora4);
 	
 		
 		getVuelosPrueba().add(vuelo1);
 		getVuelosPrueba().add(vuelo2);
 		getVuelosPrueba().add(vuelo3);
 		getVuelosPrueba().add(vuelo4);
+		getVuelosPrueba().add(vuelo5);
+		getVuelosPrueba().add(vuelo6);
 
 	}
 
