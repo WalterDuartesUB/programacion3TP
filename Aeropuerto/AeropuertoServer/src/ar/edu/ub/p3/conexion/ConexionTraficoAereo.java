@@ -163,7 +163,7 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	}
 
 	public void obtenerAeropuertosDisponibles() {
-		this.enviarMensaje( Mensaje.crearMensajeObtenerListadoAeropuerto() );
+		this.enviarMensaje( Mensaje.crearMensajeObtenerListadoAeropuerto( this.getEstadoAeropuerto().getAerpuerto().getIdAeropuerto() ) );
 	}
 
 	public void despegar(Vuelo vuelo) {
@@ -179,7 +179,7 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 		this.getEstadoAeropuerto().setEstoyEsperandoRespuestaConexion( true );
 		this.getEstadoAeropuerto().setVueloRecibido(null);
 		
-		this.enviarMensaje( Mensaje.crearMensajeObtenerInformacionVuelo( idVuelo ) );
+		this.enviarMensaje( Mensaje.crearMensajeObtenerInformacionVuelo( this.getEstadoAeropuerto().getAerpuerto().getIdAeropuerto(), idVuelo ) );
 		
 		this.esperarRespuestaTraficoAereo();
 		

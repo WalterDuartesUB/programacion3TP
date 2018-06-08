@@ -41,9 +41,10 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 		
 		//Envio un mensaje de proximidad al aeropuerto de destino
 		this.getEstadoTraficoAereo().getConexionAeropuerto( aeropuertoDestino.getIdAeropuerto() ).enviarMensaje( Mensaje.crearMensajeVueloProximoAterrizar(new Vuelo(this.getEstadoTraficoAereo().getVuelo(this.getIdVuelo()))));
-		
+	
+		//TODO Sacar de la lista de vuelos del TA
 		//Sigo avanzando el avion hasta llegar
-		this.moverAvion(aeropuertoDestino, pendiente, orientacionX, vuelo, 0.1);
+//		this.moverAvion(aeropuertoDestino, pendiente, orientacionX, vuelo, 0.1);
 	}
 
 	private void moverAvion(IAeropuerto aeropuertoDestino, double pendiente, double orientacionX, IVuelo vuelo, double distanciaAlDestino) {

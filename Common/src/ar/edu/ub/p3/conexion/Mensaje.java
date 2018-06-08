@@ -7,11 +7,11 @@ import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IVuelo;
 
 public class Mensaje implements Serializable{
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8908279627091769482L;
+	private static final long serialVersionUID = -3985999859165403417L;
 	private TipoMensaje 	  tipoMensaje = null;
 	private IAeropuerto 	  aeropuerto = null;
 	private String  		  idAeropuerto = null;
@@ -36,8 +36,11 @@ public class Mensaje implements Serializable{
 		return mensaje;
 	}
 	
-	public static Mensaje crearMensajeObtenerListadoAeropuerto() {
-		return new Mensaje(TipoMensaje.OBTENER_LISTADO_AEROPUERTOS_DISPONIBLES);
+	public static Mensaje crearMensajeObtenerListadoAeropuerto( String idAeropuerto) {
+		Mensaje mensaje = new Mensaje(TipoMensaje.OBTENER_LISTADO_AEROPUERTOS_DISPONIBLES);
+		mensaje.setIdAeropuerto(idAeropuerto);
+		return mensaje;
+		
 	}
 	
 	public static Mensaje crearMensajeListadoAeropuerto(List<IAeropuerto> aeropuertos) {
@@ -72,16 +75,18 @@ public class Mensaje implements Serializable{
 		mensaje.setVuelo(vuelo);
 		return mensaje;
 	}
-	
+	/*
 	public static Mensaje crearMensajeVueloAterrizoEnDestino(String idVuelo) {
 		Mensaje mensaje = new Mensaje(TipoMensaje.VUELO_ATERRIZO_EN_DESTINO);
 		mensaje.setIdVuelo(idVuelo);
 		return mensaje;
 	}
+	*/
 	
-	public static Mensaje crearMensajeObtenerInformacionVuelo( String idVuelo) {
+	public static Mensaje crearMensajeObtenerInformacionVuelo( String idAeropuerto, String idVuelo) {
 		Mensaje mensaje = new Mensaje(TipoMensaje.OBTENER_INFORMACION_VUELO);
 		mensaje.setIdVuelo(idVuelo);		
+		mensaje.setIdAeropuerto(idAeropuerto);
 		return mensaje;
 	}
 	
@@ -90,11 +95,7 @@ public class Mensaje implements Serializable{
 		mensaje.setVuelo(vuelo);
 		return mensaje;
 	}
-	
-	
-	
-	
-	
+		
 	public TipoMensaje getTipoMensaje() {
 		return tipoMensaje;
 	}

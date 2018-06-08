@@ -45,7 +45,7 @@ public class RecibidorDeMensajesDelTraficoAereo implements Runnable {
 		//Mensajes de Vuelo
 		this.getHandlers().put(TipoMensaje.VUELO_PROGRAMADO, new HandlerMensajeVueloProgramado() );
 		this.getHandlers().put(TipoMensaje.VUELO_PROXIMO_A_ATERRIZAR, new HandlerMensajeVueloProximoAterrizar() );
-		this.getHandlers().put(TipoMensaje.VUELO_ATERRIZO_EN_DESTINO, new HandlerMensajeVueloAterrizoEnDestino() );
+//		this.getHandlers().put(TipoMensaje.VUELO_ATERRIZO_EN_DESTINO, new HandlerMensajeVueloAterrizoEnDestino() );
 		this.getHandlers().put(TipoMensaje.INFORMACION_VUELO, new HandlerMensajeInformacionVuelo() );
 		
 	}

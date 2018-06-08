@@ -35,7 +35,9 @@ public class Aplicacion {
 		handlers.put(TipoMensaje.OBTENER_LISTADO_AEROPUERTOS_DISPONIBLES, new HandlerMensajeObtenerListadoAeropuertosDisponibles( estadoTA ) );
 		handlers.put(TipoMensaje.VUELO_PROGRAMADO, new HandlerMensajeVueloProgramado( estadoTA ) );
 		handlers.put(TipoMensaje.OBTENER_INFORMACION_VUELO, new HandlerMensajeObtenerInformacionVuelo( estadoTA ) );
-		handlers.put(TipoMensaje.VUELO_ATERRIZO_EN_DESTINO, new HandlerMensajeVueloAterrizoEnDestino( estadoTA ) );
+		
+		//TODO El aeropuerto se encarga de aterrizar cuando esta "cerca". A origen no le interesa en que termina el vuelo
+//		handlers.put(TipoMensaje.VUELO_ATERRIZO_EN_DESTINO, new HandlerMensajeVueloAterrizoEnDestino( estadoTA ) );
 		
 		///////////////////////////////////////////////////////////////////////
 		// Inicio el servidor
