@@ -12,8 +12,13 @@ public class FichaBotonesPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 4758493507936529253L;
 
-	public FichaBotonesPanel() {
+	private FichaPanel	fichaPanel;
+	
+	public FichaBotonesPanel( FichaPanel fichaPanel ) {
 		super();
+		
+		setFichaPanel(fichaPanel);
+		
 		setBackground(Color.DARK_GRAY);
 		
 		this.setLayout( new FlowLayout());
@@ -34,6 +39,14 @@ public class FichaBotonesPanel extends JPanel {
 		button_3.setForeground(Color.WHITE);
 		button_3.setBackground(Color.DARK_GRAY);
 		this.add( button_3);
+	}
+
+	public FichaPanel getFichaPanel() {
+		return fichaPanel;
+	}
+
+	public void setFichaPanel(FichaPanel fichaPanel) {
+		this.fichaPanel = fichaPanel;
 	}
 
 }

@@ -11,18 +11,61 @@ import java.awt.Color;
 
 public class FichaConListaView extends JFrame {
 
-	public FichaConListaView(FichaCamposPanel fichaPanel,ConexionAeropuerto conexion) throws HeadlessException {
+	private ConexionAeropuerto conexion;
+	private ListaPanel listaPanel;
+	private FichaPanel	fichaPanel;
+	
+	
+	public FichaConListaView( ConexionAeropuerto conexion ) throws HeadlessException {
+		
 		super();
+		setConexion(conexion);
+		
+		configuracionVentana();
+		
 		getContentPane().setBackground(Color.DARK_GRAY);
 
 		getContentPane().setLayout( new GridLayout(1,2));
 		
-		getContentPane().add( new ListaPanel( conexion));
-		getContentPane().add( new FichaPanel( fichaPanel ));
+		getContentPane().add( getListaPanel());
+		getContentPane().add( getFichaPanel());
 		
 		this.setSize(800, 320);                                  
         this.setLocationRelativeTo(null); 
 		this.setVisible(false);
+	}
+
+	private void configuracionVentana() {
+		
+		setListaPanel( new ListaPanel( this ) );
+		
+		
+		setFichaPanel( new FichaPanel( this ) );
+		
+	}
+
+	public ConexionAeropuerto getConexion() {
+		return conexion;
+	}
+
+	public void setConexion(ConexionAeropuerto conexion) {
+		this.conexion = conexion;
+	}
+
+	public ListaPanel getListaPanel() {
+		return listaPanel;
+	}
+
+	public void setListaPanel(ListaPanel listaPanel) {
+		this.listaPanel = listaPanel;
+	}
+
+	public FichaPanel getFichaPanel() {
+		return fichaPanel;
+	}
+
+	public void setFichaPanel(FichaPanel fichaPanel) {
+		this.fichaPanel = fichaPanel;
 	}
 
 	/**
