@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +21,7 @@ import ar.edu.ub.p3.modelo.Posicion;
 import ar.edu.ub.p3.modelo.Vuelo;
 import ar.edu.ub.p3.util.Configuracion;
 
-public class PanelRadar extends JPanel{
+public class PanelRadar extends JPanel implements Closeable{
 	private static final long serialVersionUID = 1L;
 	private List<Integer> radiosDeCobertura;
 	private Collection<Vuelo> vuelos;
@@ -28,6 +30,8 @@ public class PanelRadar extends JPanel{
 	private int angulo;
 	private ConexionTraficoAereo conexionTA;
 	private Configuracion configuracion;
+	private Timer timerCambioDeAnguloDelArcoDelRadar;
+	private Timer timerPedidorDeVuelosEnElAire;
 	
 	public PanelRadar( Configuracion configuracion, IPosicion posicionRadar, ConexionTraficoAereo conexionTA) {
 		this.setConexionTA(conexionTA);
@@ -44,10 +48,13 @@ public class PanelRadar extends JPanel{
 		this.getRadiosDeCobertura().add( this.getConfiguracion().getConfiguracionAsInt("radioRadarEnKilometros3")  );		
 	
 		//Creo el timer para dibujar el arco del radar
-		new Timer( 15, this::cambiarAnguloDelArcoDelRadar).start();
+		this.setTimerCambioDeAnguloDelArcoDelRadar( new Timer( 15, this::cambiarAnguloDelArcoDelRadar));
+		this.getTimerCambioDeAnguloDelArcoDelRadar().start();
 		
 		//Timer para pedir la posicion de los aviones al trafico aereo
-		new Timer( 1000, this::pedirVuelosAlTraficoAereo).start();
+		this.setTimerPedidorDeVuelosEnElAire(new Timer( 1000, this::pedirVuelosAlTraficoAereo));
+		this.getTimerPedidorDeVuelosEnElAire().start();
+		
 	  }
 
 	public void cambiarAnguloDelArcoDelRadar(ActionEvent arg0) {
@@ -99,7 +106,7 @@ public class PanelRadar extends JPanel{
 		
 		g2.setPaint( gp );
 		g2.rotate( Math.toRadians( this.getAngulo() ), 0 + (anchoAlto/2), 0 + (anchoAlto/2));
-		g2.fillArc((int)0, (int)0, (int)anchoAlto, (int)anchoAlto, 0, (int)15);
+		g2.fillArc(0, 0, anchoAlto, anchoAlto, 0, 15);
 		
 		g2.setTransform(old);
 	}
@@ -116,11 +123,10 @@ public class PanelRadar extends JPanel{
 
 	private void dibujarVuelo(Graphics g, IVuelo vuelo, int anchoAlto, Color colorAvion) {
 		Posicion posicionAvion = this.obtenerDistanciasAlAeropuerto(vuelo.getAvion().getPosicion());
-		double x = posicionAvion.getX();
-		double y = posicionAvion.getY();
-		//TODO sacar el casteo y comvertir correctamente 
-		int xPixel = this.calcularUnidadesDePantalla(anchoAlto, (int)x);
-		int yPixel = this.calcularUnidadesDePantalla(anchoAlto, (int)y);
+		int x =new Double(posicionAvion.getX()).intValue();
+		int y = new Double(posicionAvion.getY()).intValue();
+		int xPixel = this.calcularUnidadesDePantalla(anchoAlto, x);
+		int yPixel = this.calcularUnidadesDePantalla(anchoAlto, y);
 		int yPixelCorregido = this.calcularCoordenadaYEnPantalla(yPixel,anchoAlto);
 		int xPixelCorregido = this.calcularCoordenadaXEnPantalla(xPixel,anchoAlto);
 		char[] idAvion = vuelo.getAvion().getIdAvion().toCharArray();
@@ -215,5 +221,27 @@ public class PanelRadar extends JPanel{
 
 	private void setConfiguracion(Configuracion configuracion) {
 		this.configuracion = configuracion;
+	}
+
+	@Override
+	public void close() throws IOException {
+		this.getTimerCambioDeAnguloDelArcoDelRadar().stop();
+		this.getTimerPedidorDeVuelosEnElAire().stop();
+	}
+
+	private Timer getTimerCambioDeAnguloDelArcoDelRadar() {
+		return timerCambioDeAnguloDelArcoDelRadar;
+	}
+
+	private void setTimerCambioDeAnguloDelArcoDelRadar( Timer timerCambioDeAnguloDelArcoDelRadar) {
+		this.timerCambioDeAnguloDelArcoDelRadar = timerCambioDeAnguloDelArcoDelRadar;
+	}
+
+	private Timer getTimerPedidorDeVuelosEnElAire() {
+		return timerPedidorDeVuelosEnElAire;
+	}
+
+	private void setTimerPedidorDeVuelosEnElAire( Timer timerPedidorDeVuelosEnElAire) {
+		this.timerPedidorDeVuelosEnElAire = timerPedidorDeVuelosEnElAire;
 	}
 }
