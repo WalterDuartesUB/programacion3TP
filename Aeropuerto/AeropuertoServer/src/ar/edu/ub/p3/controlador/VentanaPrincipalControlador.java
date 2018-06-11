@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
+import ar.edu.ub.p3.vista.VentanaDespegue;
 import ar.edu.ub.p3.vista.VentanaRadar;
 
 public class VentanaPrincipalControlador {
@@ -71,7 +72,7 @@ public class VentanaPrincipalControlador {
 	}
 	
 	public void verDespegues() {
-		this.onEventoAImplementar();
+		new VentanaDespegue( this.getConfiguracion(), this.getEstadoAeropuerto().getAerpuerto(), this.getConexionTA() );
 	}
 	
 	public void verRadar() {
