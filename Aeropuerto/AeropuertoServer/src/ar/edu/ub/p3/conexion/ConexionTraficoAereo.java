@@ -1,5 +1,7 @@
 package ar.edu.ub.p3.conexion;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -8,7 +10,11 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.Timer;
+
+import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IPosicion;
+import ar.edu.ub.p3.interfaz.IVuelo;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.modelo.EstadoVuelo;
 import ar.edu.ub.p3.modelo.Posicion;
@@ -79,6 +85,11 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 			
 			this.esperarRespuestaTraficoAereo();
 			
+			//Si me pude conectar,creo un timer para mover los aviones que estan acercandose al aeropuerto
+			//TODO cambiar y crear un thread en donde corresponda
+//			if( this.isEstoyConectado() )
+//				new Timer( 1000, this::onTimerMoverAvionesAterrizando).start();
+			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -89,6 +100,28 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	
 	}
 
+	public void onTimerMoverAvionesAterrizando(ActionEvent e) {		
+		for( Vuelo vuelo : this.getEstadoAeropuerto().getVuelosAterrizando().values() )
+			this.moverAvionAterrizando( this.getEstadoAeropuerto().getAerpuerto(), vuelo, 0);
+	}
+	
+	private void moverAvionAterrizando(IAeropuerto aeropuertoDestino, IVuelo vuelo, double distanciaAlDestino) {
+		double angulo = vuelo.getPosicion().calcularAngulo( aeropuertoDestino.getPosicion() ); 
+		double avanceX = Math.cos( angulo );
+		double avanceY = Math.sin(angulo);
+		
+		while( ( vuelo.getPosicion().calcularDistancia( aeropuertoDestino.getPosicion() ) - distanciaAlDestino ) > 0.01) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			//cambio el avion			
+			this.getEstadoAeropuerto().moverAvion( vuelo.getIdVuelo(), new Posicion( avanceX, avanceY  ) );
+		}
+	}
+	
 	private void crearThreadRecibidorDeMensajesDelTraficoAereo() {
 		this.setThreadRecibidorDeMensajesDelTraficoAereo( new Thread( new RecibidorDeMensajesDelTraficoAereo( this.getEstadoAeropuerto(), this.getSocket(), this ) ) );
 		this.getThreadRecibidorDeMensajesDelTraficoAereo().start();
@@ -104,7 +137,7 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 
 	@Override
 	public void enviarMensaje(Mensaje mensaje) {
-		
+		System.out.println("Se envia el mensaje: " + mensaje.getTipoMensaje());
 		try {
 			this.getOutputStream().writeObject( mensaje );
 		} catch (IOException e) {

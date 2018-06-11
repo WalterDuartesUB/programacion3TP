@@ -3,6 +3,7 @@ package ar.edu.ub.p3.modelo;
 import java.util.HashMap;
 import java.util.Map;
 
+import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.util.CargadorArchivosData;
 import ar.edu.ub.p3.util.Configuracion;
 import ar.edu.ub.p3.util.factory.AerolineaFactory;
@@ -186,6 +187,15 @@ public class EstadoAeropuerto {
 
 	public void setVuelosAterrizando(Map<String, Vuelo> vuelosAterrizando) {
 		this.vuelosAterrizando = vuelosAterrizando;
+	}
+
+
+	public void moverAvion(String idVuelo, IPosicion posicion) {
+		Vuelo vuelo = this.getVuelosAterrizando().get( idVuelo );
+		
+		synchronized (vuelo) {
+			vuelo.setPosicion( new Posicion( vuelo.getPosicion().sumar( posicion ) ) );
+		}		
 	}
 	
 	
