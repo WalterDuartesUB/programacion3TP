@@ -49,7 +49,12 @@ public class Posicion implements IPosicion,Serializable{
 	}
 
 	@Override
-	public double distancia(IPosicion otraPosicion) {
+	public double calcularDistancia(IPosicion otraPosicion) {
 		return Math.hypot( otraPosicion.getX() - this.getX(), otraPosicion.getY() - this.getY() );
+	}
+
+	@Override
+	public double calcularAngulo(IPosicion otraPosicion) {
+		return Math.atan2( otraPosicion.getY() - this.getY(), otraPosicion.getX() - this.getX() );
 	}
 }
