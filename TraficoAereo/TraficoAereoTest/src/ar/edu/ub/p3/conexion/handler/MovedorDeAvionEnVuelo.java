@@ -48,8 +48,12 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 	}
 
 	private void moverAvion(IAeropuerto aeropuertoDestino, double pendiente, double orientacionX, IVuelo vuelo, double distanciaAlDestino) {
+		double angulo = vuelo.getPosicion().calcularAngulo( aeropuertoDestino.getPosicion() ); 
+		double avanceX = Math.cos( angulo );
+		double avanceY = Math.sin(angulo);
 		
-		while( Math.abs( vuelo.getPosicion().getY() - aeropuertoDestino.getPosicion().getY() ) > distanciaAlDestino) {
+//		while( Math.abs( vuelo.getPosicion().getY() - aeropuertoDestino.getPosicion().getY() ) > distanciaAlDestino) {
+		while( vuelo.getPosicion().calcularDistancia( aeropuertoDestino.getPosicion() ) > distanciaAlDestino ) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -57,7 +61,8 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 			}
 			
 			//cambio el avion
-			this.getEstadoTraficoAereo().moverAvion( this.getIdVuelo(), new Posicion( orientacionX, pendiente * orientacionX  ) );
+//			this.getEstadoTraficoAereo().moverAvion( this.getIdVuelo(), new Posicion( orientacionX, pendiente * orientacionX  ) );			
+			this.getEstadoTraficoAereo().moverAvion( this.getIdVuelo(), new Posicion( avanceX, avanceY  ) );
 		}
 	}
 
