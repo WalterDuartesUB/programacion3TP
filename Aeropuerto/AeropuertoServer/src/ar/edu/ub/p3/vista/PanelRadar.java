@@ -23,15 +23,17 @@ import ar.edu.ub.p3.util.Configuracion;
 
 public class PanelRadar extends JPanel implements Closeable{
 	private static final long serialVersionUID = 1L;
-	private List<Integer> radiosDeCobertura;
-	private Collection<Vuelo> vuelos;
-	private int coberturaKm;
-	private IPosicion posicionRadar; 
-	private int angulo;
-	private ConexionTraficoAereo conexionTA;
-	private Configuracion configuracion;
-	private Timer timerCambioDeAnguloDelArcoDelRadar;
-	private Timer timerPedidorDeVuelosEnElAire;
+	
+	private List<Integer>           radiosDeCobertura;
+	private Collection<Vuelo>       vuelos;
+	private int                     coberturaKm;
+	private IPosicion               posicionRadar; 
+	private int                     angulo;
+	private ConexionTraficoAereo    conexionTA;
+	private Configuracion           configuracion;
+	private Timer                   timerCambioDeAnguloDelArcoDelRadar;
+	private Timer                   timerPedidorDeVuelosEnElAire;
+	
 	
 	public PanelRadar( Configuracion configuracion, IPosicion posicionRadar, ConexionTraficoAereo conexionTA) {
 		this.setConexionTA(conexionTA);
@@ -52,7 +54,7 @@ public class PanelRadar extends JPanel implements Closeable{
 		this.getTimerCambioDeAnguloDelArcoDelRadar().start();
 		
 		//Timer para pedir la posicion de los aviones al trafico aereo
-		this.setTimerPedidorDeVuelosEnElAire(new Timer( 1000, this::pedirVuelosAlTraficoAereo));
+		this.setTimerPedidorDeVuelosEnElAire(new Timer( this.getConfiguracion().getConfiguracionAsInt("radarTiempoRefresh"), this::pedirVuelosAlTraficoAereo));
 		this.getTimerPedidorDeVuelosEnElAire().start();
 		
 	  }
