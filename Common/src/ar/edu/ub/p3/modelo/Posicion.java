@@ -47,4 +47,9 @@ public class Posicion implements IPosicion,Serializable{
 	public IPosicion sumar(IPosicion otraPosicion) {
 		return new Posicion( this.getX() + otraPosicion.getX(), this.getY() + otraPosicion.getY() );
 	}
+
+	@Override
+	public double distancia(IPosicion otraPosicion) {
+		return Math.hypot( otraPosicion.getX() - this.getX(), otraPosicion.getY() - this.getY() );
+	}
 }

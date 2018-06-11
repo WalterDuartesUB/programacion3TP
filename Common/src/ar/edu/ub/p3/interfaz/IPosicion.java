@@ -8,4 +8,5 @@ public interface IPosicion extends Serializable{
 	public double getY();
 	
 	public IPosicion sumar( IPosicion otraPosicion );
+	public double distancia( IPosicion otraPosicion );
 }
