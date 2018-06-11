@@ -38,7 +38,6 @@ public class VentanaSalida extends JFrame {
     public VentanaSalida(ConexionAeropuerto conexion, Aeropuerto aeropuertolocal) {
         super();                    // usamos el contructor de la clase padre JFrame
         iniciarVentana(conexion,aeropuertolocal);        // configuramos la ventana
-       // agregarTabla(conexion);
         setVisible(true);
         this.setResizable(false);
     }
@@ -59,9 +58,9 @@ public class VentanaSalida extends JFrame {
 
     	int i = 0;
     	
-    	ImageIcon icon1 = new ImageIcon("M:\\New folder\\PruebaVentana2\\img\\arg2.png");
-    	ImageIcon icon2 = new ImageIcon("M:\\New folder\\PruebaVentana2\\img\\latam2.png");
-    	ImageIcon icon3 = new ImageIcon("M:\\New folder\\PruebaVentana2\\img\\andes2.png");
+    	ImageIcon icon1 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\arg2.png");
+    	ImageIcon icon2 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\latam2.png");
+    	ImageIcon icon3 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\andes2.png");
 		
     	
 		for(IVuelo vuelo : conexion.getVuelos()) {
@@ -80,34 +79,13 @@ public class VentanaSalida extends JFrame {
 				if(vuelo.getAvion().getAerolinea().getNombre().equals("ANDES"))
 					vuelos[i][2] = icon3;
 					
-				//vuelos[i][2] = (vuelo.getAvion().getAerolinea().getNombre().toString());
-				
-	           /* 
-	            if(vuelo.getAvion().getAerolinea().toString() != null){
-	                
-	             ImageIcon image = new ImageIcon(new ImageIcon(("M:\\New folder\\PruebaVentana2\\img\\arg.png")).getImage()
-	             .getScaledInstance(150,120, Image.SCALE_SMOOTH) );   
-	                
-	            vuelos[i][2] = image;
-	            }
-	            else{
-	                vuelos[i][2] = null;
-	            }
-				*/
-				//vuelos[i][2] = icon1;
+
 				vuelos[i][3] = ( vuelo.getAeropuertoDestino().getIdAeropuerto() + " - "+vuelo.getAeropuertoDestino().getNombre());
 				vuelos[i][4] = (vuelo.getHorarioDespegue().getHours() + ":" + vuelo.getHorarioDespegue().getMinutes());
 				vuelos[i][5] = (vuelo.getEstadoVuelo().toString());
 				i++;
 			}
 		}
-		
-
-		
-		 
-    	
-		//JTable tabla = new JTable(vuelos, nombreColumna);
-		
 		
         JTable tabla = new JTable(vuelos,nombreColumna) {
             @Override
@@ -119,20 +97,7 @@ public class VentanaSalida extends JFrame {
             }
         };
        
-        /*
-        tabla.setDefaultRenderer(Double.class, new DefaultTableCellRenderer(){
-            @Override
-            public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
-                Component c = super.getTableCellRendererComponent(table,value,isSelected,hasFocus,row,column);
-                
-                if(EstadoVuelo == EstadoVuelo.BOARDING) {
-                	c.setForeground(((Double) value)>0 ? Color.BLUE : Color.RED);
-                return c;
-            }
-        });
-		*/
 		
-	//	tabla.setPreferredSize(tabla.getPreferredSize());
 		tabla.setRowHeight(50);
 		tabla.setEnabled(false);
 		tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
@@ -141,11 +106,8 @@ public class VentanaSalida extends JFrame {
 		JScrollPane tableScrollPane = new JScrollPane(tabla);
 		tableScrollPane.setPreferredSize(new Dimension(400, 400));
 		
-		
-		
-		
 		JLabel jLabelObject = new JLabel();
-		jLabelObject.setIcon(new ImageIcon("M:\\New folder\\PruebaVentana2\\img\\salidas.png"));
+		jLabelObject.setIcon(new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\salidas.png"));
 		
 	
 		String date = new Date().toString();
@@ -194,63 +156,12 @@ public class VentanaSalida extends JFrame {
 		
 		this.setVisible(true);
     	
-    	/*
-        this.setTitle("Tablero Primer intento");               // colocamos titulo a la ventana
-        this.setSize(710, 450);                                 // colocamos tamanio a la ventana (ancho, alto)
-        this.setLocationRelativeTo(null);                       // centramos la ventana en la pantalla
-        this.setLayout(null);                                   // no usamos ningun layout, solo asi podremos dar posiciones a los componentes
-        //this.setResizable(false);                               // hacemos que la ventana no sea redimiensionable
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // hacemos que cuando se cierre la ventana termina todo proceso
-        this.getContentPane().setLayout(null);
-*/
     }
 
 	private boolean estoyEnMiAeropuerto(IVuelo vuelo, Aeropuerto aerolocal) {
 		
 		return vuelo.getAeropuertoOrigen().getIdAeropuerto().equals(aerolocal.getIdAeropuerto());
-	}
-  
-    /*
-    private void agregarTabla(ConexionAeropuerto conexion) {
-
-    	String[] 	nombreColumna = {"NroVuelo", "Origen", "Destino", "Aerolinea", "Hora Programada"};
-    	
-    	// acomodar segun tablero llegada o salida
-    	Object [][] aux3 = new Object [conexion.getVuelos().size()][nombreColumna.length];
-   
-
-    	int i = 0;
-    	
-		for(IVuelo vuelo : conexion.getVuelos()) {
-			
-
-			aux3[i][0] = (vuelo.getIdVuelo().toString());
-			aux3[i][3] = (vuelo.getAvion().getAerolinea().toString());
-			aux3[i][2] = ( vuelo.getAeropuertoDestino().getIdAeropuerto() + " - "+vuelo.getAeropuertoDestino().getNombre());
-			aux3[i][1] = ( vuelo.getAeropuertoOrigen().getIdAeropuerto() +" - "+ vuelo.getAeropuertoOrigen().getNombre());
-			aux3[i][4] = ( vuelo.getHorarioProgramado().getHours() +":"+vuelo.getHorarioProgramado().getMinutes());
-			i++;
-			
-		}
-		    	JTable tabla = new JTable(aux3,nombreColumna);
-		    	
-		    	tabla.setSize(200,200);
-		    	tabla.setVisible(true);
-		    	tabla.setEnabled(false);
-		
-		   	
-		    	//this.setLayout(new BorderLayout());
-		    	this.setLayout(new GridBagLayout());
-		    	this.add(tabla.getTableHeader(), BorderLayout.PAGE_START);
-		    	this.add(tabla, BorderLayout.CENTER);
-		    	
-		    	
-    	}
-    	
-    	*/
-
-    	
-    
+	}   
     }
 
 

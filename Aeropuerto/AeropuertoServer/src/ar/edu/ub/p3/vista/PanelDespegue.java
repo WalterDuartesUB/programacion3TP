@@ -51,48 +51,41 @@ public class PanelDespegue extends JPanel {
 	}
 	
 	public void pedirVuelosAlTraficoAereo(ActionEvent arg0) {	
-		
-		
-		
-		//Pido la info de los vuelos cercanos a mi posicion
-		
+			
 		//Preguntar donde saco los vuelos
 		//this.setVuelos(this.getConexionTA().obtenerInformacionVuelos(this.getVuelos()));
-		
-		
 		this.dibujarTableroDespegue();
 	}
-
 
 	private void dibujarTableroDespegue() {
 		this.validate();
 		this.repaint();
 	}
-	/*
+	
 	private void iniciarVentana() {
- 
-    	
-		JPanel panel = new JPanel(new GridBagLayout());
-		this.getContentPane().add(panel);
+     	
+		JPanel panel = new JPanel(new GridBagLayout());repaint();
+		//this.getContentPane().add(panel);
+		this.add(panel);
 		
 		
 		String[] 	nombreColumna = {"Hora Programada","NroVuelo", "Aerolinea", "Destino", "Estima", "Estado"};
 		
 		// acomodar segun tablero llegada o salida
-    	Object [][] vuelos = new Object [conexion.getVuelos().size()][nombreColumna.length];
+    	Object [][] vuelos = new Object [conexionTA.getVuelosProximoDespegue().size()][nombreColumna.length];
    
 
     	int i = 0;
     	
-    	ImageIcon icon1 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\arg2.png");
-    	ImageIcon icon2 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\latam2.png");
-    	ImageIcon icon3 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\andes2.png");
+    	ImageIcon icon1 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\arg2.png");
+    	ImageIcon icon2 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\latam2.png");
+    	ImageIcon icon3 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\andes2.png");
 		
     	
-		for(IVuelo vuelo : conexion.getVuelos()) {
+		for(IVuelo vuelo : conexionTA.getVuelosProximoDespegue()) {
     
 			
-			if(estoyEnMiAeropuerto(vuelo,aeropuertolocal)) {
+			if(estoyEnMiAeropuerto(vuelo,miIdAeropuerto)) {
 
 				vuelos[i][0] = ( vuelo.getHorarioProgramado().getHours() +":"+vuelo.getHorarioProgramado().getMinutes());  // arreglar en algun momento
 				vuelos[i][1] = (vuelo.getIdVuelo().toString());
@@ -135,14 +128,13 @@ public class PanelDespegue extends JPanel {
 		
 		
 		JLabel jLabelObject = new JLabel();
-		jLabelObject.setIcon(new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\salidas.png"));
+		jLabelObject.setIcon(new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\salidas.png"));
 		
 	
 		String date = new Date().toString();
 		JLabel dia = new JLabel(date);
 		
-		String aeropuertoactual = aeropuertolocal.getIdAeropuerto().toString()+"-"+aeropuertolocal.getNombre();
-		JLabel aeropuertoactuall = new JLabel(aeropuertoactual);
+		JLabel aeropuertoactuall = new JLabel(miIdAeropuerto);
 		
 		
 
@@ -180,11 +172,16 @@ public class PanelDespegue extends JPanel {
 		gbc.weighty = 0;
 		panel.add(aeropuertoactuall, gbc);
 
-		this.pack();
+		//this.pack();
 		
-		this.setVisible(true);
+		
+		//this.setVisible(true);
     }
-*/
+
+	private boolean estoyEnMiAeropuerto(IVuelo vuelo, String miIdAeropuerto2) {
+		return vuelo.getAeropuertoOrigen().getIdAeropuerto().equals(miIdAeropuerto2);
+	}
+
 	public Collection<String> getVuelos() {
 		return idVuelos;
 	}

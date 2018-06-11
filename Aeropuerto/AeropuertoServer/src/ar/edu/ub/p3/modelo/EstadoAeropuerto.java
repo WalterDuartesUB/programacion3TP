@@ -1,9 +1,11 @@
 package ar.edu.ub.p3.modelo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ar.edu.ub.p3.interfaz.IPosicion;
+import ar.edu.ub.p3.interfaz.IVuelo;
 import ar.edu.ub.p3.util.CargadorArchivosData;
 import ar.edu.ub.p3.util.Configuracion;
 import ar.edu.ub.p3.util.factory.AerolineaFactory;
@@ -183,7 +185,10 @@ public class EstadoAeropuerto {
 	public Map<String, Vuelo> getVuelosAterrizando() {
 		return vuelosAterrizando;
 	}
-
+	
+	public Map<String, Vuelo> getVuelosProximoDespegue() {
+		return null;
+	}
 
 	public void setVuelosAterrizando(Map<String, Vuelo> vuelosAterrizando) {
 		this.vuelosAterrizando = vuelosAterrizando;
@@ -197,6 +202,8 @@ public class EstadoAeropuerto {
 			vuelo.setPosicion( new Posicion( vuelo.getPosicion().sumar( posicion ) ) );
 		}		
 	}
+
+
 	
 	
 	
