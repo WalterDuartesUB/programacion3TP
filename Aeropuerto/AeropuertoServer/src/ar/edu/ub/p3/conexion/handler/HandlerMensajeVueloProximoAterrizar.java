@@ -18,14 +18,13 @@ public class HandlerMensajeVueloProximoAterrizar implements Handler<EstadoAeropu
 		vuelo.setEstadoVuelo( EstadoVuelo.LANDING );
 
 		//Agregar a la lista de vuelos del estado del aeropuerto
+		estado.addVueloAterrizando( vuelo );
 		
 		//TODO caminar los vuelos en un timer aparte afuera
 		
 		//TODO esto debe ocurrir cuando se pueda aterrizar el avion
 		//Envio un mensaje indicando que pude aterrizar
 		vuelo.setEstadoVuelo( EstadoVuelo.LANDED );
-		
-//		conexionTraficoAereo.enviarMensaje( Mensaje.crearMensajeVueloAterrizoEnDestino( vuelo.getIdVuelo() ) );		
 	}
 
 }

@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
-import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.interfaz.IVuelo;
 import ar.edu.ub.p3.modelo.Posicion;
@@ -78,14 +77,19 @@ public class PanelRadar extends JPanel{
 		    
 		    this.dibujarEjesDeRadar(g2,anchoAlto);
 		    
-		    for (IVuelo vuelo : this.getVuelos()){
-		    	this.dibujarVuelo(g2,vuelo,anchoAlto);		    
-		    }
-
+		    this.dibujarVuelos(g2, anchoAlto, this.getVuelos(), Color.RED );		
+		    this.dibujarVuelos(g2, anchoAlto, this.getConexionTA().getEstadoAeropuerto().getVuelosAterrizando().values(), Color.BLUE );		
+	
 		    this.dibujarArcoRadar(g2, anchoAlto);
 		    
 		    	    
 	  }
+
+	private void dibujarVuelos(Graphics2D g2, int anchoAlto, Collection<Vuelo> vuelos, Color colorAvion) {
+		for (IVuelo vuelo : vuelos){
+			this.dibujarVuelo(g2,vuelo,anchoAlto, colorAvion );		    
+		}
+	}
 
 	private void dibujarArcoRadar(Graphics2D g2, int anchoAlto) {
 		g2.setColor(Color.green);
@@ -110,7 +114,7 @@ public class PanelRadar extends JPanel{
 		
 	}
 
-	private void dibujarVuelo(Graphics g, IVuelo vuelo, int anchoAlto) {
+	private void dibujarVuelo(Graphics g, IVuelo vuelo, int anchoAlto, Color colorAvion) {
 		Posicion posicionAvion = this.obtenerDistanciasAlAeropuerto(vuelo.getAvion().getPosicion());
 		double x = posicionAvion.getX();
 		double y = posicionAvion.getY();
@@ -120,7 +124,7 @@ public class PanelRadar extends JPanel{
 		int yPixelCorregido = this.calcularCoordenadaYEnPantalla(yPixel,anchoAlto);
 		int xPixelCorregido = this.calcularCoordenadaXEnPantalla(xPixel,anchoAlto);
 		char[] idAvion = vuelo.getAvion().getIdAvion().toCharArray();
- 		g.setColor(Color.RED);
+ 		g.setColor( colorAvion );
 		g.fillOval(xPixelCorregido-5, yPixelCorregido-5, 10, 10);
 		g.drawChars(idAvion, 0, idAvion.length, xPixelCorregido+10, yPixelCorregido);
 	}

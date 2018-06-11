@@ -3,6 +3,7 @@ package ar.edu.ub.p3.modelo;
 import java.util.HashMap;
 import java.util.Map;
 
+import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.util.CargadorArchivosData;
 import ar.edu.ub.p3.util.Configuracion;
 import ar.edu.ub.p3.util.factory.AerolineaFactory;
@@ -17,6 +18,7 @@ public class EstadoAeropuerto {
 	private Map<String, Aerolinea> aerolineas;
 	private Map<String, Vuelo> vuelos;
 	private Map<String, Aeropuerto> aeropuertos;
+	private Map<String, Vuelo> vuelosAterrizando;
 	
 	private boolean estoyConectado;
 	private boolean estoyEsperandoRespuestaConexion;
@@ -35,6 +37,7 @@ public class EstadoAeropuerto {
 		
 		this.setAerpuerto(new Aeropuerto(idAeropuerto, nomAeropuerto,posicion));
 		this.setAviones(new HashMap<String, Avion>());
+		this.setVuelosAterrizando(new HashMap<String, Vuelo>());
 		
 		this.setEstoyConectado(false);
 		this.setEstoyEsperandoRespuestaConexion(false);
@@ -168,6 +171,31 @@ public class EstadoAeropuerto {
 
 	public void setVueloRecibido(Vuelo vueloRecibido) {
 		this.vueloRecibido = vueloRecibido;
+	}
+
+
+	public void addVueloAterrizando(Vuelo vuelo) {		
+		synchronized (this.getVuelosAterrizando()) {
+			this.getVuelosAterrizando().put( vuelo.getIdVuelo(), vuelo );	
+		}
+	}
+
+	public Map<String, Vuelo> getVuelosAterrizando() {
+		return vuelosAterrizando;
+	}
+
+
+	public void setVuelosAterrizando(Map<String, Vuelo> vuelosAterrizando) {
+		this.vuelosAterrizando = vuelosAterrizando;
+	}
+
+
+	public void moverAvion(String idVuelo, IPosicion posicion) {
+		Vuelo vuelo = this.getVuelosAterrizando().get( idVuelo );
+		
+		synchronized (vuelo) {
+			vuelo.setPosicion( new Posicion( vuelo.getPosicion().sumar( posicion ) ) );
+		}		
 	}
 	
 	
