@@ -25,7 +25,7 @@ public class PanelRadar extends JPanel implements Closeable{
 	private static final long serialVersionUID = 1L;
 	
 	private List<Integer>           radiosDeCobertura;
-	private Collection<Vuelo>       vuelos;
+	private Collection<Vuelo>       vuelosDespegados;
 	private int                     coberturaKm;
 	private IPosicion               posicionRadar; 
 	private int                     angulo;
@@ -38,7 +38,7 @@ public class PanelRadar extends JPanel implements Closeable{
 	public PanelRadar( Configuracion configuracion, IPosicion posicionRadar, ConexionTraficoAereo conexionTA) {
 		this.setConexionTA(conexionTA);
 		this.setPosicionRadar(posicionRadar);
-		this.setVuelos( new LinkedList<Vuelo>() );
+		this.setVuelosDespegados( new LinkedList<Vuelo>() );
 		this.setConfiguracion(configuracion);
 		
 		this.setCoberturaKm( this.getConfiguracion().getConfiguracionAsInt("coberturaRadarEnKilometros") );
@@ -66,7 +66,7 @@ public class PanelRadar extends JPanel implements Closeable{
 
 	public void pedirVuelosAlTraficoAereo(ActionEvent arg0) {		
 		//Pido la info de los vuelos cercanos a mi posicion
-		this.setVuelos( this.getConexionTA().obtenerInformacionVuelosCercanos( this.getPosicionRadar(), this.getCoberturaKm() ) );
+		this.setVuelosDespegados( this.getConexionTA().obtenerInformacionVuelosCercanos( this.getPosicionRadar(), this.getCoberturaKm() ) );
 		
 		this.dibujarRadar();
 	}
@@ -86,8 +86,8 @@ public class PanelRadar extends JPanel implements Closeable{
 		    
 		    this.dibujarEjesDeRadar(g2,anchoAlto);
 		    
-		    this.dibujarVuelos(g2, anchoAlto, this.getVuelos(), Color.RED );		
-		    this.dibujarVuelos(g2, anchoAlto, this.getConexionTA().getEstadoAeropuerto().getVuelosAterrizando().values(), Color.BLUE );		
+		    this.dibujarVuelos(g2, anchoAlto, this.getVuelosDespegados(), Color.RED );		
+		    this.dibujarVuelos(g2, anchoAlto, this.getVuelosAterrizando(), Color.BLUE );		
 	
 		    this.dibujarArcoRadar(g2, anchoAlto);
 		    
@@ -178,12 +178,16 @@ public class PanelRadar extends JPanel implements Closeable{
 		this.coberturaKm = coberturaKm;
 	}
 
-	private Collection<Vuelo> getVuelos() {
-		return vuelos;
+	private Collection<Vuelo> getVuelosDespegados() {
+		return vuelosDespegados;
 	}
-
-	private void setVuelos(Collection<Vuelo> vuelos) {
-		this.vuelos = vuelos;
+	
+	private Collection<Vuelo> getVuelosAterrizando() {
+		return this.getConexionTA().getEstadoAeropuerto().getVuelosAterrizando().values();
+	}
+	
+	private void setVuelosDespegados(Collection<Vuelo> vuelos) {
+		this.vuelosDespegados = vuelos;
 	}
 
 	private IPosicion getPosicionRadar() {

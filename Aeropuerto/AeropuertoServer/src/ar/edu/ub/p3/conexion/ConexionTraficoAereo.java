@@ -1,7 +1,6 @@
 package ar.edu.ub.p3.conexion;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -9,8 +8,6 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.Timer;
 
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IPosicion;
@@ -261,7 +258,7 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 
 	public Collection<Vuelo> obtenerInformacionVuelosCercanos(IPosicion posicion, int coberturaKm) {
 		//TODO implementar este mensaje en el trafico aereo: obtenerInformacionVuelosCercanos
-		return this.obtenerInformacionVuelos( this.getEstadoAeropuerto().getVuelos().keySet() );
+		return this.obtenerInformacionVuelos( this.getEstadoAeropuerto().getVuelosDespegados().keySet() );
 	}
 
 }
