@@ -6,8 +6,12 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import javax.swing.Timer;
 
 import ar.edu.ub.p3.interfaz.IAeropuerto;
 import ar.edu.ub.p3.interfaz.IPosicion;
@@ -84,8 +88,8 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 			
 			//Si me pude conectar,creo un timer para mover los aviones que estan acercandose al aeropuerto
 			//TODO cambiar y crear un thread en donde corresponda
-//			if( this.isEstoyConectado() )
-//				new Timer( 1000, this::onTimerMoverAvionesAterrizando).start();
+			if( this.isEstoyConectado() )
+				new Timer( 500, this::onTimerMoverAvionesAterrizando).start();
 			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -97,25 +101,40 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	
 	}
 
-	public void onTimerMoverAvionesAterrizando(ActionEvent e) {		
-		for( Vuelo vuelo : this.getEstadoAeropuerto().getVuelosAterrizando().values() )
-			this.moverAvionAterrizando( this.getEstadoAeropuerto().getAerpuerto(), vuelo, 0);
+	public void onTimerMoverAvionesAterrizando(ActionEvent e) {
+		Map<EstadoVuelo, CalculadorPosicionDestino> handler = new HashMap<EstadoVuelo, CalculadorPosicionDestino>();
+		
+		handler.put( EstadoVuelo.PROGRAMMED, CalculadorPosicionDestino.NEUTRO );
+		handler.put( EstadoVuelo.BOARDING, CalculadorPosicionDestino.ALEJA_DE_ORIGEN );
+		handler.put( EstadoVuelo.ON_AIR, CalculadorPosicionDestino.NEUTRO );
+		handler.put( EstadoVuelo.LANDING, CalculadorPosicionDestino.AVANZA_A_DESTINO );
+		handler.put( EstadoVuelo.LANDED, CalculadorPosicionDestino.NEUTRO );
+		
+		for( Vuelo vuelo : this.getEstadoAeropuerto().getTodosLosVuelos().values() )
+			this.moverAvionAterrizando( handler.get( vuelo.getEstadoVuelo() ), vuelo );		
+			//this.moverAvionAterrizando( handler.get( vuelo.getEstadoVuelo() ).obtenerPosicionDestino( vuelo, this.getConfiguracion().getConfiguracionAsInt("coberturaRadarEnKilometros") ), vuelo, 0, handler.get(vuelo.getEstadoVuelo()).obtenerEstadoVueloAlLlegar(vuelo.getEstadoVuelo()));
 	}
 	
-	private void moverAvionAterrizando(IAeropuerto aeropuertoDestino, IVuelo vuelo, double distanciaAlDestino) {
-		double angulo = vuelo.getPosicion().calcularAngulo( aeropuertoDestino.getPosicion() ); 
+//	private void moverAvionAterrizando(IPosicion posicionDestino, Vuelo vuelo, double distanciaAlDestino, EstadoVuelo estadoVuelo) {
+	private void moverAvionAterrizando(CalculadorPosicionDestino calculadorPosicion, Vuelo vuelo ) {		
+		double distanciaAlDestino = 0;
+		IPosicion posicionDestino = calculadorPosicion.obtenerPosicionDestino(vuelo, this.getConfiguracion().getConfiguracionAsInt("coberturaRadarEnKilometros") );
+		double angulo = vuelo.getAeropuertoOrigen().getPosicion().calcularAngulo( posicionDestino ); 
 		double avanceX = Math.cos( angulo );
-		double avanceY = Math.sin(angulo);
+		double avanceY = Math.sin( angulo );
 		
-		while( ( vuelo.getPosicion().calcularDistancia( aeropuertoDestino.getPosicion() ) - distanciaAlDestino ) > 0.01) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			//cambio el avion			
+		if( vuelo.getEstadoVuelo() == EstadoVuelo.LANDING ){
+			System.out.println( "V: " + vuelo.getPosicion() );
+			System.out.println( "D: " + posicionDestino );
+			System.out.println( vuelo.getPosicion().calcularDistancia( posicionDestino ) );
+		}
+		
+		//Si todavia no llegue, muevo un poco el avion		
+		if( ( vuelo.getPosicion().calcularDistancia( posicionDestino ) - distanciaAlDestino ) > 0.01 )
 			this.getEstadoAeropuerto().moverAvion( vuelo.getIdVuelo(), new Posicion( avanceX, avanceY  ) );
+		else{
+			this.getEstadoAeropuerto().cambiarEstadoAvion( vuelo.getIdVuelo(), calculadorPosicion.obtenerEstadoVueloAlLlegar( vuelo.getEstadoVuelo() ) );
+			calculadorPosicion.enviarMensaje( this, vuelo );			
 		}
 	}
 	
@@ -199,9 +218,10 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	public void despegar(Vuelo vuelo) {
 		//TODO evaluar si esto tiene que estar aca
 		vuelo.setPosicion(new Posicion( this.getEstadoAeropuerto().getAerpuerto().getPosicion() ) );
-		vuelo.setEstadoVuelo( EstadoVuelo.ON_AIR );
+//		vuelo.setEstadoVuelo( EstadoVuelo.BOARDING );
+		this.getEstadoAeropuerto().cambiarEstadoAvion( vuelo.getIdVuelo(), EstadoVuelo.BOARDING );
 		
-		this.enviarMensaje( Mensaje.crearMensajeProgramarVuelo(vuelo));		
+//		this.enviarMensaje( Mensaje.crearMensajeProgramarVuelo(vuelo));		
 	}
 
 	public Vuelo obtenerInformacionVuelo(String idVuelo) {
