@@ -9,7 +9,8 @@ import javax.swing.JPanel;
 import ar.edu.ub.p3.aeropuerto.gestion.modelo.*;
 import ar.edu.ub.p3.aeropuerto.gestion.view.IFichaModelo;
 import ar.edu.ub.p3.aeropuerto.gestion.view.ITablaModelo;
-import ar.edu.ub.p3.modelo.*;
+import ar.edu.ub.p3.modelo.Aeropuerto;
+ 
 
 public class PanelFichaAeropuerto extends JPanel implements IFichaModelo<Aeropuerto> {
 
@@ -42,8 +43,12 @@ public class PanelFichaAeropuerto extends JPanel implements IFichaModelo<Aeropue
 	
 	@Override
 	public void mostrar(Aeropuerto dato) {
+		
 		getPanelCampos().getTxtIdAeropuerto().setText( dato.getIdAeropuerto() );		
-		getPanelCampos().getTxtNombre().setText( dato.getNombre() );		
+		getPanelCampos().getTxtNombre().setText( dato.getNombre() );	
+		getPanelCampos().getTxtPosicionX().setText( Double.toString(dato.getPosicion().getX()) );
+		getPanelCampos().getTxtPosicionY().setText( Double.toString(dato.getPosicion().getY()) );
+		
 	}
 
 	public ITablaModelo getPanelLista() {

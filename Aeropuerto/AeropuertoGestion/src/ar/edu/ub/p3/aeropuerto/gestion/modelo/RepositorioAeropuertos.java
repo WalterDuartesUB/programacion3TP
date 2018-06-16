@@ -1,20 +1,22 @@
 package ar.edu.ub.p3.aeropuerto.gestion.modelo;
 
-import java.util.HashMap;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import ar.edu.ub.p3.modelo.*;
+import ar.edu.ub.p3.modelo.Aeropuerto;
+import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 
 
-public class EstadoAeropuerto implements IRepositorioModelo < Aeropuerto >{
+
+public class RepositorioAeropuertos implements IRepositorioModelo < Aeropuerto >{
 
 	private Map <String,Aeropuerto> aeropuertos;
 
-	public EstadoAeropuerto() {
+	public RepositorioAeropuertos( EstadoAeropuerto estadoAeropuerto) {
 		
-		setAeropuertos( new HashMap< String , Aeropuerto >() );
+		setAeropuertos( estadoAeropuerto.getAeropuertos() );
 		
 	}
 	

@@ -5,7 +5,8 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 
 import ar.edu.ub.p3.aeropuerto.gestion.view.PanelLista;
-import ar.edu.ub.p3.modelo.*;
+import ar.edu.ub.p3.modelo.Aerolinea;
+ 
 
 public class VentanaGestionABMAerolinea extends JFrame{
 

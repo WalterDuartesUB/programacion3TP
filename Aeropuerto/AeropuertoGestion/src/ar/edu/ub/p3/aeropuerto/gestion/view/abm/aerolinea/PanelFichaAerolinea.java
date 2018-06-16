@@ -9,8 +9,9 @@ import javax.swing.JPanel;
 import ar.edu.ub.p3.aeropuerto.gestion.modelo.*;
 import ar.edu.ub.p3.aeropuerto.gestion.view.IFichaModelo;
 import ar.edu.ub.p3.aeropuerto.gestion.view.ITablaModelo;
-import ar.edu.ub.p3.modelo.*;
+import ar.edu.ub.p3.modelo.Aerolinea;
 
+ 
 public class PanelFichaAerolinea extends JPanel implements IFichaModelo < Aerolinea > {
 
 	private ITablaModelo panelLista;

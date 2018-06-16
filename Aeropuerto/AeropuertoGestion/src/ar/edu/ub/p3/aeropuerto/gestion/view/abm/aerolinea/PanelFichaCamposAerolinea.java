@@ -9,7 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import ar.edu.ub.p3.aeropuerto.gestion.modelo.IRepositorioModelo;
-import ar.edu.ub.p3.modelo.*;
+import ar.edu.ub.p3.modelo.Aerolinea;
+ 
 
 public class PanelFichaCamposAerolinea extends JPanel{
 
@@ -33,8 +34,8 @@ public class PanelFichaCamposAerolinea extends JPanel{
 		setTxtIdAerolineas( new JTextField() );
 		setTxtNombre( new JTextField() );
 		
-		setLblIdAerolineas( new JLabel("        ID AEROLINEA" ) );
-		setLblNombreAerolineas( new JLabel("        NOMBRE AEROLINEA") );
+		setLblIdAerolineas( new JLabel("        Id Aerolinea" ) );
+		setLblNombreAerolineas( new JLabel("        Nombre Aerolinea") );
 		
 		add( getLblIdAerolineas());
 		add( getTxtIdAerolineas() );
@@ -52,10 +53,10 @@ public class PanelFichaCamposAerolinea extends JPanel{
 		getLblIdAerolineas().setForeground(Color.WHITE);
 		getLblNombreAerolineas().setForeground(Color.WHITE);
 		
-		getTxtIdAerolineas().setBackground(Color.BLACK);
+		getTxtIdAerolineas().setBackground(Color.DARK_GRAY);
 		getTxtIdAerolineas().setForeground(Color.WHITE);
 		
-		getTxtNombre().setBackground(Color.BLACK);
+		getTxtNombre().setBackground(Color.DARK_GRAY);
 		getTxtNombre().setForeground(Color.WHITE);
 		
 	}

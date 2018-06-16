@@ -6,7 +6,8 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import ar.edu.ub.p3.aeropuerto.gestion.modelo.*;
-import ar.edu.ub.p3.modelo.*;
+import ar.edu.ub.p3.modelo.Aeropuerto;
+ 
 public final class TableModelAeropuerto extends DefaultTableModel {
 				
 		/**

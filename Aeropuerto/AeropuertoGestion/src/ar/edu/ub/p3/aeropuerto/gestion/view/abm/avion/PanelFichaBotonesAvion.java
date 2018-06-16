@@ -3,32 +3,38 @@ package ar.edu.ub.p3.aeropuerto.gestion.view.abm.avion;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import ar.edu.ub.p3.aeropuerto.gestion.modelo.IRepositorioModelo;
 import ar.edu.ub.p3.aeropuerto.gestion.view.ITablaModelo;
-import ar.edu.ub.p3.modelo.*;
+import ar.edu.ub.p3.modelo.Aerolinea;
+import ar.edu.ub.p3.modelo.Avion;
+import ar.edu.ub.p3.modelo.Posicion;
+ 
 
 public class PanelFichaBotonesAvion extends JPanel{
 
 	private static final long serialVersionUID = 1L;
-	
+	private VentanaGestionABMAvion ventanaPrincipal;
 	
 	private ITablaModelo panelLista;
 	private PanelFichaCamposAvion panelCampos;
-	private IRepositorioModelo<Aeropuerto> aeropuertos;
+	private IRepositorioModelo< Avion > aviones;
+	private Map <String,Aerolinea> aerolineas;
 	
-	
+	private JButton btnActualizar;
 	private JButton btnAgregar;
 	private JButton btnGrabar;
 	private JButton btnBorrar;
 	private JButton btnSalir;
 	
-	public PanelFichaBotonesAvion( IRepositorioModelo<Aeropuerto> aeropuertos ) {
+	public PanelFichaBotonesAvion( IRepositorioModelo< Avion > aviones , Map < String , Aerolinea > aerolineas ) {
 		
-		setAeropuertos(aeropuertos);
+		setAviones( aviones );
+		setAerolineas( aerolineas );
 		generarComponentes();
 		configurarVentana();
 		
@@ -37,16 +43,19 @@ public class PanelFichaBotonesAvion extends JPanel{
 	
 	private void generarComponentes() {
 		
+		setBtnActualizar( new JButton("Actualizar"));
 		setBtnAgregar( new JButton("Nuevo"));
 		setBtnGrabar ( new JButton("Grabar"));
 		setBtnBorrar ( new JButton("Borrar"));
 		setBtnSalir  ( new JButton("Salir") );
 		
+		add( getBtnActualizar());
 		add( getBtnAgregar() );
 		add( getBtnBorrar() );
 		add( getBtnGrabar());
 		add( getBtnSalir());
 		
+		getBtnActualizar().addActionListener( this::onClickBtnActualizar);
 		getBtnBorrar().addActionListener ( this::onClickBtnBorrar );
 		getBtnAgregar().addActionListener( this::onClickBtnAgregar);
 		getBtnGrabar().addActionListener ( this::onClickBtnGrabar );
@@ -54,6 +63,8 @@ public class PanelFichaBotonesAvion extends JPanel{
 	}
 
 
+	
+	
 	private void configurarVentana() {
 		
 		setBackground(Color.BLACK);
@@ -71,39 +82,66 @@ public class PanelFichaBotonesAvion extends JPanel{
 		getBtnSalir().setForeground(Color.WHITE);
 		getBtnSalir().setBackground(Color.BLACK);
 		
+		getBtnActualizar().setForeground(Color.WHITE);
+		getBtnActualizar().setBackground(Color.BLACK);		
+	}
+
+	
+	public void onClickBtnActualizar(ActionEvent arg0) {
+		
+		getPanelLista().refrescar();
+		getPanelCampos().getTxtIdAvion().setText("");
+		getPanelCampos().getTxtPosicionX().setText("");
+		getPanelCampos().getTxtPosicionY().setText("");
+		getPanelCampos().getComboNombreAerolinea().setSelectedIndex(0);
 	}
 
 	public void onClickBtnAgregar(ActionEvent arg0) {
-		getAeropuertos().add( new Aeropuerto( getPanelCampos().getTxtIdAeropuerto().getText(), 
-				getPanelCampos().getTxtNombre().getText(), 
-				null ) );
 		
-		getPanelLista().refrescar();		
+		
+		getAviones().add( avionEnCampo() );
+		
+		getPanelLista().refrescar();	
+		
+		
 	}
 	
 	
 	public void onClickBtnBorrar(ActionEvent arg0) {
-		getAeropuertos().delete( new Aeropuerto( 
-				getPanelCampos().getTxtIdAeropuerto().getText(), 
-				getPanelCampos().getTxtNombre().getText(), 
-				null ) );
+		getAviones().delete( avionEnCampo()  );
 		
 		getPanelLista().refrescar();		
 		
 	}
 	
 	public void onClickBtnGrabar(ActionEvent arg0) {
-		getAeropuertos().add( new Aeropuerto( 
-			getPanelCampos().getTxtIdAeropuerto().getText(), 
-			getPanelCampos().getTxtNombre().getText(), 
-			null ) );
+		getAviones().add( avionEnCampo() );
 		getPanelLista().refrescar();		
 	}
 	
 	public void onClickBtnSalir(ActionEvent arg0) {
 		
-		System.exit(0);
+		getVentanaPrincipal().dispose();	
 		
+	}
+	
+	public Avion avionEnCampo() {
+		
+		return new Avion(
+				getPanelCampos().getTxtIdAvion().getText(),buscarAerolinea(getPanelCampos().getComboNombreAerolinea().getSelectedItem().toString()),
+				new Posicion(
+						Double.parseDouble(getPanelCampos().getTxtPosicionX().getText()), 
+						Double.parseDouble(getPanelCampos().getTxtPosicionY().getText())));
+		
+	}
+	
+	public  Aerolinea buscarAerolinea(String dato) {
+		
+		for(Aerolinea aerolinea : getAerolineas().values())
+			if(aerolinea.getNombre().equals(dato))
+				return aerolinea;
+		
+		return null;
 	}
 
 	public JButton getBtnAgregar() {
@@ -130,14 +168,7 @@ public class PanelFichaBotonesAvion extends JPanel{
 	}
 
 
-	public IRepositorioModelo<Aeropuerto> getAeropuertos() {
-		return aeropuertos;
-	}
 
-
-	public void setAeropuertos(IRepositorioModelo<Aeropuerto> aeropuertos) {
-		this.aeropuertos = aeropuertos;
-	}
 
 	public JButton getBtnGrabar() {
 		return btnGrabar;
@@ -167,6 +198,51 @@ public class PanelFichaBotonesAvion extends JPanel{
 	public void setBtnSalir(JButton btnSalir) {
 		this.btnSalir = btnSalir;
 	}
+
+
+
+
+
+	public VentanaGestionABMAvion getVentanaPrincipal() {
+		return ventanaPrincipal;
+	}
+
+
+	public void setVentanaPrincipal(VentanaGestionABMAvion ventanaPrincipal) {
+		this.ventanaPrincipal = ventanaPrincipal;
+	}
+
+
+	public JButton getBtnActualizar() {
+		return btnActualizar;
+	}
+
+
+	public void setBtnActualizar(JButton btnActualizar) {
+		this.btnActualizar = btnActualizar;
+	}
+
+
+	public IRepositorioModelo< Avion > getAviones() {
+		return aviones;
+	}
+
+
+	public void setAviones(IRepositorioModelo< Avion > aviones) {
+		this.aviones = aviones;
+	}
+
+
+	public Map <String,Aerolinea> getAerolineas() {
+		return aerolineas;
+	}
+
+
+	public void setAerolineas(Map <String,Aerolinea> aerolineas) {
+		this.aerolineas = aerolineas;
+	}
+
+
 	
 
 }

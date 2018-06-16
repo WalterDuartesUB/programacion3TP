@@ -10,7 +10,9 @@ import javax.swing.JPanel;
 
 import ar.edu.ub.p3.aeropuerto.gestion.modelo.IRepositorioModelo;
 import ar.edu.ub.p3.aeropuerto.gestion.view.ITablaModelo;
-import ar.edu.ub.p3.modelo.*;
+import ar.edu.ub.p3.modelo.Aeropuerto;
+import ar.edu.ub.p3.modelo.Posicion;
+ 
 
 public class PanelFichaBotonesAeropuerto extends JPanel{
 
@@ -110,14 +112,24 @@ public class PanelFichaBotonesAeropuerto extends JPanel{
 	
 	
 	public void onClickBtnBorrar(ActionEvent arg0) {
-		getAeropuertos().delete( new Aeropuerto( 
-				getPanelCampos().getTxtIdAeropuerto().getText(), 
-				getPanelCampos().getTxtNombre().getText(), 
-				new Posicion(
-						Double.parseDouble(getPanelCampos().getTxtPosicionX().getText()), 
-						Double.parseDouble(getPanelCampos().getTxtPosicionY().getText())) ) );
 		
-		getPanelLista().refrescar();		
+		try {
+			
+			getAeropuertos().delete( new Aeropuerto( 
+					getPanelCampos().getTxtIdAeropuerto().getText(), 
+					getPanelCampos().getTxtNombre().getText(), 
+					new Posicion(
+							Double.parseDouble(getPanelCampos().getTxtPosicionX().getText()), 
+							Double.parseDouble(getPanelCampos().getTxtPosicionY().getText())) ) );
+			
+			getPanelLista().refrescar();
+			
+		}catch(Exception e){
+			
+			mostrarMensaje("Error en borrar");
+			
+		}
+				
 		
 	}
 	

@@ -9,7 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import ar.edu.ub.p3.aeropuerto.gestion.modelo.IRepositorioModelo;
-import ar.edu.ub.p3.modelo.*;
+import ar.edu.ub.p3.modelo.Aeropuerto;
+ 
 
 public class PanelFichaCamposAeropuerto extends JPanel{
 
