@@ -266,15 +266,6 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 		return vuelos;
 	}
 	
-	public List<IVuelo> getVuelosProximoDespegue() {
-		//return (List<IVuelo>) this.getEstadoAeropuerto().getVuelosProximoDespegue();
-		return null;
-	}
-	
-	public List<IVuelo> getVuelosProximoAterrizar(){
-		//return (List<IVuelo>) this.getEstadoAeropuerto().getVuelosAterrizando();
-		return null;
-	}
 
 	public Collection<Vuelo> obtenerInformacionVuelosCercanos(IPosicion posicion, int coberturaKm) {
 		//TODO implementar este mensaje en el trafico aereo: obtenerInformacionVuelosCercanos
