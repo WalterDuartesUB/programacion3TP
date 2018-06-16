@@ -55,7 +55,7 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 //		while( Math.abs( vuelo.getPosicion().getY() - aeropuertoDestino.getPosicion().getY() ) > distanciaAlDestino) {
 		while( vuelo.getPosicion().calcularDistancia( aeropuertoDestino.getPosicion() ) > distanciaAlDestino ) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

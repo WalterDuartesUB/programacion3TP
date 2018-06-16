@@ -32,7 +32,7 @@ public class Vuelo implements IVuelo,Serializable {
 		
 		this.setHorarioAterrizajeEstimado(horarioProgramado);
 		this.setHorarioDespegue(horarioProgramado);
-		this.setEstadoVuelo(EstadoVuelo.BOARDING);
+		this.setEstadoVuelo(EstadoVuelo.PROGRAMMED);
 	}
 	
 	public Vuelo(String idVuelo, IAvion avion, IAeropuerto aeropuertoOrigen, IAeropuerto aeropuertoDestino, Date horarioProgramado, Date horarioDespegue, Date horarioAterrizajeEstimado, EstadoVuelo estadoVuelo) {

@@ -66,7 +66,9 @@ public class PanelRadar extends JPanel implements Closeable{
 
 	public void pedirVuelosAlTraficoAereo(ActionEvent arg0) {		
 		//Pido la info de los vuelos cercanos a mi posicion
-		this.setVuelosDespegados( this.getConexionTA().obtenerInformacionVuelosCercanos( this.getPosicionRadar(), this.getCoberturaKm() ) );
+//		this.setVuelosDespegados( this.getConexionTA().obtenerInformacionVuelosCercanos( this.getPosicionRadar(), this.getCoberturaKm() ) );
+		
+		this.setVuelosDespegados( this.getConexionTA().getEstadoAeropuerto().getVuelosDespegados().values() );
 		
 		this.dibujarRadar();
 	}

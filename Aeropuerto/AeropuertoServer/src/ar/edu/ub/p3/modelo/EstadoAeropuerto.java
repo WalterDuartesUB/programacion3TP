@@ -192,19 +192,59 @@ public class EstadoAeropuerto {
 		this.vuelosAterrizando = vuelosAterrizando;
 	}
 
+	public void cambiarEstadoAvion( String idVuelo, EstadoVuelo estadoVuelo){
+		Vuelo vuelo = this.getTodosLosVuelos().get( idVuelo );
+		
+		synchronized (vuelo) {
+			vuelo.setEstadoVuelo(estadoVuelo);
+		}		
+	}
 
 	public void moverAvion(String idVuelo, IPosicion posicion) {
-		Vuelo vuelo = this.getVuelosAterrizando().get( idVuelo );
+		Vuelo vuelo = this.getTodosLosVuelosEntantesYSalientes().get( idVuelo );
 		
 		synchronized (vuelo) {
 			vuelo.setPosicion( new Posicion( vuelo.getPosicion().sumar( posicion ) ) );
 		}		
 	}
 
-	public Map<String,Vuelo> getVuelosDespegados() {
-		return this.getVuelos();
+	public Map<String, Vuelo> getTodosLosVuelos() {
+		Map<String, Vuelo> todosLosVuelos = new HashMap<String,Vuelo>();
+		
+		todosLosVuelos.putAll( this.getVuelos() );
+		todosLosVuelos.putAll( this.getTodosLosVuelosEntantesYSalientes() );
+		
+		return todosLosVuelos;
+	}
+	
+	private Map<String, Vuelo> getTodosLosVuelosEntantesYSalientes() {
+		Map<String, Vuelo> todosLosVuelos = new HashMap<String,Vuelo>();
+		
+		todosLosVuelos.putAll( this.getVuelosDespegados() );
+		todosLosVuelos.putAll( this.getVuelosAterrizando() );
+		
+		return todosLosVuelos;
 	}
 
+
+	public Map<String,Vuelo> getVuelosDespegados() {
+		Map<String,Vuelo> vuelosDespegados = new HashMap<String, Vuelo>();
+		
+		for( Vuelo vuelo : this.getVuelos().values() )
+			if( vuelo.getEstadoVuelo() == EstadoVuelo.BOARDING )
+				vuelosDespegados.put( vuelo.getIdVuelo(), vuelo );
+			
+		return vuelosDespegados;
+	}
+
+	public Map<String,Vuelo> getVuelosProximoADespegarYDespegados(){
+		Map<String,Vuelo> vuelosProximoADespegarYDespegados = new HashMap<String,Vuelo>();
+		
+		for(Vuelo vuelo: this.getVuelos().values())
+			if(vuelo.getEstadoVuelo()== EstadoVuelo.PROGRAMMED || vuelo.getEstadoVuelo()==EstadoVuelo.BOARDING || vuelo.getEstadoVuelo() == EstadoVuelo.ON_AIR )
+				vuelosProximoADespegarYDespegados.put(vuelo.getIdVuelo(),vuelo);
+		return vuelosProximoADespegarYDespegados;
+	}
 
 	
 	
