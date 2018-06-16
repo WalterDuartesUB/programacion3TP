@@ -237,6 +237,14 @@ public class EstadoAeropuerto {
 		return vuelosDespegados;
 	}
 
+	public Map<String,Vuelo> getVuelosProximoADespegarYDespegados(){
+		Map<String,Vuelo> vuelosProximoADespegarYDespegados = new HashMap<String,Vuelo>();
+		
+		for(Vuelo vuelo: this.getVuelos().values())
+			if(vuelo.getEstadoVuelo()== EstadoVuelo.PROGRAMMED || vuelo.getEstadoVuelo()==EstadoVuelo.BOARDING || vuelo.getEstadoVuelo() == EstadoVuelo.ON_AIR )
+				vuelosProximoADespegarYDespegados.put(vuelo.getIdVuelo(),vuelo);
+		return vuelosProximoADespegarYDespegados;
+	}
 
 	
 	
