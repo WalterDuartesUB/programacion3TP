@@ -118,7 +118,7 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 
 	public void onTimerDespegarAviones(ActionEvent e) {		
 		if( this.getEstadoAeropuerto().getVuelosProgramados().size() > 0 )
-			this.getEstadoAeropuerto().cambiarEstadoAvion(this.getEstadoAeropuerto().getVuelosProgramados().iterator().next().getIdVuelo(), EstadoVuelo.BOARDING );			
+			this.despegar( this.getEstadoAeropuerto().getVuelosProgramados().iterator().next() );			
 	}
 	
 	public void onTimerMoverAviones(ActionEvent e) {				
