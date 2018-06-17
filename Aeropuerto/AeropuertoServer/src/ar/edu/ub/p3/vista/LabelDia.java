@@ -2,6 +2,8 @@ package ar.edu.ub.p3.vista;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.swing.JLabel;
@@ -11,7 +13,7 @@ import javax.swing.Timer;
 
 import ar.edu.ub.p3.util.Configuracion;
 
-public class LabelDia extends JPanel {
+public class LabelDia extends JPanel implements Closeable{
 
 	/**
 	 * 
@@ -68,6 +70,12 @@ public class LabelDia extends JPanel {
 
 	public void setTimerPedirVuelos(Timer timerPedirVuelos) {
 		this.timerPedirVuelos = timerPedirVuelos;
+	}
+
+	@Override
+	public void close() throws IOException {
+		this.getTimerPedirVuelos().stop();
+		
 	}
 
 }

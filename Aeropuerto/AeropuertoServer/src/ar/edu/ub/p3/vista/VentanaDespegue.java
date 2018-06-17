@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -157,7 +158,12 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		// TODO Auto-generated method stub
+		try {
+			this.getPanelDespegue().close();
+			this.getDiaDeHoy().close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

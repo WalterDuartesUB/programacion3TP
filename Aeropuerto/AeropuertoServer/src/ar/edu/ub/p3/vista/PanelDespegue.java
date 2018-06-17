@@ -215,7 +215,7 @@ public class PanelDespegue extends JPanel implements Closeable{
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
+		//this.getTimerPedirVuelos().stop();
 		
 	}
 	
