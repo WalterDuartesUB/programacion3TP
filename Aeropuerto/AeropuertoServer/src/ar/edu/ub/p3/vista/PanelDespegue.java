@@ -89,7 +89,34 @@ public class PanelDespegue extends JPanel implements Closeable{
 				{"pepe","pepe","pepe","pepe","pepe","pepe"},
 };
 		
-    	JTable tabla = new JTable(aux2,nombreColumna);
+		Object [][] vuelos = new Object [conexionTA.getEstadoAeropuerto().getVuelosProgramados().size()][nombreColumna.length];
+		int i = 0 ;
+		for(IVuelo vuelo : conexionTA.getEstadoAeropuerto().getVuelosProgramados()) { // cambiar
+ 
+
+				vuelos[i][0] = ( vuelo.getHorarioProgramado().getHours() +":"+vuelo.getHorarioProgramado().getMinutes());  // arreglar en algun momento
+				vuelos[i][1] = (vuelo.getIdVuelo().toString());
+				
+				/*
+				///// HACER ESTO ESCALABLE  solo prueba
+				if(vuelo.getAvion().getAerolinea().getNombre().equals("AEROLINEAS ARGENTINAS"))
+					vuelos[i][2] = icon1;
+				if(vuelo.getAvion().getAerolinea().getNombre().equals("LATAM"))
+					vuelos[i][2] = icon2;
+				if(vuelo.getAvion().getAerolinea().getNombre().equals("ANDES"))
+					vuelos[i][2] = icon3;
+					
+				 */
+				
+				vuelos[i][2] = vuelo.getAvion().getAerolinea().getNombre();
+				vuelos[i][3] = ( vuelo.getAeropuertoDestino().getIdAeropuerto() + " - "+vuelo.getAeropuertoDestino().getNombre());
+				vuelos[i][4] = (vuelo.getHorarioDespegue().getHours() + ":" + vuelo.getHorarioDespegue().getMinutes());
+				vuelos[i][5] = (vuelo.getEstadoVuelo().toString());
+				i++;
+			
+		}
+		
+    	JTable tabla = new JTable(vuelos,nombreColumna);
     	JScrollPane scroll =  new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     	scroll.setBackground(Color.DARK_GRAY);
     	
