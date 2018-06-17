@@ -65,9 +65,7 @@ public class PanelRadar extends JPanel implements Closeable{
 	}
 
 	public void pedirVuelosAlTraficoAereo(ActionEvent arg0) {		
-		//Pido la info de los vuelos cercanos a mi posicion
-//		this.setVuelosDespegados( this.getConexionTA().obtenerInformacionVuelosCercanos( this.getPosicionRadar(), this.getCoberturaKm() ) );
-		
+		//Pido la info de los vuelos cercanos a mi posicion		
 		this.setVuelosDespegados( this.getConexionTA().getEstadoAeropuerto().getVuelosDespegados().values() );
 		
 		this.dibujarRadar();
@@ -133,7 +131,7 @@ public class PanelRadar extends JPanel implements Closeable{
 		int yPixel = this.calcularUnidadesDePantalla(anchoAlto, y);
 		int yPixelCorregido = this.calcularCoordenadaYEnPantalla(yPixel,anchoAlto);
 		int xPixelCorregido = this.calcularCoordenadaXEnPantalla(xPixel,anchoAlto);
-		char[] idAvion = vuelo.getAvion().getIdAvion().toCharArray();
+		char[] idAvion = vuelo.getIdVuelo().toCharArray();
  		g.setColor( colorAvion );
 		g.fillOval(xPixelCorregido-5, yPixelCorregido-5, 10, 10);
 		g.drawChars(idAvion, 0, idAvion.length, xPixelCorregido+10, yPixelCorregido);
