@@ -122,5 +122,23 @@ public class Vuelo implements IVuelo,Serializable {
 	public void setHorarioDespegue(Date horarioDespegue) {
 		this.horarioDespegue = horarioDespegue;
 	}
+
+	@Override
+	public int hashCode() {
+		return this.getIdVuelo().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vuelo other = (Vuelo) obj;
+		return this.getIdVuelo().equals( other.getIdVuelo() );
+	}
+	
 	
 }

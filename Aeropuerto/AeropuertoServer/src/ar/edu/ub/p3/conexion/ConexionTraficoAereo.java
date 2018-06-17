@@ -117,6 +117,7 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	}
 
 	public void onTimerMoverAviones(ActionEvent e) {		
+		System.out.println( this.getEstadoAeropuerto().getVuelosProgramados() );
 		for( Vuelo vuelo : this.getEstadoAeropuerto().getTodosLosVuelos().values() )
 			this.moverAvionAterrizando( this.getCalculadoresPosicionAvion().get( vuelo.getEstadoVuelo() ), vuelo );
 	}

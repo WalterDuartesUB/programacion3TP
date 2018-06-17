@@ -1,5 +1,6 @@
 package ar.edu.ub.p3.util.factory;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -39,7 +40,12 @@ public class VueloFactory extends Fabrica<Vuelo>{
 	
 	@Override
 	public Vuelo crear(String[] campos) {
-		return new Vuelo( campos[0], this.getAviones().get( campos[1] ), this.getAeropuertos().get( campos[2] ), this.getAeropuertos().get( campos[3] ), new Date() );
+		String[] camposFecha = campos[4].split(":");
+		Calendar ahora = Calendar.getInstance();
+		ahora.set(Calendar.HOUR, Integer.parseInt( camposFecha[0] ));
+		ahora.set(Calendar.MINUTE, Integer.parseInt( camposFecha[1] ));		
+		
+		return new Vuelo( campos[0], this.getAviones().get( campos[1] ), this.getAeropuertos().get( campos[2] ), this.getAeropuertos().get( campos[3] ), ahora.getTime() );
 	}
 
 }
