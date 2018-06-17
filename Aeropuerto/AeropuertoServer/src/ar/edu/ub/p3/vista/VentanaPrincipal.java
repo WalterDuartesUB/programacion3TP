@@ -29,7 +29,6 @@ public class VentanaPrincipal extends JFrame{
 		this.crearMenus();
 		this.setVisible( true );
 		
-		//TODO revisar como hacer esto, deberia formar parte del controlador
 		this.setControlador( new VentanaPrincipalControlador( configuracion, estadoAeropuerto, conexionTA ) );
 	}
 

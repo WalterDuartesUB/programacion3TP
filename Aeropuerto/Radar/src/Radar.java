@@ -107,7 +107,6 @@ public class Radar extends JPanel implements IRadar{
 		Posicion posicionAvion = this.obtenerDistanciasAlAeropuerto(vuelo.getAvion().getPosicion());
 		double x = posicionAvion.getX();
 		double y = posicionAvion.getY();
-		//TODO sacar el casteo y comvertir correctamente 
 		int xPixel = this.calcularUnidadesDePantalla(anchoAlto, (int)x);
 		int yPixel = this.calcularUnidadesDePantalla(anchoAlto, (int)y);
 		int yPixelCorregido = this.calcularCoordenadaYEnPantalla(yPixel,anchoAlto);

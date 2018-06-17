@@ -15,8 +15,7 @@ public class AvionFactory extends Fabrica<Avion> {
 	}
 
 	@Override
-	public Avion crear(String[] campos) {				
-		//TODO agregar el modelo del avion		
+	public Avion crear(String[] campos) {						
 		return new Avion(campos[0], this.getAerolineas().get( campos[2] ), this.getPosicion());
 	}
 

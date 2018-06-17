@@ -22,7 +22,6 @@ public class CargadorArchivosData {
 			}
 			
 		} catch (IOException e) {
-			// TODO Ver que hacer cuando de una excepcion cargar los datos
 			e.printStackTrace();
 		}
 		

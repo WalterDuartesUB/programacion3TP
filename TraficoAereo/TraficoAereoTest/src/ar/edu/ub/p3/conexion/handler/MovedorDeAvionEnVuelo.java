@@ -18,22 +18,7 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 
 	@Override
 	public void run() {
-
-		//TODO reveer esto para los casos en los que una recta no sirva
-		//Uno los aeropuertos con una recta
-		//IAeropuerto aeropuertoOrigen = this.getEstadoTraficoAereo().getVuelo( this.getIdVuelo() ).getAeropuertoOrigen();
-		IAeropuerto aeropuertoDestino = this.getEstadoTraficoAereo().getVuelo( this.getIdVuelo() ).getAeropuertoDestino();
-/*		
-		//Calculo la pendiente
-		double pendiente = ( aeropuertoDestino.getPosicion().getY() -  aeropuertoOrigen.getPosicion().getY() ) / ( aeropuertoDestino.getPosicion().getX() - aeropuertoOrigen.getPosicion().getX() );
-		
-		//calculo la ordenada al origen
-		double ordenadaAlOrigen = aeropuertoOrigen.getPosicion().getY() - pendiente * aeropuertoOrigen.getPosicion().getX();
-		
-		double orientacionX = ( aeropuertoDestino.getPosicion().getX() - aeropuertoOrigen.getPosicion().getX() ) > 0 ? 1 : -1;
-		
-		System.out.println( String.format("y = %f X + %f", pendiente, ordenadaAlOrigen));
-*/		
+		IAeropuerto aeropuertoDestino = this.getEstadoTraficoAereo().getVuelo( this.getIdVuelo() ).getAeropuertoDestino();	
 		IVuelo vuelo = this.getEstadoTraficoAereo().getVuelo(this.getIdVuelo());
 		
 		//Avanzo hasta estar en la zona de aterrizaje
@@ -41,10 +26,6 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 		
 		//Envio un mensaje de proximidad al aeropuerto de destino
 		this.getEstadoTraficoAereo().getConexionAeropuerto( aeropuertoDestino.getIdAeropuerto() ).enviarMensaje( Mensaje.crearMensajeVueloProximoAterrizar(new Vuelo(this.getEstadoTraficoAereo().getVuelo(this.getIdVuelo()))));
-	
-		//TODO Sacar de la lista de vuelos del TA
-		//Sigo avanzando el avion hasta llegar
-//		this.moverAvion(aeropuertoDestino, pendiente, orientacionX, vuelo, 0.1);
 	}
 
 	private void moverAvion(IAeropuerto aeropuertoDestino, IVuelo vuelo, double distanciaAlDestino) {
@@ -52,7 +33,6 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 		double avanceX = Math.cos( angulo );
 		double avanceY = Math.sin(angulo);
 		
-//		while( Math.abs( vuelo.getPosicion().getY() - aeropuertoDestino.getPosicion().getY() ) > distanciaAlDestino) {
 		while( vuelo.getPosicion().calcularDistancia( aeropuertoDestino.getPosicion() ) > distanciaAlDestino ) {
 			try {
 				Thread.sleep(10);
@@ -60,8 +40,7 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 				e.printStackTrace();
 			}
 			
-			//cambio el avion
-//			this.getEstadoTraficoAereo().moverAvion( this.getIdVuelo(), new Posicion( orientacionX, pendiente * orientacionX  ) );			
+			//cambio el avion			
 			this.getEstadoTraficoAereo().moverAvion( this.getIdVuelo(), new Posicion( avanceX, avanceY  ) );
 		}
 	}

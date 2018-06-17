@@ -13,8 +13,6 @@ public class HandlerMensajeVueloAterrizoEnDestino implements Handler {
 
 	@Override
 	public void accept(Mensaje m, IConexionAeropuerto conexionAeropuerto, AtendedorDePedidosDeAeropuerto atendedorDePedidosDeAeropuerto) {
-		//TODO mensaje deprecado
-//		this.getEstadoTA().getConexionAeropuerto( this.getEstadoTA().getVuelo( m.getIdVuelo() ).getAeropuertoOrigen().getIdAeropuerto() ).enviarMensaje( ( Mensaje.crearMensajeVueloAterrizoEnDestino( m.getIdVuelo() ) ) );
 	}
 
 	private EstadoTraficoAereo getEstadoTA() {
