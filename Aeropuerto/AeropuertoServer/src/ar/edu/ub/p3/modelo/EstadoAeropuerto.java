@@ -1,7 +1,11 @@
 package ar.edu.ub.p3.modelo;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.util.CargadorArchivosData;
@@ -227,12 +231,17 @@ public class EstadoAeropuerto {
 	}
 
 
-	public Map<String,Vuelo> getVuelosProgramados() {
-		Map<String,Vuelo> vuelosDespegados = new HashMap<String, Vuelo>();
+	public Collection<Vuelo> getVuelosProgramados() {
+		Set<Vuelo> vuelosDespegados = new TreeSet<Vuelo>( new Comparator<Vuelo>() {
+			@Override
+			public int compare(Vuelo v1, Vuelo v2) {
+				return v1.getHorarioProgramado().compareTo( v2.getHorarioProgramado() );
+			}
+		});
 		
 		for( Vuelo vuelo : this.getVuelos().values() )
 			if( vuelo.getEstadoVuelo() == EstadoVuelo.PROGRAMMED )
-				vuelosDespegados.put( vuelo.getIdVuelo(), vuelo );
+				vuelosDespegados.add( vuelo );
 		
 		return vuelosDespegados;
 	}
