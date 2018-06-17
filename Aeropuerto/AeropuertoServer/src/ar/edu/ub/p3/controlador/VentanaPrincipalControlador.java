@@ -2,6 +2,10 @@ package ar.edu.ub.p3.controlador;
 
 import javax.swing.JOptionPane;
 
+import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aerolinea.ActionVentanaGestionAerolineas;
+import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aeropuerto.ActionVentanaGestionAeropuertos;
+import ar.edu.ub.p3.aeropuerto.gestion.view.abm.avion.ActionVentanaGestionAviones;
+import ar.edu.ub.p3.aeropuerto.gestion.view.abm.vuelo.ActionVentanaGestionVuelos;
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
@@ -80,19 +84,19 @@ public class VentanaPrincipalControlador {
 	}
 	
 	public void gestionarAviones() {
-		this.onEventoAImplementar();
+		ActionVentanaGestionAviones.generarVentana( getEstadoAeropuerto() );
 	}
 	
 	public void gestionarAerolineas() {
-		this.onEventoAImplementar();
+		ActionVentanaGestionAerolineas.generarVentana( getEstadoAeropuerto() );
 	}
 	
 	public void gestionarAeropuertos() {
-		this.onEventoAImplementar();
+		ActionVentanaGestionAeropuertos.generarVentana( getEstadoAeropuerto() );
 	}
 	
 	public void gestionarVuelos() {
-		this.onEventoAImplementar();	
+		ActionVentanaGestionVuelos.generarVentana( getEstadoAeropuerto());
 	}	
 	
 	private void onEventoAImplementar() {
