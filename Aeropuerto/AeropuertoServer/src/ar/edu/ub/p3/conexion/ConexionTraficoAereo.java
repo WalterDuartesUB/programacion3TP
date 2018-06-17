@@ -130,12 +130,13 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 		double distanciaAlDestino = 0;
 		IPosicion posicionDestino = calculadorPosicion.obtenerPosicionDestino(vuelo, this.getConfiguracion().getConfiguracionAsInt("coberturaRadarEnKilometros") );
 		double angulo = vuelo.getAeropuertoOrigen().getPosicion().calcularAngulo( posicionDestino ); 
-		double avanceX = Math.cos( angulo );
-		double avanceY = Math.sin( angulo );
-
+//		double avanceX = Math.cos( angulo );
+//		double avanceY = Math.sin( angulo );
+		double distancia = vuelo.getPosicion().calcularDistancia( posicionDestino );
+		
 		//Si todavia no llegue, muevo un poco el avion		
-		if( ( vuelo.getPosicion().calcularDistancia( posicionDestino ) - distanciaAlDestino ) > 0.01 )
-			this.getEstadoAeropuerto().moverAvion( vuelo.getIdVuelo(), new Posicion( avanceX, avanceY  ) );
+		if( ( distancia - distanciaAlDestino ) > 0.01 )
+			this.getEstadoAeropuerto().moverAvion( vuelo.getIdVuelo(), new Posicion( Math.cos( angulo ) * Math.min(1, distancia), Math.sin( angulo ) * Math.min(1, distancia)  ) );
 		else{
 			this.getEstadoAeropuerto().cambiarEstadoAvion( vuelo.getIdVuelo(), calculadorPosicion.obtenerEstadoVueloAlLlegar( vuelo.getEstadoVuelo() ) );
 			calculadorPosicion.enviarMensaje( this, vuelo );			
