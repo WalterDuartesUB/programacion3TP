@@ -62,9 +62,9 @@ public class VentanaLlegada extends JFrame {
   
     	int i = 0;
     	
-    	ImageIcon icon1 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\arg2.png");
-    	ImageIcon icon2 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\latam2.png");
-    	ImageIcon icon3 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\andes2.png");
+    	ImageIcon icon1 = new ImageIcon("M:\\Aeropuerto\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\arg2.png");
+    	ImageIcon icon2 = new ImageIcon("M:\\Aeropuerto\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\latam2.png");
+    	ImageIcon icon3 = new ImageIcon("M:\\Aeropuerto\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\andes2.png");
 		  	
 		for(IVuelo vuelo : conexion.getVuelos()) {
 			if(estoyEnMiAeropuerto(vuelo,aeropuertoLocal)) {
@@ -109,7 +109,7 @@ public class VentanaLlegada extends JFrame {
 		
 	// Label Imagen	
 		JLabel jLabelObject = new JLabel();
-		jLabelObject.setIcon(new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\llegadas.png"));
+		jLabelObject.setIcon(new ImageIcon("M:\\Aeropuerto\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\llegadas.png"));
 		
 		
 /////////////////////////////////////////////////////

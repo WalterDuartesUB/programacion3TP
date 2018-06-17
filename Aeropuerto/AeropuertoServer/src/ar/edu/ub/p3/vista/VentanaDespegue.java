@@ -3,6 +3,7 @@ package ar.edu.ub.p3.vista;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Date;
@@ -10,6 +11,8 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
@@ -29,31 +32,35 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 	private ConexionTraficoAereo conexionTA;
 	private Configuracion configuracion;
 	private PanelDespegue panelDespegue;
+	private LabelDia		diaDeHoy;
 
 	public VentanaDespegue(Configuracion configuracion, IAeropuerto aeropuerto, ConexionTraficoAereo conexionTA) {
+		
+		Timer timer = new Timer(1000, this::actualizar);
+		timer.start();
 		
 		this.setAeropuerto(aeropuerto);
 		this.setConexionTA(conexionTA);
 		this.setConfiguracion(configuracion);
 		
 		this.setTitle("Despegues");
-		this.setLayout(new GridBagLayout());
-		this.setSize(400,400);
+		//this.setLayout(new GridBagLayout());
+		this.setSize(580,400);
 		this.setPanelDespegue( new PanelDespegue( this.getConfiguracion(), this.getAeropuerto().getIdAeropuerto(), this.getConexionTA() ));
-		//this.add(this.getPanelDespegue(),BorderLayout.CENTER);
+		this.setDiaDeHoy(new LabelDia(this.getConfiguracion()));
 		this.addWindowListener(this);
 		this.setVisible(true);	
 		
-		
+		JPanel panel = new JPanel(new GridBagLayout());
+		this.getContentPane().add(panel);
 		
 		JLabel jLabelObject = new JLabel();
 		jLabelObject.setIcon(new ImageIcon("./encabezadotablero/salidas.png"));
-		//"./mapas/"
+
 		
-		String date = new Date().toString();
-		JLabel dia = new JLabel(date);
+		//String date = new Date().toString();
+		//JLabel dia = new JLabel(date);
 		
-		//String aeropuertoactual = aeropuertolocal.getIdAeropuerto().toString()+"-"+aeropuertolocal.getNombre();
 		String aeropuertoactual= this.getAeropuerto().getIdAeropuerto().toString()+"-"+this.getAeropuerto().getNombre().toString();
 		JLabel aeropuertoactuall = new JLabel(aeropuertoactual);
 		
@@ -61,23 +68,15 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.anchor = GridBagConstraints.WEST;
-		this.add(jLabelObject, gbc);
+		gbc.anchor = GridBagConstraints.CENTER;
+		panel.add(jLabelObject, gbc);
 		
-		gbc.fill = GridBagConstraints.NONE;
+		gbc.fill = GridBagConstraints.CENTER;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.weightx = 0;
 		gbc.weighty = 0;
-		this.add(dia, gbc);
-		
-		
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
-		this.add(aeropuertoactuall, gbc);
+		panel.add(this.getDiaDeHoy(), gbc);
 		
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 0;
@@ -85,7 +84,23 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 2.0;
 		gbc.weighty = 2.0;
-		this.add(this.getPanelDespegue(), gbc);
+		panel.add(this.getPanelDespegue(), gbc);
+		
+		gbc.fill = GridBagConstraints.CENTER;
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.weightx = 0;
+		gbc.weighty = 0;
+		panel.add(aeropuertoactuall, gbc);
+		
+
+	}
+	
+	
+	public void actualizar (ActionEvent arg0) {
+	
+		this.validate();
+		this.repaint();
 	}
 	
 	public IAeropuerto getAeropuerto() {
@@ -118,6 +133,14 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 
 	private void setPanelDespegue(PanelDespegue panelDespegue) {
 		this.panelDespegue = panelDespegue;
+	}
+	
+	public LabelDia getDiaDeHoy() {
+		return diaDeHoy;
+	}
+	
+	public void setDiaDeHoy(LabelDia diaDeHoy) {
+		this.diaDeHoy = diaDeHoy;
 	}
 
 	@Override
@@ -161,6 +184,7 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 
 

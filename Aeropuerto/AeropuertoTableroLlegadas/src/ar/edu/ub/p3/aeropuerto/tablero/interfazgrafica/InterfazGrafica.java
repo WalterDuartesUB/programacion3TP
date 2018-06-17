@@ -34,7 +34,7 @@ public class InterfazGrafica {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					setVentanaLlegada( new VentanaLlegada( getConexion(),aep ) );
+					//setVentanaLlegada( new VentanaLlegada( getConexion(),aep ) );
 					setVentanaSalida( new VentanaSalida( getConexion(),aep ) );
 				} catch (Exception e) {
 					e.printStackTrace();

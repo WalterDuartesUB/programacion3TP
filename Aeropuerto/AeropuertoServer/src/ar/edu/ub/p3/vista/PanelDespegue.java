@@ -54,9 +54,10 @@ public class PanelDespegue extends JPanel implements Closeable{
 		this.setVuelosProgramadosDespegue(new LinkedList<Vuelo>());
 		this.setVuelosPorAterrizar(new LinkedList<>());
 		this.setConfiguracion(configuracion);
+		this.Iniciar();
 		
-		this.setTimerPedirVuelos(new Timer (this.getConfiguracion().getConfiguracionAsInt("tableroTiempoRefresh"), this ::pedirVuelosAlTraficoAereo));
-		this.getTimerPedirVuelos().start();
+	//	this.setTimerPedirVuelos(new Timer (this.getConfiguracion().getConfiguracionAsInt("tableroTiempoRefresh"), this ::pedirVuelosAlTraficoAereo));
+	//	this.getTimerPedirVuelos().start();
 	}
 	
 
@@ -64,6 +65,7 @@ public class PanelDespegue extends JPanel implements Closeable{
 		this.setVuelosProgramadosDespegue(this.getConexionTA().getEstadoAeropuerto().getVuelosProximoADespegarYDespegados().values());
 		this.dibujarSalidas();
 	}
+	
 	
 	  public void Iniciar() {
 	    int width = getWidth();
@@ -75,14 +77,14 @@ public class PanelDespegue extends JPanel implements Closeable{
 	    
 	}
 	
+	
 	private Component dibujarTabla() {
 		
-		JPanel panel = new JPanel(new GridBagLayout());
 		
 		String[] 	nombreColumna = {"Hora Programada","NroVuelo", "Aerolinea", "Destino", "Estima", "Estado"};
 		Object [][] aux2 = {
 				{"pepe","pepe","pepe","pepe","pepe","pepe"},
-				{"pepe","pepe","pepe","pepe","pepe","pepe"},
+				{"pepe","pepe","pepe","pepa","pepe","pepe"},
 				{"pepe","pepe","pepe","pepe","pepe","pepe"},
 				{"pepe","pepe","pepe","pepe","pepe","pepe"},
 };
@@ -93,30 +95,21 @@ public class PanelDespegue extends JPanel implements Closeable{
     	
     	tabla.setAutoscrolls(true);
  
-    	
     	tabla.setSize(200,200);
     	
 		JScrollPane tableScrollPane = new JScrollPane(tabla);
 		tableScrollPane.setPreferredSize(new Dimension(400, 400));
-    	
-    	GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.gridx = 0;
-		gbc.gridy = 2;		
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.weightx = 2.0;
-		gbc.weighty = 2.0;
-		panel.add(tableScrollPane, gbc);
-    	
-    	return tabla;
+
+		
+    	return tableScrollPane;
+		
     	
 		
 	}
 
 
 	private void dibujarSalidas() {
-		this.validate();
-		this.Iniciar();
+		Iniciar();
 		
 	}
 

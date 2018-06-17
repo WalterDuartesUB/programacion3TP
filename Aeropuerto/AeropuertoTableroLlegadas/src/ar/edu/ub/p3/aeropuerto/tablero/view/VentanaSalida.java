@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -15,11 +16,13 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import ar.edu.ub.p3.aeropuerto.tablero.conexion.ConexionAeropuerto;
@@ -27,7 +30,7 @@ import ar.edu.ub.p3.interfaz.IVuelo;
 import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.modelo.EstadoVuelo;
 
-public class VentanaSalida extends JFrame {
+public class VentanaSalida extends JDialog {
 
 
     /**
@@ -35,14 +38,21 @@ public class VentanaSalida extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
+	//JPanel pane = new JPanel(new GridBagLayout());
+	
     public VentanaSalida(ConexionAeropuerto conexion, Aeropuerto aeropuertolocal) {
-        super();                    // usamos el contructor de la clase padre JFrame
-        iniciarVentana(conexion,aeropuertolocal);        // configuramos la ventana
+        super();                  
+        iniciarVentana(conexion,aeropuertolocal);     
         setVisible(true);
-        this.setResizable(false);
+        //this.setResizable(false);
+    	this.setSize(580,400);
+		Timer timer = new Timer(1000, this::actualizar);
+		timer.start();
     }
 
     private void iniciarVentana(ConexionAeropuerto conexion, Aeropuerto aeropuertolocal) {
+    	
     	
     	setTitle("Prueba Ventana 3");
     	
@@ -58,9 +68,9 @@ public class VentanaSalida extends JFrame {
 
     	int i = 0;
     	
-    	ImageIcon icon1 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\arg2.png");
-    	ImageIcon icon2 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\latam2.png");
-    	ImageIcon icon3 = new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\andes2.png");
+    	ImageIcon icon1 = new ImageIcon("M:\\Aeropuerto\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\arg2.png");
+    	ImageIcon icon2 = new ImageIcon("M:\\Aeropuerto\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\latam2.png");
+    	ImageIcon icon3 = new ImageIcon("M:\\Aeropuerto\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\andes2.png");
 		
     	
 		for(IVuelo vuelo : conexion.getVuelos()) {
@@ -107,12 +117,14 @@ public class VentanaSalida extends JFrame {
 		tableScrollPane.setPreferredSize(new Dimension(400, 400));
 		
 		JLabel jLabelObject = new JLabel();
-		jLabelObject.setIcon(new ImageIcon("C:\\WorkSpaceIntegrador\\programacion3TP\\img\\salidas.png"));
+		jLabelObject.setIcon(new ImageIcon("M:\\Aeropuerto\\programacion3TP\\Aeropuerto\\AeropuertoTableroLlegadas\\img\\salidas.png"));
 		
-	
-		String date = new Date().toString();
-		JLabel dia = new JLabel(date);
-		
+	/*
+	 * 		this.setTimerPedirVuelos(new Timer (this.getConfiguracion().getConfiguracionAsInt("tableroTiempoRefresh"), this ::pedirVuelosAlTraficoAereo));
+		this.getTimerPedirVuelos().start();
+	 */
+
+
 		String aeropuertoactual = aeropuertolocal.getIdAeropuerto().toString()+"-"+aeropuertolocal.getNombre();
 		JLabel aeropuertoactuall = new JLabel(aeropuertoactual);
 		
@@ -121,6 +133,11 @@ public class VentanaSalida extends JFrame {
 		JPanel detailsPanel = new JPanel();
 		detailsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
+		
+		String date = new Date().toString();
+		JLabel dia = new JLabel(date);
+		
+	
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -138,12 +155,14 @@ public class VentanaSalida extends JFrame {
 		gbc.weighty = 2.0;
 		panel.add(tableScrollPane, gbc);
 
-		gbc.fill = GridBagConstraints.NONE;
+		gbc.fill = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.weightx = 0;
 		gbc.weighty = 0;
-		panel.add(dia, gbc);
+		panel.add(dibujarHora(), gbc);
+		
+	
 		
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridx = 0;
@@ -157,6 +176,19 @@ public class VentanaSalida extends JFrame {
 		this.setVisible(true);
     	
     }
+    
+	public void actualizar (ActionEvent arg0) {
+		this.revalidate();
+		this.repaint();
+	}
+
+	private Component dibujarHora() {
+		String date = new Date().toString();
+		JLabel dia = new JLabel(date);
+		System.out.println(date);
+		return dia;
+		
+	}
 
 	private boolean estoyEnMiAeropuerto(IVuelo vuelo, Aeropuerto aerolocal) {
 		
