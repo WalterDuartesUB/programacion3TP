@@ -29,12 +29,26 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	private Socket socket;
 	private ObjectOutputStream outputStream;		
 	private Thread threadRecibidorDeMensajesDelTraficoAereo;
+	private Timer timerMoverAviones;
+	private Map<EstadoVuelo, CalculadorPosicionDestino> calculadoresPosicionAvion;
 	
 	public ConexionTraficoAereo(Configuracion configuracion, EstadoAeropuerto estadoAeropuerto) {
 		
 		setConfiguracion(configuracion);
 		setEstadoAeropuerto(estadoAeropuerto);
+		this.setTimerMoverAviones(null);
 	
+		this.cargarCalculadoresPosicionAvion();		
+	}
+
+	private void cargarCalculadoresPosicionAvion() {
+		this.setCalculadoresPosicionAvion(new HashMap<EstadoVuelo, CalculadorPosicionDestino>());
+		
+		this.getCalculadoresPosicionAvion().put( EstadoVuelo.PROGRAMMED, CalculadorPosicionDestino.NEUTRO );
+		this.getCalculadoresPosicionAvion().put( EstadoVuelo.BOARDING, CalculadorPosicionDestino.ALEJA_DE_ORIGEN );
+		this.getCalculadoresPosicionAvion().put( EstadoVuelo.ON_AIR, CalculadorPosicionDestino.NEUTRO );
+		this.getCalculadoresPosicionAvion().put( EstadoVuelo.LANDING, CalculadorPosicionDestino.AVANZA_A_DESTINO );
+		this.getCalculadoresPosicionAvion().put( EstadoVuelo.LANDED, CalculadorPosicionDestino.NEUTRO );
 	}
 
 	public EstadoAeropuerto getEstadoAeropuerto() {
@@ -87,9 +101,10 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 			this.esperarRespuestaTraficoAereo();
 			
 			//Si me pude conectar,creo un timer para mover los aviones que estan acercandose al aeropuerto
-			//TODO cambiar y crear un thread en donde corresponda
-			if( this.isEstoyConectado() )
-				new Timer( 500, this::onTimerMoverAvionesAterrizando).start();
+			if( this.isEstoyConectado() ) {
+				this.setTimerMoverAviones( new Timer( 500, this::onTimerMoverAviones) );
+				this.getTimerMoverAviones().start();
+			}
 			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -101,34 +116,18 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	
 	}
 
-	public void onTimerMoverAvionesAterrizando(ActionEvent e) {
-		Map<EstadoVuelo, CalculadorPosicionDestino> handler = new HashMap<EstadoVuelo, CalculadorPosicionDestino>();
-		
-		handler.put( EstadoVuelo.PROGRAMMED, CalculadorPosicionDestino.NEUTRO );
-		handler.put( EstadoVuelo.BOARDING, CalculadorPosicionDestino.ALEJA_DE_ORIGEN );
-		handler.put( EstadoVuelo.ON_AIR, CalculadorPosicionDestino.NEUTRO );
-		handler.put( EstadoVuelo.LANDING, CalculadorPosicionDestino.AVANZA_A_DESTINO );
-		handler.put( EstadoVuelo.LANDED, CalculadorPosicionDestino.NEUTRO );
-		
+	public void onTimerMoverAviones(ActionEvent e) {		
 		for( Vuelo vuelo : this.getEstadoAeropuerto().getTodosLosVuelos().values() )
-			this.moverAvionAterrizando( handler.get( vuelo.getEstadoVuelo() ), vuelo );		
-			//this.moverAvionAterrizando( handler.get( vuelo.getEstadoVuelo() ).obtenerPosicionDestino( vuelo, this.getConfiguracion().getConfiguracionAsInt("coberturaRadarEnKilometros") ), vuelo, 0, handler.get(vuelo.getEstadoVuelo()).obtenerEstadoVueloAlLlegar(vuelo.getEstadoVuelo()));
+			this.moverAvionAterrizando( this.getCalculadoresPosicionAvion().get( vuelo.getEstadoVuelo() ), vuelo );
 	}
 	
-//	private void moverAvionAterrizando(IPosicion posicionDestino, Vuelo vuelo, double distanciaAlDestino, EstadoVuelo estadoVuelo) {
 	private void moverAvionAterrizando(CalculadorPosicionDestino calculadorPosicion, Vuelo vuelo ) {		
 		double distanciaAlDestino = 0;
 		IPosicion posicionDestino = calculadorPosicion.obtenerPosicionDestino(vuelo, this.getConfiguracion().getConfiguracionAsInt("coberturaRadarEnKilometros") );
 		double angulo = vuelo.getAeropuertoOrigen().getPosicion().calcularAngulo( posicionDestino ); 
 		double avanceX = Math.cos( angulo );
 		double avanceY = Math.sin( angulo );
-		
-		if( vuelo.getEstadoVuelo() == EstadoVuelo.LANDING ){
-			System.out.println( "V: " + vuelo.getPosicion() );
-			System.out.println( "D: " + posicionDestino );
-			System.out.println( vuelo.getPosicion().calcularDistancia( posicionDestino ) );
-		}
-		
+
 		//Si todavia no llegue, muevo un poco el avion		
 		if( ( vuelo.getPosicion().calcularDistancia( posicionDestino ) - distanciaAlDestino ) > 0.01 )
 			this.getEstadoAeropuerto().moverAvion( vuelo.getIdVuelo(), new Posicion( avanceX, avanceY  ) );
@@ -186,7 +185,10 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 		this.outputStream = outputStram;
 	}
 
-	public void desconectar() {		
+	public void desconectar() {
+		if( this.getTimerMoverAviones() != null)
+			this.getTimerMoverAviones().stop();
+				
 		this.getEstadoAeropuerto().setEstoyEsperandoRespuestaConexion( true );
 		this.enviarMensaje( Mensaje.crearMensajeBajaAeropuerto( this.getEstadoAeropuerto().getAerpuerto().getIdAeropuerto() ) );
 		
@@ -216,12 +218,8 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	}
 
 	public void despegar(Vuelo vuelo) {
-		//TODO evaluar si esto tiene que estar aca
 		vuelo.setPosicion(new Posicion( this.getEstadoAeropuerto().getAerpuerto().getPosicion() ) );
-//		vuelo.setEstadoVuelo( EstadoVuelo.BOARDING );
-		this.getEstadoAeropuerto().cambiarEstadoAvion( vuelo.getIdVuelo(), EstadoVuelo.BOARDING );
-		
-//		this.enviarMensaje( Mensaje.crearMensajeProgramarVuelo(vuelo));		
+		this.getEstadoAeropuerto().cambiarEstadoAvion( vuelo.getIdVuelo(), EstadoVuelo.BOARDING );				
 	}
 
 	public Vuelo obtenerInformacionVuelo(String idVuelo) {
@@ -256,20 +254,20 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 		this.threadRecibidorDeMensajesDelTraficoAereo = threadRecibidorDeMensajesDelTraficoAereo;
 	}
 
-	public Collection<Vuelo> obtenerInformacionVuelos(Collection<String> idVuelos) {
-		//TODO el trafico aereo deberia resolver este mensaje en un solo llamado
-		List<Vuelo> vuelos = new LinkedList<Vuelo>();
-		
-		for( String idVuelo : idVuelos)
-			vuelos.add( this.obtenerInformacionVuelo(idVuelo) );
-		
-		return vuelos;
+	private Timer getTimerMoverAviones() {
+		return timerMoverAviones;
 	}
-	
 
-	public Collection<Vuelo> obtenerInformacionVuelosCercanos(IPosicion posicion, int coberturaKm) {
-		//TODO implementar este mensaje en el trafico aereo: obtenerInformacionVuelosCercanos
-		return this.obtenerInformacionVuelos( this.getEstadoAeropuerto().getVuelosDespegados().keySet() );
+	private void setTimerMoverAviones(Timer timerMoverAviones) {
+		this.timerMoverAviones = timerMoverAviones;
+	}
+
+	private Map<EstadoVuelo, CalculadorPosicionDestino> getCalculadoresPosicionAvion() {
+		return calculadoresPosicionAvion;
+	}
+
+	private void setCalculadoresPosicionAvion(Map<EstadoVuelo, CalculadorPosicionDestino> handler) {
+		this.calculadoresPosicionAvion = handler;
 	}
 
 }
