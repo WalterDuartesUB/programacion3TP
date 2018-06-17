@@ -30,6 +30,7 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	private ObjectOutputStream outputStream;		
 	private Thread threadRecibidorDeMensajesDelTraficoAereo;
 	private Timer timerMoverAviones;
+	private Timer timerDespegadorDeAviones;
 	private Map<EstadoVuelo, CalculadorPosicionDestino> calculadoresPosicionAvion;
 	
 	public ConexionTraficoAereo(Configuracion configuracion, EstadoAeropuerto estadoAeropuerto) {
@@ -37,6 +38,7 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 		setConfiguracion(configuracion);
 		setEstadoAeropuerto(estadoAeropuerto);
 		this.setTimerMoverAviones(null);
+		this.setTimerDespegadorDeAviones(null);
 	
 		this.cargarCalculadoresPosicionAvion();		
 	}
@@ -104,6 +106,9 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 			if( this.isEstoyConectado() ) {
 				this.setTimerMoverAviones( new Timer( 500, this::onTimerMoverAviones) );
 				this.getTimerMoverAviones().start();
+				
+				this.setTimerDespegadorDeAviones( new Timer( 10000, this::onTimerDespegarAviones) );
+				this.getTimerDespegadorDeAviones().start();								
 			}
 			
 		} catch (UnknownHostException e) {
@@ -116,8 +121,12 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	
 	}
 
-	public void onTimerMoverAviones(ActionEvent e) {		
-		System.out.println( this.getEstadoAeropuerto().getVuelosProgramados() );
+	public void onTimerDespegarAviones(ActionEvent e) {		
+		if( this.getEstadoAeropuerto().getVuelosProgramados().size() > 0 )
+			this.getEstadoAeropuerto().cambiarEstadoAvion(this.getEstadoAeropuerto().getVuelosProgramados().iterator().next().getIdVuelo(), EstadoVuelo.BOARDING );			
+	}
+	
+	public void onTimerMoverAviones(ActionEvent e) {				
 		for( Vuelo vuelo : this.getEstadoAeropuerto().getTodosLosVuelos().values() )
 			this.moverAvionAterrizando( this.getCalculadoresPosicionAvion().get( vuelo.getEstadoVuelo() ), vuelo );
 	}
@@ -187,9 +196,10 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 	}
 
 	public void desconectar() {
-		if( this.getTimerMoverAviones() != null)
-			this.getTimerMoverAviones().stop();
-				
+		
+		matarTimer( this.getTimerMoverAviones() );		
+		matarTimer( this.getTimerDespegadorDeAviones() );
+		
 		this.getEstadoAeropuerto().setEstoyEsperandoRespuestaConexion( true );
 		this.enviarMensaje( Mensaje.crearMensajeBajaAeropuerto( this.getEstadoAeropuerto().getAerpuerto().getIdAeropuerto() ) );
 		
@@ -202,6 +212,11 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 		}
 		System.out.println("Termino el thread de mensajes");		
 		this.cerrarConexionSocket();		
+	}
+
+	private void matarTimer(Timer timer) {
+		if( timer != null )
+			timer.stop();
 	}
 
 	private void cerrarConexionSocket() {
@@ -269,6 +284,14 @@ public class ConexionTraficoAereo implements IConexionTraficoAereo{
 
 	private void setCalculadoresPosicionAvion(Map<EstadoVuelo, CalculadorPosicionDestino> handler) {
 		this.calculadoresPosicionAvion = handler;
+	}
+
+	private Timer getTimerDespegadorDeAviones() {
+		return timerDespegadorDeAviones;
+	}
+
+	private void setTimerDespegadorDeAviones(Timer timerDespegadorDeAviones) {
+		this.timerDespegadorDeAviones = timerDespegadorDeAviones;
 	}
 
 }
