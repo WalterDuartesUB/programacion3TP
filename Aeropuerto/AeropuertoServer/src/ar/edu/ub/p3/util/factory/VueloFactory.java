@@ -1,7 +1,6 @@
 package ar.edu.ub.p3.util.factory;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 import ar.edu.ub.p3.modelo.Aeropuerto;

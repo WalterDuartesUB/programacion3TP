@@ -10,7 +10,6 @@ import ar.edu.ub.p3.conexion.handler.HandlerMensajeAltaAeropuerto;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeBajaAeropuerto;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeObtenerInformacionVuelo;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeObtenerListadoAeropuertosDisponibles;
-import ar.edu.ub.p3.conexion.handler.HandlerMensajeVueloAterrizoEnDestino;
 import ar.edu.ub.p3.conexion.handler.HandlerMensajeVueloProgramado;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 import ar.edu.ub.p3.util.Configuracion;
