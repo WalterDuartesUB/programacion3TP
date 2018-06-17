@@ -79,7 +79,7 @@ public class EstadoAeropuerto {
 	}
 	
 	private void cargarAeropuertos(String pathData) {
-		// TODO Decidir como conseguir los id y nombre de los otros aeropuertos
+
 		this.setAeropuertos( CargadorArchivosData.cargarMapaDesdeArchivo(pathData, new AeropuertoFactory() ) );
 		
 		System.out.println("Aeropuertos: ");
@@ -227,6 +227,16 @@ public class EstadoAeropuerto {
 	}
 
 
+	public Map<String,Vuelo> getVuelosProgramados() {
+		Map<String,Vuelo> vuelosDespegados = new HashMap<String, Vuelo>();
+		
+		for( Vuelo vuelo : this.getVuelos().values() )
+			if( vuelo.getEstadoVuelo() == EstadoVuelo.PROGRAMMED )
+				vuelosDespegados.put( vuelo.getIdVuelo(), vuelo );
+		
+		return vuelosDespegados;
+	}
+	
 	public Map<String,Vuelo> getVuelosDespegados() {
 		Map<String,Vuelo> vuelosDespegados = new HashMap<String, Vuelo>();
 		
