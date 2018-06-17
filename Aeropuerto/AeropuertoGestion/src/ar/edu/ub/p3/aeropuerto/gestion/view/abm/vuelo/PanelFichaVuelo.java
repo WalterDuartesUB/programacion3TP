@@ -24,27 +24,31 @@ public class PanelFichaVuelo extends JPanel implements IFichaModelo < Vuelo > {
 	
 	private PanelFichaCamposVuelo panelCampos;
 	private PanelFichaBotonesVuelo panelBotones;
-	
+	private PanelFichaCamposDateVuelo panelFecha;
 	
 	public PanelFichaVuelo( IRepositorioModelo < Vuelo > vuelos, IRepositorioModelo < Aeropuerto > aeropuertos,IRepositorioModelo < Avion > aviones) {
 		
 		setVuelos( vuelos );
 		setPanelCampos ( new PanelFichaCamposVuelo( aeropuertos, aviones ));
 		setPanelBotones( new PanelFichaBotonesVuelo( getVuelos() ));
+		setPanelFecha( new PanelFichaCamposDateVuelo());
 		
 		getPanelBotones().setPanelCampos( getPanelCampos() );
+		getPanelBotones().setPanelFecha(getPanelFecha());
 		getPanelBotones().setAeropuertos(aeropuertos);
 		getPanelBotones().setAviones(aviones);
 		
 		setLayout( new BorderLayout() );
 		setBackground(Color.BLACK);
 		add(getPanelCampos() , BorderLayout.NORTH);
+		add(getPanelFecha(),BorderLayout.LINE_END);
 		add(getPanelBotones(), BorderLayout.SOUTH);
 			
 	}
 
 	
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void mostrar(Vuelo dato) {
 		
@@ -53,8 +57,18 @@ public class PanelFichaVuelo extends JPanel implements IFichaModelo < Vuelo > {
 		getPanelCampos().getComboOrigen().setSelectedItem(dato.getAeropuertoOrigen().getNombre());
 		getPanelCampos().getComboDestino().setSelectedItem(dato.getAeropuertoDestino().getNombre());
 		getPanelCampos().getComboEstado().setSelectedItem(dato.getEstadoVuelo());
-		getPanelCampos().getTxtHoraProgramada().setText(dato.getHorarioProgramado().toString());
 		
+		getPanelFecha().getComboAnio().setSelectedItem(dato.getHorarioProgramado().getYear()-100);
+		getPanelFecha().getComboMes().setSelectedItem(dato.getHorarioProgramado().getMonth());
+		getPanelFecha().getComboDia().setSelectedItem(dato.getHorarioProgramado().getDay());
+		getPanelFecha().getComboHora().setSelectedItem(dato.getHorarioProgramado().getHours());
+		getPanelFecha().getComboMinutos().setSelectedItem(dato.getHorarioProgramado().getMinutes());
+		
+		System.out.println(dato.getHorarioProgramado().getYear()-100);
+		System.out.println(dato.getHorarioProgramado().getMonth());
+		System.out.println(dato.getHorarioProgramado().getDay());
+		System.out.println(dato.getHorarioProgramado().getHours());
+		System.out.println(dato.getHorarioProgramado().getMinutes());
 	}
 
 	public ITablaModelo getPanelLista() {
@@ -94,6 +108,18 @@ public class PanelFichaVuelo extends JPanel implements IFichaModelo < Vuelo > {
 
 	public void setVuelos(IRepositorioModelo < Vuelo > vuelos) {
 		this.vuelos = vuelos;
+	}
+
+
+
+	public PanelFichaCamposDateVuelo getPanelFecha() {
+		return panelFecha;
+	}
+
+
+
+	public void setPanelFecha(PanelFichaCamposDateVuelo panelFecha) {
+		this.panelFecha = panelFecha;
 	}
 
 }

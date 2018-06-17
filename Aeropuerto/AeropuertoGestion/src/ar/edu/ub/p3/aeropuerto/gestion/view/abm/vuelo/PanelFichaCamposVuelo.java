@@ -29,21 +29,19 @@ public class PanelFichaCamposVuelo extends JPanel{
 	private JComboBox<String>  	comboOrigen;
 	private JComboBox<String>  	comboDestino;
 	private JComboBox<EstadoVuelo> comboEstado;
-	private JTextField 	txtHoraProgramada;
-
+	private PanelFichaCamposDateVuelo panelCampoFecha;
+	
+	
 	private JLabel 	lblIdVuelo;
 	private JLabel 	lblAvion;
 	private JLabel  lblOrigen;
 	private JLabel  lblDestino;
 	private JLabel  lblEstado;
-	private JLabel 	lblHoraProgramada;
-	
 	
 	public PanelFichaCamposVuelo(IRepositorioModelo<Aeropuerto> aeropuertos, IRepositorioModelo<Avion> aviones ) {
 		
 		setAeropuertos(aeropuertos);
 		setAviones(aviones);
-		
 		
 		genererComponentes();
 		configurarVentana();
@@ -57,15 +55,13 @@ public class PanelFichaCamposVuelo extends JPanel{
 		setComboDestino(new JComboBox<String>() );
 		setComboOrigen (new JComboBox<String>() );
 		setComboEstado ( new JComboBox<EstadoVuelo>() );
-		setTxtHoraProgramada( new JTextField() );
-		
+		setPanelCampoFecha( new PanelFichaCamposDateVuelo() );
 		
 		setLblIdVuelo(new JLabel("        Id Vuelo:" )  );
 		setLblAvion(new JLabel("        Id Avion:" ) );
 		setLblOrigen(new JLabel("        Aeropuerto Origen" ) );
 		setLblDestino(new JLabel("       Aeropuerto Destino" ) );
 		setLblEstado(new JLabel("        Estado de Vuelo" ) );
-		setLblHoraProgramada(new JLabel("        Programacion" ) );
 		
 		add( getLblIdVuelo());
 		add( getTxtIdVuelo());
@@ -82,10 +78,6 @@ public class PanelFichaCamposVuelo extends JPanel{
 		add( getLblEstado());
 		add( getComboEstado());
 		
-		add( getLblHoraProgramada());
-		add( getTxtHoraProgramada());
-		
-		
 		agregarItemsEnComboAviones();
 		agregarItemsEnComboOrigenyDestino();
 		agregarItemsEnComboEstadoVuelo();
@@ -95,7 +87,7 @@ public class PanelFichaCamposVuelo extends JPanel{
 	private void configurarVentana() {
 		
 		setBackground(Color.BLACK);
-		setLayout( new GridLayout( 6,1));
+		setLayout( new GridLayout( 5,1));
 
 		getLblIdVuelo().setBackground(Color.BLACK);
 		getLblIdVuelo().setForeground(Color.WHITE);
@@ -126,13 +118,6 @@ public class PanelFichaCamposVuelo extends JPanel{
 		
 		getComboEstado().setBackground(Color.DARK_GRAY);
 		getComboEstado().setForeground(Color.WHITE);
-		
-		getLblHoraProgramada().setBackground(Color.BLACK);
-		getLblHoraProgramada().setForeground(Color.WHITE);
-		
-		getTxtHoraProgramada().setBackground(Color.DARK_GRAY);
-		getTxtHoraProgramada().setForeground(Color.WHITE);
-		
 		
 		
 	}
@@ -187,13 +172,6 @@ public class PanelFichaCamposVuelo extends JPanel{
 		this.comboEstado = comboEstado;
 	}
 
-	public JTextField getTxtHoraProgramada() {
-		return txtHoraProgramada;
-	}
-
-	public void setTxtHoraProgramada(JTextField txtHoraProgramada) {
-		this.txtHoraProgramada = txtHoraProgramada;
-	}
 
 	public JLabel getLblIdVuelo() {
 		return lblIdVuelo;
@@ -235,13 +213,6 @@ public class PanelFichaCamposVuelo extends JPanel{
 		this.lblEstado = lblEstado;
 	}
 
-	public JLabel getLblHoraProgramada() {
-		return lblHoraProgramada;
-	}
-
-	public void setLblHoraProgramada(JLabel lblHoraProgramada) {
-		this.lblHoraProgramada = lblHoraProgramada;
-	}
 
 	public JComboBox<String> getComboOrigen() {
 		return comboOrigen;
@@ -274,6 +245,16 @@ public class PanelFichaCamposVuelo extends JPanel{
 	public void setAeropuertos(IRepositorioModelo<Aeropuerto> aeropuertos) {
 		this.aeropuertos = aeropuertos;
 	}
+
+	public PanelFichaCamposDateVuelo getPanelCampoFecha() {
+		return panelCampoFecha;
+	}
+
+	public void setPanelCampoFecha(PanelFichaCamposDateVuelo panelCampoFecha) {
+		this.panelCampoFecha = panelCampoFecha;
+	}
+
+
 
 
 

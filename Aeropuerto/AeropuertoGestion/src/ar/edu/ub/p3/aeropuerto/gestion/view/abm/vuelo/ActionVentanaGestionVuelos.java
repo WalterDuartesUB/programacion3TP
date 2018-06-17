@@ -25,8 +25,6 @@ public class ActionVentanaGestionVuelos {
 	public static void generarComponentes( RepositorioVuelos vuelos ,RepositorioAeropuertos aeropuertos	,RepositorioAviones aviones ) {
 		
 		PanelFichaVuelo ficha = new PanelFichaVuelo( vuelos , aeropuertos, aviones );
-		
-		
 		PanelLista <Vuelo> 	lista = new PanelLista <Vuelo> ( vuelos );
 		
 		lista.setTableModel( new TableModelVuelo( vuelos ) );				

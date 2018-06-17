@@ -71,7 +71,7 @@ public final class TableModelVuelo extends DefaultTableModel {
 			case 4:
 				return vuelo.getEstadoVuelo();
 			case 5:
-				return vuelo.getHorarioProgramado().toString();	
+				return fechaVuelo(vuelo);	
 				
 			default:
 				break;
@@ -80,6 +80,17 @@ public final class TableModelVuelo extends DefaultTableModel {
 			return null;
 		}
 
+
+		@SuppressWarnings("deprecation")
+		private String fechaVuelo(Vuelo vuelo) {
+		
+			return (    vuelo.getHorarioProgramado().getDay()+"/"+
+						vuelo.getHorarioProgramado().getMonth()+"/"+
+					   (vuelo.getHorarioProgramado().getYear()-100)+" | "+
+						vuelo.getHorarioProgramado().getHours()+":"+
+						vuelo.getHorarioProgramado().getMinutes());
+			
+		}
 
 		private List<Vuelo> getVuelos() {
 			return this.getRepositorio().getList();

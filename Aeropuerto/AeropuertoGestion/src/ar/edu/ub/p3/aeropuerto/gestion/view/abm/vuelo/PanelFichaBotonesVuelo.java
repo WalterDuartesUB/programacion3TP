@@ -23,6 +23,7 @@ public class PanelFichaBotonesVuelo extends JPanel{
 	
 	private ITablaModelo panelLista;
 	private PanelFichaCamposVuelo panelCampos;
+	private PanelFichaCamposDateVuelo panelFecha;
 
 	private IRepositorioModelo<Aeropuerto> aeropuertos;
 	private IRepositorioModelo<Avion> aviones;
@@ -115,15 +116,21 @@ public class PanelFichaBotonesVuelo extends JPanel{
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public Vuelo vueloEnCampo() {
 		
-		
+	
 		return new Vuelo(
 					getPanelCampos().getTxtIdVuelo().getText(),
 					buscarAvion(getPanelCampos().getComboAvion().getSelectedItem().toString()), 
 					buscarAeropuerto(getPanelCampos().getComboOrigen().getSelectedItem().toString()), 
 					buscarAeropuerto(getPanelCampos().getComboDestino().getSelectedItem().toString()), 
-					new Date(),
+					new Date(
+							(Integer)getPanelFecha().getComboAnio().getSelectedItem()+100,
+							(Integer)getPanelFecha().getComboMes().getSelectedItem(),
+							(Integer)getPanelFecha().getComboDia().getSelectedItem(),
+							(Integer)getPanelFecha().getComboHora().getSelectedItem(),
+							(Integer)getPanelFecha().getComboMinutos().getSelectedItem()),
 					new Date(), 
 					new Date(), 
 					(EstadoVuelo)getPanelCampos().getComboEstado().getSelectedItem());
@@ -259,6 +266,16 @@ public  Aeropuerto buscarAeropuerto(String dato) {
 
 	public void setVuelos(IRepositorioModelo<Vuelo> vuelos) {
 		this.vuelos = vuelos;
+	}
+
+
+	public PanelFichaCamposDateVuelo getPanelFecha() {
+		return panelFecha;
+	}
+
+
+	public void setPanelFecha(PanelFichaCamposDateVuelo panelFecha) {
+		this.panelFecha = panelFecha;
 	}
 	
 

@@ -19,6 +19,7 @@ public class VentanaGestionABMAerolinea extends JFrame{
 		add(lista);
 		add(ficha);
 		setSize(800, 320); 
+		setResizable(false);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		ficha.getPanelBotones().setVentanaPrincipal(this);

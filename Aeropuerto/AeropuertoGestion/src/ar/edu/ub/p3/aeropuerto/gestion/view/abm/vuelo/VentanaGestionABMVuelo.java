@@ -13,12 +13,13 @@ public class VentanaGestionABMVuelo extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public VentanaGestionABMVuelo( PanelFichaVuelo ficha , PanelLista<Vuelo> lista ) {
+	public VentanaGestionABMVuelo( PanelFichaVuelo ficha , PanelLista<Vuelo> lista) {
 		
-		setLayout( new GridLayout(1, 2) );
+		setLayout( new GridLayout(1, 3) );
 		add(lista);
 		add(ficha);
-		setSize(800, 320); 
+		setSize(1200, 320); 
+		setResizable(false);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		ficha.getPanelBotones().setVentanaPrincipal(this);
