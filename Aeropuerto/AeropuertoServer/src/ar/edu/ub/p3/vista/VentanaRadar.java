@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
+import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
 
 public class VentanaRadar extends JDialog implements WindowListener {
@@ -28,7 +29,7 @@ public class VentanaRadar extends JDialog implements WindowListener {
 		this.setConexionTA(conexionTA);
 		this.setConfiguracion(configuracion);
 		
-		this.setTitle("Radar");
+		this.setTitle("Radar " + aerpuerto.getNombre());
 		this.setSize(397, 399);
 		this.setPanelRadar( new PanelRadar( this.getConfiguracion(), this.getAerpuerto().getPosicion(), this.getConexionTA() ));
 		this.add(this.getPanelRadar(),BorderLayout.CENTER);
