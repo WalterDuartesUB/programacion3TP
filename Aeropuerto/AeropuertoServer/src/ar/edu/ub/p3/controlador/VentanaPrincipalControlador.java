@@ -1,5 +1,9 @@
 package ar.edu.ub.p3.controlador;
 
+import java.awt.Color;
+
+import javax.swing.JLabel;
+
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aerolinea.ActionVentanaGestionAerolineas;
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aeropuerto.ActionVentanaGestionAeropuertos;
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.avion.ActionVentanaGestionAviones;
@@ -65,6 +69,18 @@ public class VentanaPrincipalControlador {
 
 	public void debugPedirInformacionActualDelVueloDePrueba() {
 		System.out.println( this.getConexionTA().obtenerInformacionVuelo( this.getConfiguracion().getConfiguracion("idVueloPrueba") ) );		
+	}
+	
+	public void verEstadoConexionTraficoAereo( JLabel lblestadoConexion ) {
+		
+		if ( getConexionTA().getEstadoAeropuerto().isEstoyConectado() ) {
+			lblestadoConexion.setText( "conectado" );
+			lblestadoConexion.setBackground(Color.GREEN);	
+    	}else {
+    		lblestadoConexion.setText( "desconectado" );
+    		lblestadoConexion.setBackground(Color.RED);
+    	}
+		
 	}
 	
 	public void verArribos() {

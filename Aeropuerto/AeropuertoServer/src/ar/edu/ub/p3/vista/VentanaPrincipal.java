@@ -1,11 +1,14 @@
 package ar.edu.ub.p3.vista;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.Timer;
 
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.controlador.VentanaPrincipalControlador;
@@ -20,17 +23,18 @@ public class VentanaPrincipal extends JFrame{
 	private static final long serialVersionUID = 2955325317528293957L;
 	
 	private VentanaPrincipalControlador controlador;
-	
+	private JLabel lblestadoConexion;
 	
 	public VentanaPrincipal(Configuracion configuracion, EstadoAeropuerto estadoAeropuerto, ConexionTraficoAereo conexionTA) {
 		super("Servidor de Aeropuerto: " + configuracion.getConfiguracion("nombreAeropuerto"));
 		
 		this.inicializarVentana();
 		this.crearMenus();
+		this.crearVistaEstadoConexionTraficoAereo(conexionTA);
 		this.setVisible( true );
-		
 		this.setControlador( new VentanaPrincipalControlador( configuracion, estadoAeropuerto, conexionTA ) );
 	}
+
 
 	private void crearMenus() {
 		JMenuBar menubar = new JMenuBar();
@@ -129,12 +133,29 @@ public class VentanaPrincipal extends JFrame{
 		
 		return menu;
 	}
+	
+	private void crearVistaEstadoConexionTraficoAereo(ConexionTraficoAereo conexionTA) {
+		
+		setLblestadoConexion(new JLabel());
+		getLblestadoConexion().setOpaque(true);
+		
+		Timer timer = new Timer ( 1000, this::onEventEstadoConexionTraficoAereo);
+		timer.start();
+		
+		this.add(getLblestadoConexion(),BorderLayout.SOUTH);
+
+	}
+	
 
 	private void inicializarVentana() {
 		this.setLocation(300, 300);
 		this.setSize(400, 400);
 		this.setResizable( false );
 		this.setDefaultCloseOperation( EXIT_ON_CLOSE );
+	}
+	
+	public void onEventEstadoConexionTraficoAereo( ActionEvent ae ) {
+		getControlador().verEstadoConexionTraficoAereo(lblestadoConexion);	
 	}
 	
 	public void onClickMenuItemConectarAlTraficoAereo( ActionEvent ae ) {
@@ -195,5 +216,15 @@ public class VentanaPrincipal extends JFrame{
 
 	private void setControlador(VentanaPrincipalControlador controlador) {
 		this.controlador = controlador;
+	}
+
+
+	public JLabel getLblestadoConexion() {
+		return lblestadoConexion;
+	}
+
+
+	public void setLblestadoConexion(JLabel lblestadoConexion) {
+		this.lblestadoConexion = lblestadoConexion;
 	}
 }
