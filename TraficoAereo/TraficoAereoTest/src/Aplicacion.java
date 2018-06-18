@@ -31,7 +31,7 @@ public class Aplicacion {
 		handlers.put(TipoMensaje.ALTA_AEROPUERTO, new HandlerMensajeAltaAeropuerto( estadoTA ) );
 		handlers.put(TipoMensaje.BAJA_AEROPUERTO, new HandlerMensajeBajaAeropuerto( estadoTA ) );
 		handlers.put(TipoMensaje.OBTENER_LISTADO_AEROPUERTOS_DISPONIBLES, new HandlerMensajeObtenerListadoAeropuertosDisponibles( estadoTA ) );
-		handlers.put(TipoMensaje.VUELO_PROGRAMADO, new HandlerMensajeVueloProgramado( estadoTA ) );
+		handlers.put(TipoMensaje.VUELO_PROGRAMADO, new HandlerMensajeVueloProgramado( estadoTA, configuracion ) );
 		handlers.put(TipoMensaje.OBTENER_INFORMACION_VUELO, new HandlerMensajeObtenerInformacionVuelo( estadoTA ) );
 		
 		///////////////////////////////////////////////////////////////////////

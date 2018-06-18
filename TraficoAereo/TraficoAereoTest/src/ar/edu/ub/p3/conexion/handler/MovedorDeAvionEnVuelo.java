@@ -6,14 +6,17 @@ import ar.edu.ub.p3.interfaz.IVuelo;
 import ar.edu.ub.p3.modelo.EstadoTraficoAereo;
 import ar.edu.ub.p3.modelo.Posicion;
 import ar.edu.ub.p3.modelo.Vuelo;
+import ar.edu.ub.p3.util.Configuracion;
 
 public class MovedorDeAvionEnVuelo implements Runnable {
 	private EstadoTraficoAereo estadoTraficoAereo;
 	private String idVuelo;
+	private Configuracion configuracion;
 	
-	public MovedorDeAvionEnVuelo(EstadoTraficoAereo estadoTA, String idVuelo) {
+	public MovedorDeAvionEnVuelo(EstadoTraficoAereo estadoTA, String idVuelo, Configuracion configuracion) {
 		this.setEstadoTraficoAereo(estadoTA);
 		this.setIdVuelo(idVuelo);
+		this.setConfiguracion(configuracion);
 	}
 
 	@Override
@@ -22,7 +25,7 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 		IVuelo vuelo = this.getEstadoTraficoAereo().getVuelo(this.getIdVuelo());
 		
 		//Avanzo hasta estar en la zona de aterrizaje
-		this.moverAvion(aeropuertoDestino, vuelo, 20);
+		this.moverAvion(aeropuertoDestino, vuelo, this.getConfiguracion().getConfiguracionAsInt("distanciaParaEntregarAvionAAeropuertoDestino"));
 		
 		//Envio un mensaje de proximidad al aeropuerto de destino
 		this.getEstadoTraficoAereo().getConexionAeropuerto( aeropuertoDestino.getIdAeropuerto() ).enviarMensaje( Mensaje.crearMensajeVueloProximoAterrizar(new Vuelo(this.getEstadoTraficoAereo().getVuelo(this.getIdVuelo()))));
@@ -59,6 +62,14 @@ public class MovedorDeAvionEnVuelo implements Runnable {
 
 	public void setIdVuelo(String idVuelo) {
 		this.idVuelo = idVuelo;
+	}
+
+	private Configuracion getConfiguracion() {
+		return configuracion;
+	}
+
+	private void setConfiguracion(Configuracion configuracion) {
+		this.configuracion = configuracion;
 	}
 
 }
