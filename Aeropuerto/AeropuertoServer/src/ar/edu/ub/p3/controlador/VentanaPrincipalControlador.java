@@ -83,11 +83,11 @@ public class VentanaPrincipalControlador {
 	}
 	
 	public void verArribos() {
-		ActionVentanaVuelosLlegadas.generarVentana(getEstadoAeropuerto());
+		ActionVentanaVuelosLlegadas.generarVentana(this.getConfiguracion(),getEstadoAeropuerto());
 	}
 	
 	public void verDespegues() {
-		ActionVentanaVuelosSalida.generarVentana( getEstadoAeropuerto() );
+		ActionVentanaVuelosSalida.generarVentana( this.getConfiguracion(),getEstadoAeropuerto() );
 	}
 	
 	public void verRadar() {

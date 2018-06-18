@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -34,8 +35,7 @@ public class VentanaVuelosSalida extends JDialog implements WindowListener{
 		this.setTitle("Salidas");
 		this.addWindowListener(this);
 		GridBagConstraints gbc = new GridBagConstraints();
-		
-		
+			
 		JLabel jLabelObject = new JLabel();
 		jLabelObject.setIcon(new ImageIcon("./encabezadotablero/salidas.png"));
 		gbc.gridx = 0;
@@ -44,8 +44,9 @@ public class VentanaVuelosSalida extends JDialog implements WindowListener{
 		this.add(jLabelObject, gbc);
 		
 		
-		String date = new Date().toString();
-		JLabel dia = new JLabel(date); //  cambiar
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyy");
+		String fechaComoCadena = sdf.format(new Date());
+		JLabel dia = new JLabel("Fecha: "+fechaComoCadena);
 		
 		gbc.fill = GridBagConstraints.CENTER;
 		gbc.gridx = 0;
@@ -75,7 +76,7 @@ public class VentanaVuelosSalida extends JDialog implements WindowListener{
 		
 		//add(lista);
 		//setSize(800, 320); 
-		this.setSize(680,400);
+		this.setSize(680,700);
 		setResizable(true);
 		setVisible(true);
 		//setLocationRelativeTo(null);
@@ -87,7 +88,6 @@ public class VentanaVuelosSalida extends JDialog implements WindowListener{
 	public void refrescarVentana(ActionEvent e) {
 		this.revalidate();
 		this.repaint();
-		System.out.println("Sigo Vivo");
 	}
 
 	public Timer getTimerVentana() {

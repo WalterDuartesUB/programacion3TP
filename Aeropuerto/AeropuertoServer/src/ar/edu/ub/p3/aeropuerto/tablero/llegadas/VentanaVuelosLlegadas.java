@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.DateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -34,7 +36,6 @@ public class VentanaVuelosLlegadas extends JDialog implements WindowListener {
 		this.setLayout(new GridBagLayout());
 		this.setTitle("Llegadas");
 		this.addWindowListener(this);
-
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		JLabel jLabelOBject = new JLabel();
@@ -45,8 +46,11 @@ public class VentanaVuelosLlegadas extends JDialog implements WindowListener {
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(jLabelOBject,gbc);
 		
-		String date = new Date().toString();
-		JLabel dia = new JLabel(date);
+		
+	
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyy -  kk:mm aa");
+		String fechaComoCadena = sdf.format(new Date());
+		JLabel dia = new JLabel("Fecha: "+fechaComoCadena);
 		
 		gbc.fill = GridBagConstraints.CENTER;
 		gbc.gridx = 0;
@@ -73,7 +77,7 @@ public class VentanaVuelosLlegadas extends JDialog implements WindowListener {
 		gbc.weighty = 0;
 		this.add(aeropuertoActual1, gbc);
 		
-		this.setSize(680,400);
+		this.setSize(680,700);
 		this.setResizable(false);
 		this.setVisible(true);
 		

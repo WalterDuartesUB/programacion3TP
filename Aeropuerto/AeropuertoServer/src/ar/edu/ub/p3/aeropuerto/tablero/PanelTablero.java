@@ -34,6 +34,8 @@ public class PanelTablero<T> extends JPanel implements ITablaModelo{
 		this.add( this.getTabla(),BorderLayout.CENTER);
 		getTabla().setBackground(Color.WHITE);
 		getTabla().setForeground(Color.BLACK);
+		getTabla().setRowHeight(50);
+		getTabla().setEnabled(false);
 		
 		this.getTabla().getSelectionModel().addListSelectionListener( this::onSelchangeTabla);
 	}

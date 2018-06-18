@@ -9,23 +9,24 @@ import ar.edu.ub.p3.aeropuerto.tablero.PanelTablero;
 import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.modelo.Vuelo;
+import ar.edu.ub.p3.util.Configuracion;
 
 public class ActionVentanaVuelosLlegadas {
 
 
-	public static  void generarVentana( EstadoAeropuerto estadoAeropuerto ) {
+	public static  void generarVentana( Configuracion configuracion, EstadoAeropuerto estadoAeropuerto ) {
 		
-		generarComponentes( new RepositorioVuelosLlegadas(estadoAeropuerto) );
+		generarComponentes(configuracion, new RepositorioVuelosLlegadas(estadoAeropuerto) );
 		
 
 	}
 	
 	
-	private static void generarComponentes( RepositorioVuelosLlegadas vuelos){
+	private static void generarComponentes( Configuracion configuracion,RepositorioVuelosLlegadas vuelos){
 			
 		PanelTablero<Vuelo> 	lista = new PanelTablero<Vuelo>( vuelos );
 		
-		lista.setTableModel( new TableModelVuelosLlegadas( vuelos ) );				
+		lista.setTableModel(new TableModelVuelosLlegadas(configuracion, vuelos ) );				
 
 		
 		new VentanaVuelosLlegadas(lista);
