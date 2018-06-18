@@ -87,7 +87,7 @@ public class PanelRadar extends JPanel implements Closeable{
 		    this.dibujarEjesDeRadar(g2,anchoAlto);
 		    
 		    this.dibujarVuelos(g2, anchoAlto, this.getVuelosDespegados(), Color.RED );		
-		    this.dibujarVuelos(g2, anchoAlto, this.getVuelosAterrizando(), Color.BLUE );		
+		    this.dibujarVuelos(g2, anchoAlto, this.getVuelosAterrizando(), Color.YELLOW );		
 	
 		    this.dibujarArcoRadar(g2, anchoAlto);
 		    
