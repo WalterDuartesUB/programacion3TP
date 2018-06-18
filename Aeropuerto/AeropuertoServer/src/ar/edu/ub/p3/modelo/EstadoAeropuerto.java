@@ -256,13 +256,21 @@ public class EstadoAeropuerto {
 		return vuelosDespegados;
 	}
 
-	public Map<String,Vuelo> getVuelosProximoADespegarYDespegados(){
-		Map<String,Vuelo> vuelosProximoADespegarYDespegados = new HashMap<String,Vuelo>();
+
+	
+	public Collection<Vuelo> getVuelosProgramadosYDespegados() {
+		Set<Vuelo> vuelosDespegados = new TreeSet<Vuelo>( new Comparator<Vuelo>() {
+			@Override
+			public int compare(Vuelo v1, Vuelo v2) {
+				return v1.getHorarioProgramado().compareTo( v2.getHorarioProgramado() );
+			}
+		});
 		
-		for(Vuelo vuelo: this.getVuelos().values())
+		for( Vuelo vuelo : this.getVuelos().values() )
 			if(vuelo.getEstadoVuelo()== EstadoVuelo.PROGRAMMED || vuelo.getEstadoVuelo()==EstadoVuelo.BOARDING || vuelo.getEstadoVuelo() == EstadoVuelo.ON_AIR )
-				vuelosProximoADespegarYDespegados.put(vuelo.getIdVuelo(),vuelo);
-		return vuelosProximoADespegarYDespegados;
+				vuelosDespegados.add( vuelo );
+		
+		return vuelosDespegados;
 	}
 
 	
