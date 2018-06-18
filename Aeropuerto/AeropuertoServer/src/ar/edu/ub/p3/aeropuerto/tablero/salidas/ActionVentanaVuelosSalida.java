@@ -24,7 +24,7 @@ public class ActionVentanaVuelosSalida {
 		lista.setTableModel( new TableModelVuelosSalida(configuracion, vuelos ) );				
 
 		
-		new VentanaVuelosSalida(lista);
+		new VentanaVuelosSalida(configuracion,lista);
 		
 	}
 

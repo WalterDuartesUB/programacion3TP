@@ -2,7 +2,6 @@ package ar.edu.ub.p3.aeropuerto.tablero.salidas;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -14,11 +13,11 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-import ar.edu.ub.p3.aeropuerto.gestion.view.PanelLista;
-import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aeropuerto.PanelFichaAeropuerto;
+
 import ar.edu.ub.p3.aeropuerto.tablero.PanelTablero;
-import ar.edu.ub.p3.modelo.Aeropuerto;
+
 import ar.edu.ub.p3.modelo.Vuelo;
+import ar.edu.ub.p3.util.Configuracion;
 
 public class VentanaVuelosSalida extends JDialog implements WindowListener{
 
@@ -27,13 +26,17 @@ public class VentanaVuelosSalida extends JDialog implements WindowListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private Configuracion configuracion;
 
-	public VentanaVuelosSalida(  PanelTablero<Vuelo> lista ) {
+	public VentanaVuelosSalida(  Configuracion configuracion,PanelTablero<Vuelo> lista ) {
 		
 
 		this.setLayout(new GridBagLayout());
 		this.setTitle("Salidas");
 		this.addWindowListener(this);
+		this.setConfiguracion(configuracion);
+		this.setIconImage( new ImageIcon("mainlogo/mainlogo.png").getImage() );
 		GridBagConstraints gbc = new GridBagConstraints();
 			
 		JLabel jLabelObject = new JLabel();
@@ -63,9 +66,10 @@ public class VentanaVuelosSalida extends JDialog implements WindowListener{
 		gbc.weighty = 2.0;
 		this.add(lista, gbc);
 		
+	
 		
-		String aeropuertoactual= "Aeropuerto Local";
-		JLabel aeropuertoactuall = new JLabel(aeropuertoactual);
+		String aeropuertolocal = this.getConfiguracion().getConfiguracion("nombreAeropuerto");
+		JLabel aeropuertoactuall = new JLabel(aeropuertolocal);
 		
 		gbc.fill = GridBagConstraints.CENTER;
 		gbc.gridx = 0;
@@ -134,5 +138,11 @@ public class VentanaVuelosSalida extends JDialog implements WindowListener{
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	private Configuracion getConfiguracion() {
+		return configuracion;
+	}
+	private void setConfiguracion(Configuracion configuracion) {
+		this.configuracion = configuracion;
 	}
 }
