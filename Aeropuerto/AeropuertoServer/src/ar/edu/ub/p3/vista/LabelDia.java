@@ -24,6 +24,7 @@ public class LabelDia extends JPanel implements Closeable{
 	private Configuracion 			configuracion;
 	private Timer 					timerPedirVuelos;
 	
+	
 	public LabelDia(Configuracion configuracion) {
 		super();
 
