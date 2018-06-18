@@ -4,6 +4,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -17,7 +20,7 @@ import ar.edu.ub.p3.aeropuerto.tablero.PanelTablero;
 import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.modelo.Vuelo;
 
-public class VentanaVuelosLlegadas extends JDialog {
+public class VentanaVuelosLlegadas extends JDialog implements WindowListener {
 
 	private Timer timerVentana;
 	/**
@@ -30,6 +33,7 @@ public class VentanaVuelosLlegadas extends JDialog {
 
 		this.setLayout(new GridBagLayout());
 		this.setTitle("Llegadas");
+		this.addWindowListener(this);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -89,5 +93,40 @@ public class VentanaVuelosLlegadas extends JDialog {
 
 	private void setTimerVentana(Timer timerVentana) {
 		this.timerVentana = timerVentana;
+	}
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowClosing(WindowEvent e) {
+		this.getTimerVentana().stop();
+	
+	}
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
