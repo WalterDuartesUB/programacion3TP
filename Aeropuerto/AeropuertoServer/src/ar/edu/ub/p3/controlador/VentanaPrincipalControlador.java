@@ -14,7 +14,6 @@ import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
 import ar.edu.ub.p3.vista.ActionVentanaRadar;
-import ar.edu.ub.p3.vista.VentanaRadar;
 
 public class VentanaPrincipalControlador {
 

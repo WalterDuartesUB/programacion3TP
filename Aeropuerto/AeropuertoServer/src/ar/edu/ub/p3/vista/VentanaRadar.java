@@ -9,7 +9,6 @@ import javax.swing.JDialog;
 
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.interfaz.IAeropuerto;
-import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
 
 public class VentanaRadar extends JDialog implements WindowListener {

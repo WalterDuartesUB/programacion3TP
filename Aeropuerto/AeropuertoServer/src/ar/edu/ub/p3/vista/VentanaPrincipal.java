@@ -3,6 +3,7 @@ package ar.edu.ub.p3.vista;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -152,6 +153,7 @@ public class VentanaPrincipal extends JFrame{
 		this.setSize(400, 400);
 		this.setResizable( false );
 		this.setDefaultCloseOperation( EXIT_ON_CLOSE );
+		this.setIconImage( new ImageIcon("mainlogo/mainlogo.png").getImage() );
 	}
 	
 	public void onEventEstadoConexionTraficoAereo( ActionEvent ae ) {
