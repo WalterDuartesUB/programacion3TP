@@ -1,6 +1,5 @@
 package ar.edu.ub.p3.aeropuerto.tablero.salidas;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class RepositorioVuelosSalidas implements IRepositorioModelo<Vuelo>{
 	@Override
 	public List<Vuelo> getList() {
 
-		return new LinkedList<Vuelo>(this.getEa().getVuelosProgramados());
+		return new LinkedList<Vuelo>(this.getEa().getVuelosProgramadosYDespegados());
 	}
 
 	public EstadoAeropuerto getEa() {
