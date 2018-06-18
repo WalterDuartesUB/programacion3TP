@@ -53,6 +53,7 @@ public final class TableModelVuelo extends DefaultTableModel {
 			return this.getRepositorio() == null ? 0 : this.getVuelos().size();
 		}
 		
+		@SuppressWarnings("deprecation")
 		@Override
 		public Object getValueAt(int row, int column) {	
 			
@@ -71,7 +72,7 @@ public final class TableModelVuelo extends DefaultTableModel {
 			case 4:
 				return vuelo.getEstadoVuelo();
 			case 5:
-				return fechaVuelo(vuelo);	
+				return vuelo.getHorarioProgramado().toLocaleString();	
 				
 			default:
 				break;
@@ -81,7 +82,7 @@ public final class TableModelVuelo extends DefaultTableModel {
 		}
 
 
-		@SuppressWarnings("deprecation")
+		/*@SuppressWarnings("deprecation")
 		private String fechaVuelo(Vuelo vuelo) {
 		
 			return (    vuelo.getHorarioProgramado().getDay()+"/"+
@@ -90,7 +91,7 @@ public final class TableModelVuelo extends DefaultTableModel {
 						vuelo.getHorarioProgramado().getHours()+":"+
 						vuelo.getHorarioProgramado().getMinutes());
 			
-		}
+		}*/
 
 		private List<Vuelo> getVuelos() {
 			return this.getRepositorio().getList();

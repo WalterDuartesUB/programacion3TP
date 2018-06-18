@@ -5,20 +5,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
+import ar.edu.ub.p3.interfaz.IPosicion;
 import ar.edu.ub.p3.modelo.Avion;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
+import ar.edu.ub.p3.modelo.Posicion;
 
 
 
 public class RepositorioAviones implements IRepositorioModelo < Avion >{
 
 	private Map <String,Avion> aviones;
-
+	private IPosicion posicionAeropuerto;
+	
 	public RepositorioAviones(EstadoAeropuerto estadoAeropuerto) {
 		
 		setAviones( estadoAeropuerto.getAviones() );
-		
+		setPosicionAeropuerto(estadoAeropuerto.getAerpuerto().getPosicion());
 	}
 	
 	public Map < String , Avion > getAviones() {
@@ -32,6 +34,7 @@ public class RepositorioAviones implements IRepositorioModelo < Avion >{
 	@Override
 	public void add(Avion dato) {
 		
+		dato.setPosicion(new Posicion( getPosicionAeropuerto() ));
 		getAviones().put(dato.getIdAvion(), dato);
 		
 	}
@@ -54,4 +57,14 @@ public class RepositorioAviones implements IRepositorioModelo < Avion >{
 	public List<Avion> getList() {
 		return new LinkedList< Avion >( this.getAviones().values() );
 	}
+
+	public IPosicion getPosicionAeropuerto() {
+		return posicionAeropuerto;
+	}
+
+	public void setPosicionAeropuerto(IPosicion posicionAeropuerto) {
+		this.posicionAeropuerto = posicionAeropuerto;
+	}
+
+
 }

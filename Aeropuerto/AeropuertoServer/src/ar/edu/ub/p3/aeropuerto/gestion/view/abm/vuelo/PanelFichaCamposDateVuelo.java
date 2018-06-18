@@ -104,12 +104,20 @@ public class PanelFichaCamposDateVuelo extends JPanel{
 		agreagarItemsComboHora();
 		agreagarItemsComboMinutos();
 		
+		getComboAnio().setSelectedIndex(-1);
+		getComboDia().setSelectedIndex(-1);
+		getComboHora().setSelectedIndex(-1);
+		getComboMes().setSelectedIndex(-1);
+		getComboMinutos().setSelectedIndex(-1);
+		
 	}
 
 	private void agreagarItemsComboMinutos() {
 		
 		getComboMinutos().addItem(00);
+		getComboMinutos().addItem(15);
 		getComboMinutos().addItem(30);
+		getComboMinutos().addItem(45);
 		
 	}
 

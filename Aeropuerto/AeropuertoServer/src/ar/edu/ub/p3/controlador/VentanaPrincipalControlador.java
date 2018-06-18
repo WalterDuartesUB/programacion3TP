@@ -1,7 +1,5 @@
 package ar.edu.ub.p3.controlador;
 
-import javax.swing.JOptionPane;
-
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aerolinea.ActionVentanaGestionAerolineas;
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aeropuerto.ActionVentanaGestionAeropuertos;
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.avion.ActionVentanaGestionAviones;
@@ -11,8 +9,6 @@ import ar.edu.ub.p3.aeropuerto.tablero.salidas.ActionVentanaVuelosSalida;
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
-import ar.edu.ub.p3.vista.VentanaDespegue;
-import ar.edu.ub.p3.vista.VentanaPrincipal;
 import ar.edu.ub.p3.vista.VentanaRadar;
 
 public class VentanaPrincipalControlador {
@@ -70,10 +66,6 @@ public class VentanaPrincipalControlador {
 		System.out.println( this.getConexionTA().obtenerInformacionVuelo( this.getConfiguracion().getConfiguracion("idVueloPrueba") ) );		
 	}
 	
-	public void salirDeLaAplicacion(VentanaPrincipal ventanaPrincipal) {
-		ventanaPrincipal.dispose();
-	}
-	
 	public void verArribos() {
 		ActionVentanaVuelosLlegadas.generarVentana(getEstadoAeropuerto());
 	}
@@ -102,8 +94,5 @@ public class VentanaPrincipalControlador {
 		ActionVentanaGestionVuelos.generarVentana( getEstadoAeropuerto());
 	}	
 	
-	private void onEventoAImplementar() {
-		JOptionPane.showMessageDialog( null, "Evento a implementar " );
-	}
 
 }

@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ar.edu.ub.p3.aeropuerto.gestion.modelo.IRepositorioModelo;
@@ -39,7 +40,7 @@ public class PanelFichaBotonesAerolinea extends JPanel{
 	
 	private void generarComponentes() {
 		
-		setBtnActualizar( new JButton("Actualizar"));
+		setBtnActualizar( new JButton("Refrescar"));
 		setBtnAgregar( new JButton("Nuevo"));
 		setBtnGrabar ( new JButton("Grabar"));
 		setBtnBorrar ( new JButton("Borrar"));
@@ -51,7 +52,7 @@ public class PanelFichaBotonesAerolinea extends JPanel{
 		add( getBtnGrabar());
 		add( getBtnSalir());
 		
-		getBtnActualizar().addActionListener( this::onClickBtnActualizar);
+		getBtnActualizar().addActionListener( this::onClickBtnRefrescar);
 		getBtnBorrar().addActionListener ( this::onClickBtnBorrar );
 		getBtnAgregar().addActionListener( this::onClickBtnAgregar);
 		getBtnGrabar().addActionListener ( this::onClickBtnGrabar );
@@ -81,29 +82,94 @@ public class PanelFichaBotonesAerolinea extends JPanel{
 	}
 
 	
-	public void onClickBtnActualizar(ActionEvent arg0) {
+	public void onClickBtnRefrescar(ActionEvent arg0) {
 		
-		getPanelLista().refrescar();
+		getPanelCampos().getTxtIdAerolineas().setText("");
+		getPanelCampos().getTxtNombre().setText("");
 		
 	}
 
 	public void onClickBtnAgregar(ActionEvent arg0) {
-		getAerolineas().add( aerolineaEnCampo ());
+		try {
+			if(!getPanelCampos().getTxtIdAerolineas().getText().isEmpty()&&
+			   !getPanelCampos().getTxtNombre().getText().isEmpty()	&&
+			   !existeAerolinea(aerolineaEnCampo())) {
+				
+					getAerolineas().add( aerolineaEnCampo ());
+					mostrarMensaje("Aerolinea agregada correctamente");
+				
+					
+			}else {
+				mostrarMensaje("Error en carga");
+			}
+			
+			getPanelLista().refrescar();
+
+		}catch(Exception e){
+			
+			mostrarMensaje("Error en carga");
+			
+		};
 		
-		getPanelLista().refrescar();		
 	}
 	
 	
+	
+
+
 	public void onClickBtnBorrar(ActionEvent arg0) {
-		getAerolineas().delete( aerolineaEnCampo () );
-		
-		getPanelLista().refrescar();		
+		try {
+			
+			getAerolineas().delete( aerolineaEnCampo () );
+			getPanelLista().refrescar();
+			mostrarMensaje("Aerolinea borrada correctamente");
+			
+		}catch(Exception e){
+			
+			mostrarMensaje("Error al borrar");
+			
+		};
 		
 	}
 	
 	public void onClickBtnGrabar(ActionEvent arg0) {
-		getAerolineas().add( aerolineaEnCampo () );
-		getPanelLista().refrescar();		
+		
+		try {
+			if(!getPanelCampos().getTxtIdAerolineas().getText().isEmpty()&&
+			   !getPanelCampos().getTxtNombre().getText().isEmpty()	) {
+				getAerolineas().modify( aerolineaEnCampo ());
+				mostrarMensaje("Aerolinea agregada correctamente");
+			}else {
+				mostrarMensaje("Error en modificacion");
+			}
+			
+			getPanelLista().refrescar();
+
+		}catch(Exception e){
+			
+			mostrarMensaje("Error en modificacion");
+			
+		};		
+		
+	}
+	
+	
+	
+	public void onClickBtnSalir(ActionEvent arg0) {
+		
+		getVentanaPrincipal().dispose();	
+		
+	}
+	
+	
+	private boolean existeAerolinea(Aerolinea aerolineaNueva) {
+		
+		for(Aerolinea aerolinea:getAerolineas().getList())
+			if(aerolinea.getIdAerolinea().equals(aerolineaNueva.getIdAerolinea()))
+				return true;
+		return false;
+		
+		
 	}
 	
 	public Aerolinea aerolineaEnCampo() {
@@ -113,11 +179,10 @@ public class PanelFichaBotonesAerolinea extends JPanel{
 				getPanelCampos().getTxtNombre().getText());
 		
 	}
+
 	
-	public void onClickBtnSalir(ActionEvent arg0) {
-		
-		getVentanaPrincipal().dispose();	
-		
+	private void mostrarMensaje( String mensaje ) {
+		JOptionPane.showMessageDialog( null, mensaje);
 	}
 
 	public JButton getBtnAgregar() {

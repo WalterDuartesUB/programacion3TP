@@ -42,7 +42,7 @@ public class PanelFichaBotonesAeropuerto extends JPanel{
 	
 	private void generarComponentes() {
 		
-		setBtnActualizar( new JButton("Actualizar"));
+		setBtnActualizar( new JButton("Refrescar"));
 		setBtnAgregar( new JButton("Nuevo"));
 		setBtnGrabar ( new JButton("Grabar"));
 		setBtnBorrar ( new JButton("Borrar"));
@@ -86,7 +86,11 @@ public class PanelFichaBotonesAeropuerto extends JPanel{
 	public void onClickBtnActualizar(ActionEvent arg0) {
 		
 		getPanelLista().refrescar();
-		mostrarMensaje("Lista Actualizada");
+		getPanelCampos().getTxtIdAeropuerto().setText("");
+		getPanelCampos().getTxtNombre().setText("");
+		getPanelCampos().getTxtPosicionX().setText("");
+		getPanelCampos().getTxtPosicionY().setText("");
+		
 	}
 
 	public void onClickBtnAgregar(ActionEvent arg0) {

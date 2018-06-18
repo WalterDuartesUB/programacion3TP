@@ -47,7 +47,7 @@ public class PanelFichaBotonesVuelo extends JPanel{
 	
 	private void generarComponentes() {
 		
-		setBtnActualizar( new JButton("Actualizar"));
+		setBtnActualizar( new JButton("Refrescar"));
 		setBtnAgregar( new JButton("Nuevo"));
 		setBtnGrabar ( new JButton("Grabar"));
 		setBtnBorrar ( new JButton("Borrar"));
@@ -91,7 +91,21 @@ public class PanelFichaBotonesVuelo extends JPanel{
 	
 	public void onClickBtnActualizar(ActionEvent arg0) {
 		
+		
+		getPanelCampos().getTxtIdVuelo().setText("");
+		getPanelCampos().getComboAvion().setSelectedIndex(-1);
+		getPanelCampos().getComboDestino().setSelectedIndex(-1);
+		getPanelCampos().getComboEstado().setSelectedIndex(-1);
+		getPanelCampos().getComboOrigen().setSelectedIndex(-1);
+		
+		getPanelFecha().getComboAnio().setSelectedIndex(-1);
+		getPanelFecha().getComboDia().setSelectedIndex(-1);
+		getPanelFecha().getComboHora().setSelectedIndex(-1);
+		getPanelFecha().getComboMes().setSelectedIndex(-1);
+		getPanelFecha().getComboMinutos().setSelectedIndex(-1);
+		
 		getPanelLista().refrescar();
+		
 		
 	}
 
@@ -127,7 +141,7 @@ public class PanelFichaBotonesVuelo extends JPanel{
 					buscarAeropuerto(getPanelCampos().getComboDestino().getSelectedItem().toString()), 
 					new Date(
 							(Integer)getPanelFecha().getComboAnio().getSelectedItem()+100,
-							(Integer)getPanelFecha().getComboMes().getSelectedItem(),
+							(Integer)getPanelFecha().getComboMes().getSelectedItem()-1,
 							(Integer)getPanelFecha().getComboDia().getSelectedItem(),
 							(Integer)getPanelFecha().getComboHora().getSelectedItem(),
 							(Integer)getPanelFecha().getComboMinutos().getSelectedItem()),

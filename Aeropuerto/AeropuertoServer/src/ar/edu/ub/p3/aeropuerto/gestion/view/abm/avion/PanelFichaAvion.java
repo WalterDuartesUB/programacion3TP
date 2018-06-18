@@ -50,8 +50,6 @@ public class PanelFichaAvion extends JPanel implements IFichaModelo < Avion > {
 		
 		getPanelCampos().getTxtIdAvion().setText( dato.getIdAvion() );
 		getPanelCampos().getComboNombreAerolinea().setSelectedItem(dato.getAerolinea().getNombre());
-		getPanelCampos().getTxtPosicionX().setText(Double.toString(dato.getPosicion().getX()) );
-		getPanelCampos().getTxtPosicionY().setText(Double.toString(dato.getPosicion().getY()) );
 	
 		
 	}
@@ -106,13 +104,5 @@ public class PanelFichaAvion extends JPanel implements IFichaModelo < Avion > {
 	public void setAerolineas(Map < String , Aerolinea > aerolineas) {
 		this.aerolineas = aerolineas;
 	}
-
-
-
-
-
-
-
-	
 
 }

@@ -59,7 +59,7 @@ public class PanelFichaVuelo extends JPanel implements IFichaModelo < Vuelo > {
 		getPanelCampos().getComboEstado().setSelectedItem(dato.getEstadoVuelo());
 		
 		getPanelFecha().getComboAnio().setSelectedItem(dato.getHorarioProgramado().getYear()-100);
-		getPanelFecha().getComboMes().setSelectedItem(dato.getHorarioProgramado().getMonth());
+		getPanelFecha().getComboMes().setSelectedItem(dato.getHorarioProgramado().getMonth()+1);
 		getPanelFecha().getComboDia().setSelectedItem(dato.getHorarioProgramado().getDate());
 		getPanelFecha().getComboHora().setSelectedItem(dato.getHorarioProgramado().getHours());
 		getPanelFecha().getComboMinutos().setSelectedItem(dato.getHorarioProgramado().getMinutes());
