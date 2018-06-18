@@ -9,6 +9,7 @@ import ar.edu.ub.p3.aeropuerto.tablero.salidas.ActionVentanaVuelosSalida;
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
+import ar.edu.ub.p3.vista.ActionVentanaRadar;
 import ar.edu.ub.p3.vista.VentanaRadar;
 
 public class VentanaPrincipalControlador {
@@ -75,7 +76,7 @@ public class VentanaPrincipalControlador {
 	}
 	
 	public void verRadar() {
-		new VentanaRadar( this.getConfiguracion(), this.getEstadoAeropuerto().getAerpuerto(), this.getConexionTA() );
+		ActionVentanaRadar.generarVentana( this.getConfiguracion(), this.getEstadoAeropuerto().getAerpuerto(), this.getConexionTA() );
 	}
 	
 	public void gestionarAviones() {
