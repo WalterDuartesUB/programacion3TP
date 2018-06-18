@@ -155,7 +155,7 @@ public class VentanaPrincipal extends JFrame{
 	}
 	
 	public void onEventEstadoConexionTraficoAereo( ActionEvent ae ) {
-		getControlador().verEstadoConexionTraficoAereo(lblestadoConexion);	
+		getControlador().verEstadoConexionTraficoAereo(getLblestadoConexion());	
 	}
 	
 	public void onClickMenuItemConectarAlTraficoAereo( ActionEvent ae ) {
