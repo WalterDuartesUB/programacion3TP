@@ -13,6 +13,7 @@ import ar.edu.ub.p3.aeropuerto.gestion.modelo.IRepositorioModelo;
 import ar.edu.ub.p3.aeropuerto.gestion.view.ITablaModelo;
 import ar.edu.ub.p3.modelo.Aerolinea;
 import ar.edu.ub.p3.modelo.Avion;
+import ar.edu.ub.p3.modelo.Posicion;
 
 public class PanelFichaBotonesAvion extends JPanel{
 
@@ -96,23 +97,29 @@ public class PanelFichaBotonesAvion extends JPanel{
 	public void onClickBtnAgregar(ActionEvent arg0) {
 		
 		try {
+			
 			if(!getPanelCampos().getTxtIdAvion().getText().isEmpty()&&
-			   !getPanelCampos().getComboNombreAerolinea().getSelectedItem().equals("")	&&
-			   !existeAvion(avionEnCampo())) {
-				
+			   !getPanelCampos().getComboNombreAerolinea().getSelectedItem().equals("")){
+				if(!existeAvion(avionEnCampo())) {
 					getAviones().add( avionEnCampo ());
 					mostrarMensaje("Avion agregado correctamente");
+				}	
+					
+			
+			   
+				
+					
 				
 					
 			}else {
-				mostrarMensaje("Error en carga");
+				mostrarMensaje("Error: Campos vacios o el avion ya existe");
 			}
 			
 			getPanelLista().refrescar();
 
 		}catch(Exception e){
 			
-			mostrarMensaje("Error en carga");
+			mostrarMensaje("NO SE PUEDE CARGAR");
 			
 		};
 		
@@ -163,8 +170,9 @@ public class PanelFichaBotonesAvion extends JPanel{
 	public Avion avionEnCampo() {
 		
 		return new Avion(
-				getPanelCampos().getTxtIdAvion().getText(),buscarAerolinea(getPanelCampos().getComboNombreAerolinea().getSelectedItem().toString()),
-				null);
+				getPanelCampos().getTxtIdAvion().getText(),
+				buscarAerolinea(getPanelCampos().getComboNombreAerolinea().getSelectedItem().toString()),
+				new Posicion(0,0));
 		
 	}
 	
