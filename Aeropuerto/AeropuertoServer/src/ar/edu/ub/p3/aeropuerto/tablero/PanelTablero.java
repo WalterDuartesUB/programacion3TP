@@ -1,4 +1,4 @@
-package ar.edu.ub.p3.aeropuerto.tablero.salidas;
+package ar.edu.ub.p3.aeropuerto.tablero;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

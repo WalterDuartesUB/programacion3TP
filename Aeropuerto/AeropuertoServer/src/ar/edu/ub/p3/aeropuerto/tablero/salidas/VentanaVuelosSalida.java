@@ -13,6 +13,7 @@ import javax.swing.Timer;
 
 import ar.edu.ub.p3.aeropuerto.gestion.view.PanelLista;
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aeropuerto.PanelFichaAeropuerto;
+import ar.edu.ub.p3.aeropuerto.tablero.PanelTablero;
 import ar.edu.ub.p3.modelo.Aeropuerto;
 import ar.edu.ub.p3.modelo.Vuelo;
 
@@ -26,7 +27,7 @@ public class VentanaVuelosSalida extends JDialog{
 
 	public VentanaVuelosSalida(  PanelTablero<Vuelo> lista ) {
 		
-		//setLayout( new GridLayout(1, 2) );
+
 		this.setLayout(new GridBagLayout());
 		this.setTitle("Salidas");
 		
@@ -71,7 +72,8 @@ public class VentanaVuelosSalida extends JDialog{
 		this.add(aeropuertoactuall, gbc);
 		
 		//add(lista);
-		setSize(800, 320); 
+		//setSize(800, 320); 
+		this.setSize(680,400);
 		setResizable(true);
 		setVisible(true);
 		//setLocationRelativeTo(null);
@@ -83,6 +85,7 @@ public class VentanaVuelosSalida extends JDialog{
 	public void refrescarVentana(ActionEvent e) {
 		this.revalidate();
 		this.repaint();
+		System.out.println("Sigo Vivo");
 	}
 
 	public Timer getTimerVentana() {

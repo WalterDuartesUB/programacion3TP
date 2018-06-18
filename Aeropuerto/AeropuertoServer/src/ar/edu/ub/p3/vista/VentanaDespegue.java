@@ -33,7 +33,7 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 	private ConexionTraficoAereo conexionTA;
 	private Configuracion configuracion;
 	private PanelDespegue panelDespegue;
-	private LabelDia		diaDeHoy;
+	//private LabelDia		diaDeHoy;
 
 	public VentanaDespegue(Configuracion configuracion, IAeropuerto aeropuerto, ConexionTraficoAereo conexionTA) {
 		
@@ -137,13 +137,7 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 		this.panelDespegue = panelDespegue;
 	}
 	
-	public LabelDia getDiaDeHoy() {
-		return diaDeHoy;
-	}
 	
-	public void setDiaDeHoy(LabelDia diaDeHoy) {
-		this.diaDeHoy = diaDeHoy;
-	}
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
