@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ar.edu.ub.p3.aeropuerto.gestion.modelo.IRepositorioModelo;
@@ -98,31 +99,61 @@ public class PanelFichaBotonesAvion extends JPanel{
 
 	public void onClickBtnAgregar(ActionEvent arg0) {
 		
-		
-		getAviones().add( avionEnCampo() );
-		
-		getPanelLista().refrescar();	
-		
+		try {
+			
+			getAviones().add( avionEnCampo() );
+			getPanelLista().refrescar();
+			mostrarMensaje("Avion agregado correctamente");
+			
+		}catch(Exception e) {
+			
+			mostrarMensaje("Error en carga");
+			
+		}
 		
 	}
 	
 	
 	public void onClickBtnBorrar(ActionEvent arg0) {
-		getAviones().delete( avionEnCampo()  );
 		
-		getPanelLista().refrescar();		
+		try {
+			
+			getAviones().delete( avionEnCampo()  );
+			getPanelLista().refrescar();
+			mostrarMensaje("Avion borrado correctamente");
+			
+		}catch(Exception e) {
+			
+			mostrarMensaje("Error en carga");
+			
+		}
+				
 		
 	}
 	
 	public void onClickBtnGrabar(ActionEvent arg0) {
-		getAviones().add( avionEnCampo() );
-		getPanelLista().refrescar();		
+		try {
+			
+			getAviones().add( avionEnCampo() );
+			getPanelLista().refrescar();	
+			mostrarMensaje("Avion modificado correctamente");
+			
+		}catch(Exception e) {
+		
+			mostrarMensaje("Error al grabar");
+		
+		}
 	}
 	
 	public void onClickBtnSalir(ActionEvent arg0) {
 		
 		getVentanaPrincipal().dispose();	
+		mostrarMensaje("  Usted salio de ABM Avion, buenas tardes");
 		
+	}
+	
+	private void mostrarMensaje( String mensaje ) {
+		JOptionPane.showMessageDialog( null, mensaje);
 	}
 	
 	public Avion avionEnCampo() {

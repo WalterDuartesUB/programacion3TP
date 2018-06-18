@@ -158,7 +158,7 @@ public class VentanaPrincipal extends JFrame{
 	}
 	
 	public void onClickMenuItemSalir( ActionEvent ae ) {
-		this.getControlador().salirDeLaAplicacion();
+		this.getControlador().salirDeLaAplicacion( this );
 	}
 	
 	public void onClickMenuItemVerArribos( ActionEvent ae ) {

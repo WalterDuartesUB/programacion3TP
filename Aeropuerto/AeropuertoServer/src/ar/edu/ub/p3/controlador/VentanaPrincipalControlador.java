@@ -10,6 +10,7 @@ import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
 import ar.edu.ub.p3.vista.VentanaDespegue;
+import ar.edu.ub.p3.vista.VentanaPrincipal;
 import ar.edu.ub.p3.vista.VentanaRadar;
 
 public class VentanaPrincipalControlador {
@@ -67,8 +68,8 @@ public class VentanaPrincipalControlador {
 		System.out.println( this.getConexionTA().obtenerInformacionVuelo( this.getConfiguracion().getConfiguracion("idVueloPrueba") ) );		
 	}
 	
-	public void salirDeLaAplicacion() {
-		this.onEventoAImplementar();
+	public void salirDeLaAplicacion(VentanaPrincipal ventanaPrincipal) {
+		ventanaPrincipal.dispose();
 	}
 	
 	public void verArribos() {

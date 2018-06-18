@@ -92,18 +92,13 @@ public class PanelFichaBotonesAeropuerto extends JPanel{
 	public void onClickBtnAgregar(ActionEvent arg0) {
 		try {
 			
-			getAeropuertos().add( new Aeropuerto( getPanelCampos().getTxtIdAeropuerto().getText(), 
-					getPanelCampos().getTxtNombre().getText(), 
-					new Posicion(
-							Double.parseDouble(getPanelCampos().getTxtPosicionX().getText()), 
-							Double.parseDouble(getPanelCampos().getTxtPosicionY().getText()))));
-			
+			getAeropuertos().add(aeropuertoEnCampo());
 			getPanelLista().refrescar();
 			mostrarMensaje("Aeropuerto agregado correctamente");
 			
 		}catch(Exception e){
 			
-			mostrarMensaje("Error en carga");
+			mostrarMensaje("Error en borrado");
 			
 		};
 		
@@ -115,12 +110,7 @@ public class PanelFichaBotonesAeropuerto extends JPanel{
 		
 		try {
 			
-			getAeropuertos().delete( new Aeropuerto( 
-					getPanelCampos().getTxtIdAeropuerto().getText(), 
-					getPanelCampos().getTxtNombre().getText(), 
-					new Posicion(
-							Double.parseDouble(getPanelCampos().getTxtPosicionX().getText()), 
-							Double.parseDouble(getPanelCampos().getTxtPosicionY().getText())) ) );
+			getAeropuertos().delete( aeropuertoEnCampo() );
 			
 			getPanelLista().refrescar();
 			
@@ -134,12 +124,7 @@ public class PanelFichaBotonesAeropuerto extends JPanel{
 	}
 	
 	public void onClickBtnGrabar(ActionEvent arg0) {
-		getAeropuertos().add( new Aeropuerto( 
-			getPanelCampos().getTxtIdAeropuerto().getText(), 
-			getPanelCampos().getTxtNombre().getText(), 
-			new Posicion(
-					Double.parseDouble(getPanelCampos().getTxtPosicionX().getText()), 
-					Double.parseDouble(getPanelCampos().getTxtPosicionY().getText())) ) );
+		getAeropuertos().add( aeropuertoEnCampo() );
 		getPanelLista().refrescar();		
 	}
 	
@@ -151,6 +136,17 @@ public class PanelFichaBotonesAeropuerto extends JPanel{
 	
 	private void mostrarMensaje( String mensaje ) {
 		JOptionPane.showMessageDialog( null, mensaje);
+	}
+	
+	public Aeropuerto aeropuertoEnCampo() {
+		
+		return  new Aeropuerto( 
+				getPanelCampos().getTxtIdAeropuerto().getText(), 
+				getPanelCampos().getTxtNombre().getText(), 
+				new Posicion(
+						Double.parseDouble(getPanelCampos().getTxtPosicionX().getText()), 
+						Double.parseDouble(getPanelCampos().getTxtPosicionY().getText())) );
+		
 	}
 
 	public JButton getBtnAgregar() {
