@@ -199,7 +199,6 @@ public class PanelRadar extends JPanel implements Closeable{
 	}
 
 	private void dibujarRadar() {
-		
 		this.validate();
 		this.repaint();
 		

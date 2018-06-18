@@ -6,6 +6,8 @@ import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aerolinea.ActionVentanaGestionAe
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.aeropuerto.ActionVentanaGestionAeropuertos;
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.avion.ActionVentanaGestionAviones;
 import ar.edu.ub.p3.aeropuerto.gestion.view.abm.vuelo.ActionVentanaGestionVuelos;
+import ar.edu.ub.p3.aeropuerto.tablero.llegadas.ActionVentanaVuelosLlegadas;
+import ar.edu.ub.p3.aeropuerto.tablero.salidas.ActionVentanaVuelosSalida;
 import ar.edu.ub.p3.conexion.ConexionTraficoAereo;
 import ar.edu.ub.p3.modelo.EstadoAeropuerto;
 import ar.edu.ub.p3.util.Configuracion;
@@ -73,11 +75,11 @@ public class VentanaPrincipalControlador {
 	}
 	
 	public void verArribos() {
-		this.onEventoAImplementar();
+		ActionVentanaVuelosLlegadas.generarVentana(getEstadoAeropuerto());
 	}
 	
 	public void verDespegues() {
-		new VentanaDespegue( this.getConfiguracion(), this.getEstadoAeropuerto().getAerpuerto(), this.getConexionTA() );
+		ActionVentanaVuelosSalida.generarVentana( getEstadoAeropuerto() );
 	}
 	
 	public void verRadar() {

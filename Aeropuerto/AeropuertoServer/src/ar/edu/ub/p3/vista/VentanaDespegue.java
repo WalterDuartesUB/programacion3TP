@@ -37,8 +37,8 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 
 	public VentanaDespegue(Configuracion configuracion, IAeropuerto aeropuerto, ConexionTraficoAereo conexionTA) {
 		
-		Timer timer = new Timer(1000, this::actualizar);
-		timer.start();
+		//Timer timer = new Timer(1000, this::actualizar);
+		//timer.start();
 		
 		this.setAeropuerto(aeropuerto);
 		this.setConexionTA(conexionTA);
@@ -48,7 +48,7 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 		//this.setLayout(new GridBagLayout());
 		this.setSize(580,400);
 		this.setPanelDespegue( new PanelDespegue( this.getConfiguracion(), this.getAeropuerto().getIdAeropuerto(), this.getConexionTA() ));
-		this.setDiaDeHoy(new LabelDia(this.getConfiguracion()));
+		//this.setDiaDeHoy(new LabelDia(this.getConfiguracion()));
 		this.addWindowListener(this);
 		this.setVisible(true);	
 		
@@ -59,8 +59,9 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 		jLabelObject.setIcon(new ImageIcon("./encabezadotablero/salidas.png"));
 
 		
-		//String date = new Date().toString();
-		//JLabel dia = new JLabel(date);
+
+		String date = new Date().toString();
+		JLabel dia = new JLabel(date); //  cambiar
 		
 		String aeropuertoactual= this.getAeropuerto().getIdAeropuerto().toString()+"-"+this.getAeropuerto().getNombre().toString();
 		JLabel aeropuertoactuall = new JLabel(aeropuertoactual);
@@ -77,7 +78,7 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 		gbc.gridy = 1;
 		gbc.weightx = 0;
 		gbc.weighty = 0;
-		panel.add(this.getDiaDeHoy(), gbc);
+		panel.add(dia, gbc);
 		
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.gridx = 0;
@@ -100,7 +101,7 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 	
 	public void actualizar (ActionEvent arg0) {
 	
-		this.validate();
+		this.revalidate();
 		this.repaint();
 	}
 	
@@ -160,7 +161,7 @@ public class VentanaDespegue extends JDialog implements WindowListener {
 	public void windowClosing(WindowEvent arg0) {
 		try {
 			this.getPanelDespegue().close();
-			this.getDiaDeHoy().close();
+			//this.getDiaDeHoy().close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

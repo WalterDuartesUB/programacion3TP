@@ -42,7 +42,6 @@ public class PanelDespegue extends JPanel implements Closeable{
 	private Configuracion 			configuracion;
 	private String					miIdAeropuerto;
 	private Collection<Vuelo> 		vuelosProgramadosDespegue;
-	private Collection<Vuelo>		vuelosPorAterrizar;
 	private Timer 					timerPedirVuelos;
 	
 
@@ -52,17 +51,16 @@ public class PanelDespegue extends JPanel implements Closeable{
 		this.setConexionTA(conexionTA);
 		this.setMiIdAeropuerto(idAeropuerto);
 		this.setVuelosProgramadosDespegue(new LinkedList<Vuelo>());
-		this.setVuelosPorAterrizar(new LinkedList<>());
 		this.setConfiguracion(configuracion);
 		this.Iniciar();
 		
-	//	this.setTimerPedirVuelos(new Timer (this.getConfiguracion().getConfiguracionAsInt("tableroTiempoRefresh"), this ::pedirVuelosAlTraficoAereo));
-	//	this.getTimerPedirVuelos().start();
+		this.setTimerPedirVuelos(new Timer (this.getConfiguracion().getConfiguracionAsInt("tableroTiempoRefresh"), this ::pedirVuelosAlTraficoAereo));
+		this.getTimerPedirVuelos().start();
 	}
 	
 
 	public void pedirVuelosAlTraficoAereo(ActionEvent arg0) {
-		this.setVuelosProgramadosDespegue(this.getConexionTA().getEstadoAeropuerto().getVuelosProximoADespegarYDespegados().values());
+		this.setVuelosProgramadosDespegue(this.getConexionTA().getEstadoAeropuerto().getVuelosProgramados());
 		this.dibujarSalidas();
 	}
 	
@@ -89,9 +87,12 @@ public class PanelDespegue extends JPanel implements Closeable{
 				{"pepe","pepe","pepe","pepe","pepe","pepe"},
 };
 		
-		Object [][] vuelos = new Object [conexionTA.getEstadoAeropuerto().getVuelosProgramados().size()][nombreColumna.length];
+		//Object [][] vuelos = new Object [conexionTA.getEstadoAeropuerto().getVuelosProgramados().size()][nombreColumna.length];
+		Object [][] vuelos = new Object [this.getVuelosProgramadosDespegue().size()][nombreColumna.length];
 		int i = 0 ;
-		for(IVuelo vuelo : conexionTA.getEstadoAeropuerto().getVuelosProgramados()) { // cambiar
+		
+		for(IVuelo vuelo : this.getVuelosProgramadosDespegue()) {
+		//for(IVuelo vuelo : conexionTA.getEstadoAeropuerto().getVuelosProgramados()) { // cambiar
  
 
 				vuelos[i][0] = ( vuelo.getHorarioProgramado().getHours() +":"+vuelo.getHorarioProgramado().getMinutes());  // arreglar en algun momento
@@ -130,13 +131,11 @@ public class PanelDespegue extends JPanel implements Closeable{
 		
     	return tableScrollPane;
 		
-    	
-		
 	}
-
-
 	private void dibujarSalidas() {
-		Iniciar();
+		this.revalidate();
+		this.repaint();
+		//Iniciar();
 		
 	}
 
@@ -189,18 +188,6 @@ public class PanelDespegue extends JPanel implements Closeable{
 
 
 
-	public Collection<Vuelo> getVuelosPorAterrizar() {
-		return vuelosPorAterrizar;
-	}
-
-
-
-	private void setVuelosPorAterrizar(Collection<Vuelo> vuelosPorAterrizar) {
-		this.vuelosPorAterrizar = vuelosPorAterrizar;
-	}
-
-
-
 	public Timer getTimerPedirVuelos() {
 		return timerPedirVuelos;
 	}
@@ -215,7 +202,7 @@ public class PanelDespegue extends JPanel implements Closeable{
 
 	@Override
 	public void close() throws IOException {
-		//this.getTimerPedirVuelos().stop();
+		this.getTimerPedirVuelos().stop();
 		
 	}
 	
