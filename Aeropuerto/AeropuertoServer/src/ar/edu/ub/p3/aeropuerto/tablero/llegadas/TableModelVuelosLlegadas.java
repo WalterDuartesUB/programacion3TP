@@ -43,7 +43,12 @@ public class TableModelVuelosLlegadas extends DefaultTableModel {
 		return "";
 	}
 	
-	
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		// TODO Auto-generated method stub
+		
+		return this.getValueAt(0, columnIndex).getClass();
+	}
 	
 	@Override
 	public int getColumnCount() {

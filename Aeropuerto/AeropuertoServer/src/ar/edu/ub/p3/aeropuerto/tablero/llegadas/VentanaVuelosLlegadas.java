@@ -47,7 +47,7 @@ public class VentanaVuelosLlegadas extends JDialog implements WindowListener {
 		
 		
 	
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyy -  kk:mm aa");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMMM/yyy");
 		String fechaComoCadena = sdf.format(new Date());
 		JLabel dia = new JLabel("Fecha: "+fechaComoCadena);
 		
